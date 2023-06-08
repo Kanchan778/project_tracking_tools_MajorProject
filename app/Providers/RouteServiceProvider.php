@@ -49,4 +49,18 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
     }
+
+    //Configure the splash
+    public function map()
+{
+    $this->mapApiRoutes();
+
+    $this->mapWebRoutes();
+
+    // Change this line to point to the splash screen route
+    Route::middleware('web')
+         ->namespace($this->namespace)
+         ->group(base_path('routes/web.php'));
+}
+
 }
