@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -29,27 +30,36 @@
         button[type="submit"] {
             margin-top: 10px;
         }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body style="background-color: #E4D0D0;">
     <div class="container">
-        <form>
+        <form action="{{ route('login') }}" method="POST">
+            @csrf
             <div>
                 <img class="avatar" src="{{ asset('img/apexlogo.png') }}" alt="Avatar" style="width: 100px; height: 50px; margin-bottom: 10px;">
             </div>
             <div>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" required autofocus>
             </div>
             <div>
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-
+            @if($errors->any())
+                <div class="error-message">
+                    Invalid credentials. Please try again.
+                </div>
+            @endif
             <div>
                 <button type="submit">Login</button>
             </div>
-
             <div>
                 <p>Or Sign Up with:</p>
                 <div>
@@ -60,15 +70,12 @@
                 </div>
             </div>
             <div>
-        <a href="#">Forgot Password?</a>
-    </div>
-
-    <div>
-        Don't have an account? <a href="{{ route('registeration') }}">Create Account</a>
-    </div>
+                <a href="{{ route('password-reset') }}">Forgot Password?</a>
+            </div>
+            <div>
+                Don't have an account? <a href="{{ route('registeration') }}">Create Account</a>
+            </div>
         </form>
     </div>
-
-   
 </body>
 </html>

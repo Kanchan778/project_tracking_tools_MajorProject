@@ -2,41 +2,44 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\LoginController;
 use Laravel\Socialite\Facades\Socialite;
-
-// ProjectCordinator
-use App\Http\Controllers\ProjectCordinatorController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/ 
+use App\Http\Controllers\RegistrationController;
+//use App\Http\Controllers\ProjectCoordinatorController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
 });
- //route to login page after 10 sec from splash screen
+
 Route::get('Authenticate/login', function () {
-    
-    return view('authenticate.login');
+    return view('Authenticate.login');
 })->name('login');
 
-// route to registration page when clicked create accont button
-Route::get('Authenticate/registeration', function () {
+Route::get('Authenticate/registration', function () {
     return view('authenticate.registeration');
 })->name('registeration');
 
-//route to facebook and login
+Route::get('login/gmail', [AuthLoginController::class, 'redirectToGmail'])->name('login-gmail');
+Route::get('login/gmail/callback', [AuthLoginController::class, 'handleGmailCallback']);
 
-Route::get('login/gmail', [LoginController::class, 'redirectToGmail'])->name('login-gmail');
-Route::get('login/gmail/callback', [LoginController::class, 'handleGmailCallback']);
+Route::get('login/facebook', [AuthLoginController::class, 'redirectToFacebook'])->name('login-facebook');
+Route::get('login/facebook/callback', [AuthLoginController::class, 'handleFacebookCallback']);
 
-Route::get('login/facebook', [LoginController::class, 'redirectToFacebook'])->name('login-facebook');
-Route::get('login/facebook/callback', [LoginController::class, 'handleFacebookCallback']);
+Route::post('/register', [RegistrationController::class, 'register'])->name('register');
+
+//route to dashboard based on their role
+Route::get('/dashboard/student', [DashboardController::class, 'student'])->name('student.dashboard');
+Route::get('/dashboard/supervisor', [DashboardController::class, 'supervisor'])->name('supervisor.dashboard');
+Route::get('/dashboard/projectCoordinator', [DashboardController::class, 'projectCoordinator'])->name('projectCoordinator.dashboard');
+
+Route::get('Authenticate/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('Authenticate/login', [LoginController::class, 'login'])->name('login.submit');
+Route::post('Authenticate/logout', [LoginController::class, 'logout'])->name('logout');
+
+// For handling the password reset form submission
+Route::post('Authenticate/ForgotPassword', 'ResetPasswordController@reset')->name('password-reset');
+
+// For displaying the password reset form
+Route::get('Authenticate/ForgotPassword', [ForgotPasswordController::class,'showLinkRequestForm'])->name('password-reset');
+//Route::get('Authenticate/password-reset', '\App\Http\Controllers\Auth\ForgotPasswordController@showResetForm')->name('password-reset');

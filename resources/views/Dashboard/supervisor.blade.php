@@ -166,6 +166,7 @@
     <!-- Add your dashboard content here -->
   </div>
   
+  <div> supervisor dashboard</div>
   <script>
     var menuIcon = document.getElementById('menu-icon');
     var closeIcon = document.getElementById('close-icon');
