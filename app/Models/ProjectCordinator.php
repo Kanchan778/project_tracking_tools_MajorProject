@@ -15,4 +15,5 @@ class ProjectCordinator extends Model
         'profile_image',
         'project_type',
     ];
+
 }
