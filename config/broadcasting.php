@@ -67,4 +67,11 @@ return [
 
     ],
 
+
+    //for broadcasting message
+    'project-created' => [
+        'driver' => 'private',
+        'class' => \App\Broadcasting\ProjectCreatedChannel::class,
+    ],
+
 ];

@@ -1,0 +1,27 @@
+<?php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateUsersTable extends Migration
+{
+    public function up()
+{
+    Schema::create('users', function (Blueprint $table) {
+        $table->id();
+        $table->string('email')->unique();
+        $table->string('username')->unique();
+        $table->string('password');
+        $table->enum('role', ['student', 'supervisor', 'project_coordinator']);
+        $table->string('section');
+        $table->unsignedInteger('semester');
+        $table->enum('course', ['BBA', 'BBA-TT', 'BBA-BI', 'BCIS']);
+        $table->timestamps();
+    });
+}
+
+    public function down()
+    {
+        Schema::dropIfExists('users');
+    }
+}

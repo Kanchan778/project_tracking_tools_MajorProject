@@ -76,6 +76,8 @@
                 Don't have an account? <a href="{{ route('registeration') }}">Create Account</a>
             </div>
         </form>
+
+        <script src="{{ asset('js/login.js') }}"></script>
     </div>
 </body>
 </html>

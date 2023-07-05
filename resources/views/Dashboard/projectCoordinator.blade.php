@@ -1,62 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Coordinator Dashboard</title>
-    <style>
-        /* Add your custom CSS styles here */
-
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-gap: 20px;
-            margin-top: 30px;
-        }
-
-        .dashboard-item {
-            background-color: #E4D0D0;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-            text-align: center;
-        }
-    </style>
+  <title>Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/projectcordinator.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Project Coordinator Dashboard</h1>
-        <div class="dashboard">
-            <div class="dashboard-item">
-                <h2>Manage Projects</h2>
-                <p>View and manage projects</p>
-                <a href="#">Go to Projects</a>
-            </div>
-            <div class="dashboard-item">
-                <h2>Manage Team</h2>
-                <p>Manage project team members</p>
-                <a href="#">Go to Team</a>
-            </div>
-            <div class="dashboard-item">
-                <h2>Generate Reports</h2>
-                <p>Generate project reports</p>
-                <a href="#">Go to Reports</a>
-            </div>
-        </div>
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
     </div>
+  @endif
+
+  <!-- Navbar -->
+  <nav>
+    <div class="navbar-container">
+    <h1 class="dashboard-title">Project Coordinator Dashboard</h1>
+      <div class="navbar-icons">
+        <button id="search-button"><i class="fas fa-search"></i></button>
+        <button id="filter-button"><i class="fas fa-filter"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="sidebar">
+      <!-- Sidebar with fields -->
+      <div class="sidebar-profile">
+        <div class="profile-avatar">
+          <label for="avatar-input" class="avatar-label">
+            <i class="fas fa-plus"></i>
+          </label>
+          <input type="file" id="avatar-input" style="display: none;">
+        </div>
+        <div class="profile-name" id="username-placeholder"></div>
+      </div>
+
+      <div class="username text-center">
+    <h4><strong>{{ Auth::user()->username }}</strong></h4>
+</div>
+
+      <button class="edit-profile-button">Edit Profile</button>
+
+      <ul class="sidebar-links">
+        <li><i class="fas fa-project-diagram"></i><a href="{{ route('Project') }}">Projects</a></li>
+        <li><i class="fas fa-users"></i><a href="{{ route('Supervisor') }}">Supervisors</a></li>
+        <li><i class="fas fa-graduation-cap"></i><a href="#">Groups</a></li>
+        <li><i class="fas fa-cog"></i><a href="#">Settings</a></li>
+        <li><i class="fas fa-sign-out-alt"></i><a href="{{ route('login') }}" id="logout-link">Logout</a></li>
+      </ul>
+    </div>
+    <!-- Search Field -->
+<div id="search-field" style="display: none;">
+  <input type="text" placeholder="Search...">
+  <ul id="search-history-list"></ul>
+</div>
+
+    <div class="content">
+      <div class="content-wrapper">
+        <div class="main-content">
+          <div class="field-container" id="projects">
+            <h3><i class="fas fa-project-diagram"></i> <a href="{{ route('Project') }}">Projects</a></h3>
+            <ul id="project-list"></ul>
+          </div>
+
+          <div class="field-container" id="supervisors">
+            <h3><i class="fas fa-users"></i><a href="{{ route('Supervisor') }}">Supervisors</a></h3>
+            <ul id="supervisor-list"></ul>
+          </div>
+
+          <div class="field-container" id="students">
+            <h3><i class="fas fa-graduation-cap"></i> Groups</h3>
+            <ul id="student-list"></ul>
+          </div>
+
+          <div class="field-container" id="students">
+            <h3><i class="fas fa-graduation-cap"></i> Batch</h3>
+            <ul id="student-list"></ul>
+          </div>
+        </div>
+      </div>
+      <div class="fields-container" id="chart-conatiner">
+            <h3><i class="chart"></i> Chart</h3>
+            <div id="chart-container"></div>
+          </div>
+
+      <div class="chat-container">
+        <h3><i class="fas fa-comment-alt"></i> Chat Messages</h3>
+        <ul id="chat-messages-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+        <p>&copy; 2023 Kanchan Chaudhary. All rights reserved.</p>
+      </footer>
+
+  <script src="{{ asset('js/dashboard/projectcordinator.js') }}"></script>
 </body>
 </html>

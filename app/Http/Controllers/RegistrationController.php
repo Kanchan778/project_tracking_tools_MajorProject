@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RegistrationController extends Controller
 {
@@ -15,6 +16,10 @@ class RegistrationController extends Controller
             'username' => 'required|unique:users',
             'password' => 'required|min:6',
             'confirm-password' => 'required|same:password',
+            'section' => 'required',
+            'semester' => 'required',
+            'course' => 'required',
+            // Add validation for the 'section' field
         ]);
 
         // Create a new user record
@@ -22,9 +27,11 @@ class RegistrationController extends Controller
         $user->email = $validatedData['email'];
         $user->username = $validatedData['username'];
         $user->password = bcrypt($validatedData['password']);
+        $user->section = $validatedData['section'];
+        $user->semester = $validatedData['semester'];
+        $user->course = $validatedData['course']; // Assign the 'section' value
         $user->save();
 
-       
         // Optionally, you can log in the user after registration
         // auth()->login($user);
 
@@ -41,6 +48,4 @@ class RegistrationController extends Controller
             'role' => 'required|in:student',
         ]);
     }
-    
-    
 }
