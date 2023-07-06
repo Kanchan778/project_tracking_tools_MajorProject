@@ -1,15 +1,11 @@
 <?php
+
 namespace App\Models;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Student;
 
 class Project extends Model
 {
-    use HasFactory;
-
-    protected $table = 'projects';
-
     protected $fillable = [
         'project_name',
         'section',
@@ -20,15 +16,10 @@ class Project extends Model
         'supervisor',
     ];
 
-    //relationship with students and supervisor
+    // Define any relationships or additional methods for the Project model here
+
     public function students()
-{
-    return $this->belongsToMany(Student::class);
+    {
+        return $this->belongsToMany(Student::class);
+    }
 }
-
-// public function supervisor()
-// {
-//     return $this->belongsToMany(User::class, 'project_supervisors', 'project_id', 'user_id');
-// }
-
- }

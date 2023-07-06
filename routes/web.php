@@ -8,6 +8,8 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\ProjectController;
 //use App\Http\Controllers\ProjectCoordinatorController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Cordinator\CordinatorSupervisorController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -60,13 +62,11 @@ Route::get('/fetch-username', 'UserController@fetchUsername');
 Route::get('Student/Group', 'App\Http\Controllers\GroupController@index')->name('Group');
 
 
-//managing suprvisor from project cordinator
-Route::get('cordinator/supervisors', 'cordinatorSupervisorController@index')->name('Supervisor');
-Route::get('cordinator/supervisors/create', 'cordinatorSupervisorController@create')->name('SupervisorCreate');
-Route::get('cordinator/supervisors/{id}/edit', 'cordinatorSupervisorController@edit')->name('SupervisorEdit');
-Route::post('cordinator/supervisors', 'cordinatorSupervisorController@store')->name('SupervisorStore');
-Route::put('cordinator/supervisors/{id}', 'cordinatorSupervisorController@update')->name('SupervisorUpdate');
-Route::delete('cordinator/supervisors/{id}', 'cordinatorSupervisorController@destroy')->name('SupervisorDestroy');
+//supervisor from project cordinator
+Route::get('/cordinator/supervisor', [CordinatorSupervisorController::class, 'index'])->name('cordinator.supervisor');
+
+
 
 //logout
 Route::get('/logout', [ProjectCordinatorController::class, 'logout'])->name('logout');
+

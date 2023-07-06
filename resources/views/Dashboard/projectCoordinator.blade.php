@@ -44,7 +44,7 @@
 
       <ul class="sidebar-links">
         <li><i class="fas fa-project-diagram"></i><a href="{{ route('Project') }}">Projects</a></li>
-        <li><i class="fas fa-users"></i><a href="{{ route('Supervisor') }}">Supervisors</a></li>
+        <li><i class="fas fa-users"></i><a href="{{ route('cordinator.supervisor') }}">Supervisors</a></li>
         <li><i class="fas fa-graduation-cap"></i><a href="#">Groups</a></li>
         <li><i class="fas fa-cog"></i><a href="#">Settings</a></li>
         <li><i class="fas fa-sign-out-alt"></i><a href="{{ route('login') }}" id="logout-link">Logout</a></li>
@@ -65,7 +65,7 @@
           </div>
 
           <div class="field-container" id="supervisors">
-            <h3><i class="fas fa-users"></i><a href="{{ route('Supervisor') }}">Supervisors</a></h3>
+            <h3><i class="fas fa-users"></i><a href="{{ route('cordinator.supervisor') }}">Supervisors</a></h3>
             <ul id="supervisor-list"></ul>
           </div>
 

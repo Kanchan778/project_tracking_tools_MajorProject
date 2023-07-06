@@ -8,9 +8,10 @@
     }
     /* Navbar styles */
   nav {
-    background-color: #469597;
+    background-color: #22223B;
     color: #fff;
     padding: 10px;
+    margin-top: 0px;
   }
   
   .navbar-container {
@@ -49,7 +50,7 @@
     } */
     .sidebar {
       width: 300px;
-      background-color: #5BA199;
+      background-color: #BBC6C8;
       padding: 20px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
@@ -148,8 +149,9 @@
     
     .content {
       flex: 1;
-      background-color: #BBC6C8; /* Adjust as needed */
-      padding: 20px;
+      background-color: #fff; /* Adjust as needed */
+  
+     top: 0px;
     }
     
    
@@ -158,14 +160,25 @@
       grid-gap: 20px;
       width:300px;
       grid-template-columns: 1fr 1fr;
+      height: 466px;
+    }
+    .col-1{
+       width: 980px;
+    }
+    .col2{
+      width: 400px;
+      height:400px ;
     }
     
     .content-wrapper {
-      margin-top: 5px;
+      margin-top: 20px;
+      margin-left: 20px;
+      grid-template-columns: 1fr 1fr;
+      display: grid;
     }
     
     .field-container {
-      background-color: #5BA199;
+      background-color: #d8c6c2;
       padding: 40px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       display: flex;
@@ -190,9 +203,10 @@
     #chart-container {
       flex: 0 0 300px;
       height: 400px;
-      background-color: #5BA199;
+      background-color: #606480;
       box-sizing: border-box;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      margin-top: 0px;
     }
    
     .fields-container#chart-container {
@@ -204,7 +218,7 @@
     .chat-container {
       flex: 0 0 300px;
       padding: 20px;
-      background-color: #5BA199;
+      background-color: #c9ada7;
       box-sizing: border-box;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       margin-left: 20px; /* Add margin to the left side */
@@ -217,9 +231,9 @@
     
     
       .chat-container {
-        position: sticky;
         top: 10px;
         right: 10px;
+        height: 466px;
       }
     }
     

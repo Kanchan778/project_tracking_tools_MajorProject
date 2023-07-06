@@ -72,21 +72,21 @@ class ProjectController extends Controller
         // Save the project data to the database
         $project->save();
 
-        // Check if the project type is "Major Project"
-    if ($project->project_type === 'Major Project') {
-        // Broadcast a message about the new project
-        Broadcast::dispatch(new NewProjectCreated($project));
-    }
+    //     // Check if the project type is "Major Project"
+    // if ($project->project_type === 'Major Project') {
+    //     // Broadcast a message about the new project
+    //     Broadcast::dispatch(new NewProjectCreated($project));
+    // }
 
-    // Retrieve students matching the semester and section of the project
-    $students = Student::where('semester', $project->semester)
-        ->where('section', $project->section)
-        ->get();
+    // // Retrieve students matching the semester and section of the project
+    // $students = Student::where('semester', $project->semester)
+    //     ->where('section', $project->section)
+    //     ->get();
 
-    // Add the project to each student's project list
-    foreach ($students as $student) {
-        $student->projects()->attach($project->id);
-    }
+    // // Add the project to each student's project list
+    // foreach ($students as $student) {
+    //     $student->projects()->attach($project->id);
+    // }
 
         // Redirect to a success page or return a response
         return redirect()->back()->with('success', 'Project created successfully!');

@@ -11,17 +11,8 @@
         {{ session('success') }}
     </div>
   @endif
+<!-- Navbar -->
 
-  <!-- Navbar -->
-  <nav>
-    <div class="navbar-container">
-    <h1 class="dashboard-title">Student Dashboard</h1>
-      <div class="navbar-icons">
-        <button id="search-button"><i class="fas fa-search"></i></button>
-        <button id="filter-button"><i class="fas fa-filter"></i></button>
-      </div>
-    </div>
-  </nav>
 
   <div class="container">
     <div class="sidebar">
@@ -57,7 +48,20 @@
 </div>
 
     <div class="content">
+    <nav>
+    <div class="navbar-container">
+    <h1 class="dashboard-title">Student Dashboard</h1>
+      <div class="navbar-icons">
+        <button id="search-button"><i class="fas fa-search"></i></button>
+        <button id="filter-button"><i class="fas fa-filter"></i></button>
+      </div>
+    </div>
+  </nav>
+  
+   
+        
       <div class="content-wrapper">
+        <div class = "col-1">
         <div class="main-content">
           <div class="field-container" id="projects">
             <h3><i class="fas fa-project-diagram"></i> <a href="">Projects</a></h3>
@@ -85,18 +89,25 @@
             <ul id="student-list"></ul>
           </div>
         </div>
-      </div>
-      <div class="fields-container" id="chart-conatiner">
-            <h3><i class="chart"></i> Chart</h3>
-            <div id="chart-container"></div>
-          </div>
-
-      <div class="chat-container">
+     
+</div> <div class="col2">
+      <div class="chat-container"> 
         <h3><i class="fas fa-comment-alt"></i> Chat Messages</h3>
         <ul id="chat-messages-list"></ul>
       </div>
-    </div>
+</div>
+</div>
+      <div class="fields-container" id="chart-conatiner">
+           
+            <div id="chart-container">
+               <h3><i class="chart"></i> Chart</h3>
+              </div>
+          </div>
+
+      
+    
   </div>
+</div>
 
   <footer>
         <p>&copy; 2023 Kanchan Chaudhary. All rights reserved.</p>

@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Cordinator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class cordinatorSupervisorController extends Controller
+class CordinatorSupervisorController extends Controller
 {
-    //
+    public function index()
+    {
+        return view('cordinator.supervisor.supervisor');
+    }
 }

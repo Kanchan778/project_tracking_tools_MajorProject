@@ -4,8 +4,6 @@ namespace App\Broadcasting;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
-use App\Models\User;
-use App\Models\Supervisors;
 
 
 class ProjectCreatedChannel
