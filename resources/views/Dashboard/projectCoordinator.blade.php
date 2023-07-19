@@ -1,31 +1,60 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+
+  
+<!-- Mirrored from pipeline.mediumra.re/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 14 Jul 2023 08:23:11 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
-  <title>Dashboard</title>
-  <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/projectcordinator.css') }}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
-@if (session('success'))
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-52115242-14"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-52115242-14');
+    </script>
+    <meta charset="utf-8">
+    <title>Project Tracking Tools</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A project management Bootstrap theme by Medium Rare">
+    <link href="assets/img/favicon.ico" rel="icon" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
+    <link href="{{ asset('css/frontend/theme.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/projectcordinator.css') }}">
+  </head>
+
+  <body>
+  @if (session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
     </div>
   @endif
 
-  <!-- Navbar -->
-  <nav>
-    <div class="navbar-container">
-    <h1 class="dashboard-title">Project Coordinator Dashboard</h1>
-      <div class="navbar-icons">
-        <button id="search-button"><i class="fas fa-search"></i></button>
-        <button id="filter-button"><i class="fas fa-filter"></i></button>
-      </div>
-    </div>
-  </nav>
+    <div class="layout layout-nav-side">
+      <div class="navbar navbar-expand-lg bg-dark navbar-dark sticky-top">
+        <div class="d-flex align-items-center">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="d-block d-lg-none ml-2">
+            <div class="dropdown">
+              <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img alt="Image" src="assets/img/avatar-male-4.jpg" class="avatar" />
+              </a>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a href="nav-side-user.html" class="dropdown-item">Profile</a>
+                <a href="utility-account-settings.html" class="dropdown-item">Account Settings</a>
+                <a href="#" class="dropdown-item">Log Out</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
+          <ul class="navbar-nav d-lg-block">
 
-  <div class="container">
-    <div class="sidebar">
-      <!-- Sidebar with fields -->
+            <!-- Sidebar with fields -->
       <div class="sidebar-profile">
         <div class="profile-avatar">
           <label for="avatar-input" class="avatar-label">
@@ -41,61 +70,195 @@
 </div>
 
       <button class="edit-profile-button">Edit Profile</button>
+</ul>
 
-      <ul class="sidebar-links">
-        <li><i class="fas fa-project-diagram"></i><a href="{{ route('Project') }}">Projects</a></li>
-        <li><i class="fas fa-users"></i><a href="{{ route('cordinator.supervisor') }}">Supervisors</a></li>
-        <li><i class="fas fa-graduation-cap"></i><a href="#">Groups</a></li>
-        <li><i class="fas fa-cog"></i><a href="#">Settings</a></li>
-        <li><i class="fas fa-sign-out-alt"></i><a href="{{ route('login') }}" id="logout-link">Logout</a></li>
-      </ul>
-    </div>
-    <!-- Search Field -->
-<div id="search-field" style="display: none;">
-  <input type="text" placeholder="Search...">
-  <ul id="search-history-list"></ul>
-</div>
-
-    <div class="content">
-      <div class="content-wrapper">
-        <div class="main-content">
-          <div class="field-container" id="projects">
-            <h3><i class="fas fa-project-diagram"></i> <a href="{{ route('Project') }}">Projects</a></h3>
-            <ul id="project-list"></ul>
+          <hr>
+          <div class="d-none d-lg-block w-100">
+            <span class="text-small text-muted">Quick Links</span>
+            <ul class="nav nav-small flex-column mt-2">
+              <li class="nav-item">
+                <a href="{{ route('projectCoordinator.project') }}" class="nav-link">Team Overview</a>
+              </li>
+              <li class="nav-item">
+              <a href="{{ route('projectCoordinator.nav-side-project') }}" class="nav-link">Project</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('projectCoordinator.nav-side-task') }}"class="nav-link">Single Task</a>
+              </li>
+              <li class="nav-item">
+              <a href="{{ route('projectCoordinator.nav-side-kanban-board') }}"class="nav-link">Account Setting</a>
+              </li>
+            </ul>
+            <hr>
           </div>
-
-          <div class="field-container" id="supervisors">
-            <h3><i class="fas fa-users"></i><a href="{{ route('cordinator.supervisor') }}">Supervisors</a></h3>
-            <ul id="supervisor-list"></ul>
+          <div>
+            <form>
+              <div class="input-group input-group-dark input-group-round">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="material-icons">search</i>
+                  </span>
+                </div>
+                <input type="search" class="form-control form-control-dark" placeholder="Search" aria-label="Search app">
+              </div>
+            </form>
+            <div class="dropdown mt-2">
+              <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="newContentButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Add New
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Team</a>
+                <a class="dropdown-item" href="#">Project</a>
+                <a class="dropdown-item" href="#">Task</a>
+              </div>
+            </div>
           </div>
+        </div>
+        <div class="d-none d-lg-block">
+          <div class="dropup">
+          <a href="{{ route('projectCoordinator.logout') }}"
+   onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">
+    Logout
+</a>
 
-          <div class="field-container" id="students">
-            <h3><i class="fas fa-graduation-cap"></i> Groups</h3>
-            <ul id="student-list"></ul>
+<form id="logout-form" action="{{ route('projectCoordinator.logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
+
+            </a>
+            <div class="dropdown-menu">
+              <a href="nav-side-user.html" class="dropdown-item">Profile</a>
+              
+              
+            </div>
           </div>
+        </div>
 
-          <div class="field-container" id="students">
-            <h3><i class="fas fa-graduation-cap"></i> Batch</h3>
-            <ul id="student-list"></ul>
+      </div>
+      <div class="main-container">
+
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-11 col-xl-9">
+              <section class="py-4 py-lg-5">
+                <h1 class="display-4 mb-3">Project Tracking Tools</h1>
+                <p class="lead">
+                       </p>
+              </section>
+            </div>  <button class="btn btn-primary btn-round btn-floating btn-lg" type="button" data-toggle="collapse" data-target="#floating-chat" aria-expanded="false">
+  <i class="material-icons">chat_bubble</i>
+  <i class="material-icons">close</i>
+</button>
+
+<div class="collapse sidebar-floating" id="floating-chat">
+  <div class="sidebar-content">
+    <div class="chatify-container-wrapper">
+      <div class="chat-module-fixed">
+        <div class="chat-module">
+          <div class="chat-module-top">
+            <!-- Existing chat module top content -->
+          </div>
+          <div class="chat-module-body">
+            <!-- Existing chat module body content -->
+          </div>
+          <div class="chat-module-bottom">
+            <form class="chat-form">
+              <textarea class="form-control" placeholder="Type message" rows="1"></textarea>
+              <div class="chat-form-buttons">
+                <button type="button" class="btn btn-link">
+                  <i class="material-icons">tag_faces</i>
+                </button>
+                <div class="custom-file custom-file-naked">
+                  <input type="file" class="custom-file-input" id="customFile">
+                  <label class="custom-file-label" for="customFile">
+                    <i class="material-icons">attach_file</i>
+                  </label>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-      <div class="fields-container" id="chart-conatiner">
-            <h3><i class="chart"></i> Chart</h3>
-            <div id="chart-container"></div>
-          </div>
 
-      <div class="chat-container">
-        <h3><i class="fas fa-comment-alt"></i> Chat Messages</h3>
-        <ul id="chat-messages-list"></ul>
+      <div class="chatify-container">
+        <!-- Existing content within chatify-container -->
       </div>
     </div>
   </div>
+</div>
 
-  <footer>
+     </div>
+          </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer>
         <p>&copy; 2023 Kanchan Chaudhary. All rights reserved.</p>
       </footer>
 
-  <script src="{{ asset('js/dashboard/projectcordinator.js') }}"></script>
-</body>
+    <!-- Required vendor scripts (Do not remove) -->
+    <script type="text/javascript" src="{{ asset('js/frontend/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/frontend/popper.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/frontend/bootstrap.js') }}"></script>
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chatify/dist/chatify.min.js"></script>
+
+
+    <!-- Optional Vendor Scripts (Remove the plugin script here and comment initializer script out of index.js if site does not use that feature) -->
+
+    <!-- Autosize - resizes textarea inputs as user types -->
+    <script type="text/javascript" src="{{ asset('js/frontend/autosize.min.js') }}"></script>
+    <!-- Flatpickr (calendar/date/time picker UI) -->
+    <script type="text/javascript" src="{{ asset('js/frontend/flatpicker.min.js') }}"></script>
+    <!-- Prism - displays formatted code boxes -->
+    <script type="text/javascript" src="{{ asset('js/frontend/prism.js') }}"></script>
+    <!-- Shopify Draggable - drag, drop and sort items on page -->
+    <script type="text/javascript" src="{{ asset('js/frontend/draggable.bundle.legacy.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/frontend/swap-animation.js') }}"></script>
+    <!-- Dropzone - drag and drop files onto the page for uploading -->
+    <script type="text/javascript" src="{{ asset('js/frontend/dropzone.min.js') }}"></script>
+    <!-- List.js - filter list elements -->
+    <script type="text/javascript" src="{{ asset('js/frontend/list.min.js') }}"></script>
+
+    <!-- Required theme scripts (Do not remove) -->
+    <script type="text/javascript" src="{{ asset('js/frontend/theme.js') }}"></script>
+      <!-- Cordinator js-->
+      <script src="{{ asset('js/dashboard/projectcordinator.js') }}"></script>
+      <script src="{{ asset('js/pusher.js') }}"></script>
+
+    <!-- This appears in the demo only - demonstrates different layouts -->
+    <style type="text/css">
+      .layout-switcher{ position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(73px); color: #fff; transition: all .35s ease; background: #343a40; border-radius: .25rem .25rem 0 0; padding: .75rem; z-index: 999; }
+            .layout-switcher:not(:hover){ opacity: .95; }
+            .layout-switcher:not(:focus){ cursor: pointer; }
+            .layout-switcher-head{ font-size: .75rem; font-weight: 600; text-transform: uppercase; }
+            .layout-switcher-head i{ font-size: 1.25rem; transition: all .35s ease; }
+            .layout-switcher-body{ transition: all .55s ease; opacity: 0; padding-top: .75rem; transform: translateY(24px); text-align: center; }
+            .layout-switcher:focus{ opacity: 1; outline: none; transform: translateX(-50%) translateY(0); }
+            .layout-switcher:focus .layout-switcher-head i{ transform: rotateZ(180deg); opacity: 0; }
+            .layout-switcher:focus .layout-switcher-body{ opacity: 1; transform: translateY(0); }
+            .layout-switcher-option{ width: 72px; padding: .25rem; border: 2px solid rgba(255,255,255,0); display: inline-block; border-radius: 4px; transition: all .35s ease; }
+            .layout-switcher-option.active{ border-color: #007bff; }
+            .layout-switcher-icon{ width: 100%; border-radius: 4px; }
+            .layout-switcher-body:hover .layout-switcher-option:not(:hover){ opacity: .5; transform: scale(0.9); }
+            @media all and (max-width: 990px){ .layout-switcher{ min-width: 250px; } }
+            @media all and (max-width: 767px){ .layout-switcher{ display: none; } }
+    </style>
+    <div class="layout-switcher" tabindex="1">
+      <div class="layout-switcher-head d-flex justify-content-between">
+        <span>Select Layout</span>
+        <i class="material-icons">arrow_drop_up</i>
+      </div>
+      <div class="layout-switcher-body">
+
+      </div>
+    </div>
+
+  </body>
+
 </html>
