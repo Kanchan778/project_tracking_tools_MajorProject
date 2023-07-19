@@ -86,10 +86,10 @@
 </li>
 
 
-              <!-- <li class="nav-item">
-              <a href="{{ route('projectCoordinator.nav-side-project') }}" class="nav-link">Project</a>
-              </li>
               <li class="nav-item">
+              <a href="{{ route('student.student.group') }}" class="nav-link">Group</a>
+              </li>
+              <!-- <li class="nav-item">
                 <a href="{{ route('projectCoordinator.nav-side-task') }}"class="nav-link">Single Task</a>
               </li>
               <li class="nav-item">

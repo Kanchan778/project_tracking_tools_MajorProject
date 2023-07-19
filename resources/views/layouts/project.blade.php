@@ -255,12 +255,13 @@
                       <form class="col-md-auto">
                         <div class="input-group input-group-round">
                           <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="material-icons">filter_list</i>
-                            </span>
-                          </div>
-                          <input type="search" class="form-control filter-list-input" placeholder="Filter members" aria-label="Filter Members">
-                        </div>
+                          <div class="input-group">
+  <span class="input-group-text">
+    <i class="material-icons">filter_list</i>
+  </span>
+  <input type="search" class="form-control filter-list-input" placeholder="Filter supervisor" aria-label="Filter Members">
+</div>
+ </div>
                       </form>
                     </div>
                     <!--end of content list head-->
@@ -355,18 +356,6 @@
                           <div class="users-manage" data-filter-list="form-group-users">
                             <div class="mb-3">
                               <ul class="avatars text-center">
-                                <li>
-                                  <img alt="Claire Connors" src="assets/img/avatar-female-1.jpg" class="avatar" data-toggle="tooltip" data-title="Claire Connors" />
-                                </li>
-                                <li>
-                                  <img alt="Marcus Simmons" src="assets/img/avatar-male-1.jpg" class="avatar" data-toggle="tooltip" data-title="Marcus Simmons" />
-                                </li>
-                                <li>
-                                  <img alt="Peggy Brown" src="assets/img/avatar-female-2.jpg" class="avatar" data-toggle="tooltip" data-title="Peggy Brown" />
-                                </li>
-                                <li>
-                                  <img alt="Harry Xai" src="assets/img/avatar-male-2.jpg" class="avatar" data-toggle="tooltip" data-title="Harry Xai" />
-                                </li>
                               </ul>
                             </div>
                             <div class="input-group input-group-round">
@@ -375,27 +364,9 @@
                                   <i class="material-icons">filter_list</i>
                                 </span>
                               </div>
-                              <input type="search" class="form-control filter-list-input" placeholder="Filter members" aria-label="Filter Members">
+                              <input type="search" class="form-control filter-list-input" placeholder="Filter supervisor" aria-label="Filter Members">
                             </div>
-                            <div class="form-group-users">
-                              <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="user-manage-11">
-                                <label class="custom-control-label" for="user-manage-11">
-                                  <span class="d-flex align-items-center">
-                                    <img alt="Krishna Bajaj" src="assets/img/avatar-female-6.jpg" class="avatar mr-2" />
-                                    <span class="h6 mb-0" data-filter-by="text">Krishna Bajaj</span>
-                                  </span>
-                                </label>
-                              </div>
-                              <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="user-manage-12">
-                                <label class="custom-control-label" for="user-manage-12">
-                                  <span class="d-flex align-items-center">
-                                    <img alt="Kenny Tran" src="assets/img/avatar-male-6.jpg" class="avatar mr-2" />
-                                    <span class="h6 mb-0" data-filter-by="text">Kenny Tran</span>
-                                  </span>
-                                </label>
-                              </div>
+                            
                             </div>
                           </div>
                         </div>

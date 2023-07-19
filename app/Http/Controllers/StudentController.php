@@ -14,14 +14,5 @@ class StudentController extends Controller
         return view('dashboard.student');
     }
 
-//     public function studentDashboard()
-// {
-//     $user = auth()->user();
 
-//     $projects = Project::where('semester', $user->semester)
-//         ->where('section', $user->section)
-//         ->get();
-
-//     return view('dashboard.student', ['projects' => $projects]);
-// }
 }

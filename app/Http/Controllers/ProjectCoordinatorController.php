@@ -10,6 +10,8 @@ class ProjectCoordinatorController extends Controller
         // Return the view for the project coordinator dashboard
         return view('dashboard.projectCoordinator');
     }
+    
+
 
     //logout
     public function logout()

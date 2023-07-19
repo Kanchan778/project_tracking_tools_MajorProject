@@ -9,6 +9,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AuthLoginController; // Import the AuthLoginController
 use App\Http\Controllers\student\StudentProjectController;
+use App\Http\Controllers\Student\StudentGroupController;
 use App\Http\Controllers\PusherController;
 
 Route::get('/', function () {
@@ -98,6 +99,11 @@ Route::group([
 ], function () {
     Route::get('/dashboard', [DashboardController::class, 'student'])->name('dashboard');
     Route::get('/projects', [StudentProjectController::class, 'index'])->name('projects.index');
+
+    // Add the route for the Group blade
+
+Route::get('/group', [StudentGroupController::class, 'viewGroup'])->name('student.group');
+
 });
 
 
@@ -124,3 +130,6 @@ Route::post('/pusher/broadcast', [PusherController::class, 'broadcast']);
 
 // Route for the receiver method
 Route::post('/pusher/receiver', [PusherController::class, 'receiver']);
+
+
+Route::get('/pusher/chat', 'PusherController@displayChat')->name('chat');

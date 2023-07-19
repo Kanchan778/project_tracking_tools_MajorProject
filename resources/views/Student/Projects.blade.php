@@ -150,10 +150,10 @@
               <hr>
               <ul class="nav nav-tabs nav-fill" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#projects" role="tab" aria-controls="projects" aria-selected="true">Projects</a>
+                  <a class="nav-link active" data-toggle="tab" href="#projects" role="tab" aria-controls="projects" aria-selected="true">Your Projects</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="false">Supervisor</a>
+                  <a class="nav-link" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="false">All Projects</a>
                 </li>
               </ul>
               <div class="tab-content">
@@ -162,9 +162,6 @@
                     <div class="row content-list-head">
                       <div class="col-auto">
                         <h3>Projects</h3>
-                        <button class="btn btn-round" data-toggle="modal" data-target="#project-add-modal">
-                          <!-- <i class="material-icons">add</i> -->
-                        </button>
                       </div>
                       <form class="col-md-auto">
                         <div class="input-group input-group-round">
@@ -179,13 +176,26 @@
                     </div>
                     <!--end of content list head-->
                     <div class="content-list-body row">
-                  <!-- Display project information -->
-                  @foreach ($projects as $project)
-    <div> 
-      <div class="card-title">
+                    @foreach ($user->projects as $project)
+    <div class="col-lg-6">
+      <div class="card card-project">
+        <div class="progress">
+          <div class="progress-bar bg-danger" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <div class="card-body">
+        
+          </div>
+          <div class="card-title">
             <a href="#"><h5 data-filter-by="text">{{ $project->project_name }}</h5></a>
           </div>
-        <div class="card-meta d-flex justify-content-between">
+          <ul class="avatars">
+            <li>
+              <a href="#" data-toggle="tooltip" title="Claire">
+                <img alt="Claire Connors" class="avatar" src="assets/img/avatar-female-1.jpg" data-filter-by="alt" />
+              </a>
+            </li>
+          </ul>
+          <div class="card-meta d-flex justify-content-between">
     <div class="d-flex align-items-center">
         <i class="material-icons mr-1">playlist_add_check</i>
         <span class="text-small">{{ $project->remainingDays }} days remaining for due date</span>
@@ -193,97 +203,28 @@
     </div>
 </div>
 
-        <!-- Display other project details as needed -->
+        </div>
+      </div>
     </div>
-@endforeach
-
+  @endforeach
 
 </div>
 
-                    <!--end of content list body-->
-                  </div>
-                  <!--end of content list-->
-                </div>
-                <!--end of tab-->
-                <!-- <div class="tab-pane fade" id="members" role="tabpanel" data-filter-list="content-list-body">
-                  <div class="content-list">
-                    <div class="row content-list-head">
-                      <div class="col-auto">
-                        <h3>Supervisor</h3>
-                        <button class="btn btn-round" data-toggle="modal" data-target="#user-invite-modal">
-                          <i class="material-icons">add</i>
-                        </button>
-                      </div>
-                      <form class="col-md-auto">
-                        <div class="input-group input-group-round">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="material-icons">filter_list</i>
-                            </span>
-                          </div>
-                          <input type="search" class="form-control filter-list-input" placeholder="Filter members" aria-label="Filter Members">
-                        </div>
-                      </form>
-                     </div>
-                    <end of content list head--
-    
--->
-        <button class="btn btn-primary btn-round btn-floating btn-lg" type="button" data-toggle="collapse" data-target="#floating-chat" aria-expanded="false">
-          <i class="material-icons">chat_bubble</i>
-          <i class="material-icons">close</i>
-        </button>
-        <div class="collapse sidebar-floating" id="floating-chat">
-          <div class="sidebar-content">
-            <div class="chat-module" data-filter-list="chat-module-body">
-              <div class="chat-module-top">
-                <form>
-                  <div class="input-group input-group-round">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <i class="material-icons">search</i>
-                      </span>
-                    </div>
-                    <input type="search" class="form-control filter-list-input" placeholder="Search chat" aria-label="Search Chat">
-                  </div>
-                </form>
-                <div class="chat-module-body">
-                  <div class="media chat-item">
-                    <img alt="Claire" src="assets/img/avatar-female-1.jpg" class="avatar" />
-                    <div class="media-body">
-                      <div class="chat-item-title">
-                        <span class="chat-item-author" data-filter-by="text">Claire</span>
-                        <span data-filter-by="text">4 days ago</span>
-                      </div>
-                      <div class="chat-item-body" data-filter-by="text">
-                        <p>Hey guys, just kicking things off here in the chat window. Hope you&#39;re all ready to tackle this great project. Let&#39;s smash some Brand Concept &amp; Design!</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="chat-module-bottom">
-                <form class="chat-form">
-                  <textarea class="form-control" placeholder="Type message" rows="1"></textarea>
-                  <div class="chat-form-buttons">
-                    <button type="button" class="btn btn-link">
-                      <i class="material-icons">tag_faces</i>
-                    </button>
-                    <div class="custom-file custom-file-naked">
-                      <input type="file" class="custom-file-input" id="customFile">
-                      <label class="custom-file-label" for="customFile">
-                        <i class="material-icons">attach_file</i>
-                      </label>
-                    </div>
-                  </div>
-                </form>
-              </div>
+ <!--end of content list head-->
+ <div class="content-list-body row">
+   <!-- display project from student that is project title -->
+</div>
+
+
+                   
+</div>    </div>
             </div>
           </div>
         </div>
       </div>
     </div>
     
-   
+</div>
     <footer>
   <p>&copy; 2023 Kanchan Chaudhary. All rights reserved.</p>
 </footer>

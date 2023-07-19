@@ -4,38 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Broadcasting\Broadcasters\PusherBroadcaster;
 use Illuminate\Http\Request;
-use App\Events\PusherBroadcast;
 use Pusher\Pusher;
+use App\Models\User;
+use Illuminate\Routing\Controller;
+use PusherBroadcast;
 
 class PusherController extends Controller
 {
     public function index()
     {
-        return view('pusher.index');
+        return view('Dashboard.projectCoordinator');
     }
 
-    public function broadcast(Request $request)
-    {
-        // $pusher = new Pusher(
-        //     env('PUSHER_APP_KEY'),
-        //     env('PUSHER_APP_SECRET'),
-        //     env('PUSHER_APP_ID'),
-        //     [
-        //         'cluster' => env('PUSHER_APP_CLUSTER'),
-        //         'useTLS' => true
-        //     ]
-        // );
+//     public function broadcast(Request $request)
+// {
+//     $message = $request->input('message');
+//     event(new PusherBroadcast($message));
 
-        // $message = $request->input('message');
+//     return view('broadcast', ['message' => $message]);
+// }
 
-        // // Broadcast the message to a channel named 'my-channel'
-        // $pusher->trigger('my-channel', 'my-event', ['message' => $message]);
-
-        broadcast((new PusherBroadcast($request->get(key:'message')))->toothers());
-        return view('broadcast', ['message' => $request->get('message')]);
-
-        // return response()->json(['message' => 'Message broadcasted successfully']);
-    }
 
     public function receive(Request $request)
     {
@@ -45,27 +33,27 @@ class PusherController extends Controller
 
         return view('receive',['message' => $request-> get (key:'message') ]);
     }
+    
+    public function displayChat()
+    {
+        $users = User::all();
 
-    // public function auth(Request $request)
-    // {
-    //     // Authenticate and authorize users to access private channels
+        return view('dashboard.projectCoordinator', compact('users'));
+    }
+    
+    public function sendMessage(Request $request)
+    {
+        $message = $request->input('message');
+        $user = User::find($request->input('user_id'));
+        
+        // Save the message to the database
+        
+        // Broadcast the event
+        event(new PusherBroadcast($message, $user));
+        
+        // Return a response if needed
+    }
+    
+    
 
-    //     $pusher = new Pusher(
-    //         env('PUSHER_APP_KEY'),
-    //         env('PUSHER_APP_SECRET'),
-    //         env('PUSHER_APP_ID'),
-    //         [
-    //             'cluster' => env('PUSHER_APP_CLUSTER'),
-    //             'useTLS' => true
-    //         ]
-    //     );
-
-    //     $socketId = $request->input('socket_id');
-    //     $channelName = $request->input('channel_name');
-    //     $userId = auth()->id(); // Adjust this as per your authentication setup
-
-    //     $auth = $pusher->socket_auth($channelName, $socketId, $userId);
-
-    //     return response($auth);
-    // }
 }

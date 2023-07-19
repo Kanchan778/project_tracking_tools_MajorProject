@@ -1,3 +1,7 @@
+@php
+    use App\Models\User;
+@endphp
+
 <!doctype html>
 <html lang="en">
 
@@ -23,6 +27,10 @@
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
     <link href="{{ asset('css/frontend/theme.css') }}" rel="stylesheet" type="text/css" media="all" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/projectcordinator.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/chatify/dark.mode.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/chatify/light.mode.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/chatify/style.css') }}">
+    
   </head>
 
   <body>
@@ -145,47 +153,42 @@
                 <h1 class="display-4 mb-3">Project Tracking Tools</h1>
                 <p class="lead">
                        </p>
+                       
               </section>
-            </div>  <button class="btn btn-primary btn-round btn-floating btn-lg" type="button" data-toggle="collapse" data-target="#floating-chat" aria-expanded="false">
+            </div> 
+             <button class="btn btn-primary btn-round btn-floating btn-lg" type="button" data-toggle="collapse" data-target="#floating-chat" aria-expanded="false">
   <i class="material-icons">chat_bubble</i>
   <i class="material-icons">close</i>
 </button>
 
 <div class="collapse sidebar-floating" id="floating-chat">
   <div class="sidebar-content">
-    <div class="chatify-container-wrapper">
-      <div class="chat-module-fixed">
-        <div class="chat-module">
-          <div class="chat-module-top">
-            <!-- Existing chat module top content -->
-          </div>
-          <div class="chat-module-body">
-            <!-- Existing chat module body content -->
-          </div>
-          <div class="chat-module-bottom">
-            <form class="chat-form">
-              <textarea class="form-control" placeholder="Type message" rows="1"></textarea>
-              <div class="chat-form-buttons">
-                <button type="button" class="btn btn-link">
-                  <i class="material-icons">tag_faces</i>
-                </button>
-                <div class="custom-file custom-file-naked">
-                  <input type="file" class="custom-file-input" id="customFile">
-                  <label class="custom-file-label" for="customFile">
-                    <i class="material-icons">attach_file</i>
-                  </label>
-                </div>
-              </div>
-            </form>
-          </div>
+    <div class="chat-module-fixed">
+      <div class="chat-module">
+        <div class="chat-module-top">
+          <h4>{{ Auth::user()->username }}</h4>
+          <!-- Existing chat module top content -->
         </div>
-      </div>
-
-      <div class="chatify-container">
-        <!-- Existing content within chatify-container -->
+        <hr>
+        
+        <!-- Chat -->
+        <div class="messages">
+          @include('chat.receive', ['message' => "Hey! What's up!  👋", 'username' => 'Other User 1'])
+          @include('chat.receive', ['message' => "Ask a friend to open this link and you can chat with them!", 'username' => 'Other User 2'])
+        </div>
+        <!-- End Chat -->
+        
+        <div class="chat-module-bottom">
+          <form id="chat-form">
+            <input type="text" id="message" name="message" placeholder="Enter message..." autocomplete="off">
+            <button type="submit"></button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
+</div>
+
 </div>
 
      </div>
@@ -204,7 +207,6 @@
     <script type="text/javascript" src="{{ asset('js/frontend/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/frontend/popper.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/frontend/bootstrap.js') }}"></script>
-    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chatify/dist/chatify.min.js"></script>
 
@@ -230,6 +232,48 @@
       <!-- Cordinator js-->
       <script src="{{ asset('js/dashboard/projectcordinator.js') }}"></script>
       <script src="{{ asset('js/pusher.js') }}"></script>
+
+      <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+<script>
+    // Establish a connection with Pusher or Laravel WebSockets
+    const pusher = new Pusher('8cfa96120028307e2777', {
+        cluster: 'mt1',
+        // Add any other necessary configuration options
+    });
+  
+    // Subscribe to the chat channel
+    const channel = pusher.subscribe('chat');
+  
+    // Listen for new messages
+    channel.bind('App\\Events\\ChatMessageSent', function(data) {
+        // Handle the new message, update the chat interface
+    });
+  
+    // Handle the form submission to send a new message
+    $('form').on('submit', function(e) {
+        e.preventDefault();
+      
+        const message = $('#message').val();
+        const userId = '123'; // Get the user ID dynamically
+      
+        // Send the message to the server
+        $.ajax({
+            url: '/send-message',
+            method: 'POST',
+            data: { message: message, user_id: userId },
+            success: function(response) {
+                // Handle success if needed
+            },
+            error: function(error) {
+                // Handle error if needed
+            }
+        });
+      
+        // Clear the message input
+        $('#message').val('');
+    });
+</script>
+
 
     <!-- This appears in the demo only - demonstrates different layouts -->
     <style type="text/css">
