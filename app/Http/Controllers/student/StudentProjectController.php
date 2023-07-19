@@ -1,29 +1,24 @@
 <?php
-
 namespace App\Http\Controllers\Student;
-
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
 
 class StudentProjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
-    {
-         // Retrieve the authenticated student
-     // Retrieve the authenticated student
-     $student = Auth::user();
+{
+    $user = Auth::user(); // Retrieve the currently authenticated user
+    $projects = $user->projects; // Retrieve the projects associated with the user
 
-     // Retrieve the projects created by the project coordinator
-     $projects = Project::where('coordinator_id', $student->id)->get();
- 
-     // Return the projects and student to the view
-     return view('student.dashboard', compact('projects', 'student'));
+    // Loop through the projects and access their attributes
+    // foreach ($projects as $project) {
+    //     echo $project->name; // Example attribute, adjust it based on your project model attributes
+    // }
+    // dd($projects);
+    // Return the projects and user to the view
+    return view('student.projects', compact('projects', 'user'));
 }
+
+
 }
