@@ -144,13 +144,13 @@
        }
 
        // Check if registration was successful
-       var registrationSuccessful = true; // Replace with your actual logic to determine success/failure
+    //    var registrationSuccessful = true; // Replace with your actual logic to determine success/failure
 
-       if (registrationSuccessful) {
-           document.getElementById('success-popup').style.display = 'flex';
-       } else {
-           document.getElementById('error-popup').style.display = 'flex';
-       }
+    //    if (registrationSuccessful) {
+    //        document.getElementById('success-popup').style.display = 'flex';
+    //    } else {
+    //        document.getElementById('error-popup').style.display = 'flex';
+    //    }
    </script>
     
 </body>

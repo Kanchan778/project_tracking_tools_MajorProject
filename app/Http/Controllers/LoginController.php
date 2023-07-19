@@ -60,4 +60,11 @@ class LoginController extends Controller
             return back()->withErrors(['message' => 'Invalid credentials. Please try again.']);
         }
     }
+//logout method
+    public function logout()
+{
+    Auth::logout();
+
+    return redirect()->route('login');
+}
 }

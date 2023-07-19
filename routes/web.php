@@ -6,10 +6,10 @@ use App\Http\Controllers\LoginController;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\ProjectController;
-//use App\Http\Controllers\ProjectCoordinatorController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Cordinator\CordinatorSupervisorController;
-
+use App\Http\Controllers\AuthLoginController; // Import the AuthLoginController
+use App\Http\Controllers\student\StudentProjectController;
+use App\Http\Controllers\PusherController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,50 +23,104 @@ Route::get('Authenticate/registration', function () {
     return view('authenticate.registeration');
 })->name('registeration');
 
+Route::post('/register', [RegistrationController::class, 'register'])->name('register');
+
 Route::get('login/gmail', [AuthLoginController::class, 'redirectToGmail'])->name('login-gmail');
 Route::get('login/gmail/callback', [AuthLoginController::class, 'handleGmailCallback']);
 
 Route::get('login/facebook', [AuthLoginController::class, 'redirectToFacebook'])->name('login-facebook');
 Route::get('login/facebook/callback', [AuthLoginController::class, 'handleFacebookCallback']);
-
-Route::post('/register', [RegistrationController::class, 'register'])->name('register');
-
-//route to dashboard based on their role
-Route::get('/dashboard/student', [DashboardController::class, 'student'])->name('student.dashboard');
-Route::get('/dashboard/supervisor', [DashboardController::class, 'supervisor'])->name('supervisor.dashboard');
-Route::get('/dashboard/projectCoordinator', [DashboardController::class, 'projectCoordinator'])->name('projectCoordinator.dashboard');
-
 Route::get('Authenticate/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('Authenticate/login', [LoginController::class, 'login'])->name('login.submit');
-Route::post('Authenticate/logout', [LoginController::class, 'logout'])->name('logout');
+// Route::post('Authenticate/logout', [LoginController::class, 'logout'])->name('logout');
+
 
 // For handling the password reset form submission
 Route::post('Authenticate/ForgotPassword', 'ResetPasswordController@reset')->name('password-reset');
 
 // For displaying the password reset form
-Route::get('Authenticate/ForgotPassword', [ForgotPasswordController::class,'showLinkRequestForm'])->name('password-reset');
-//Route::get('Authenticate/password-reset', '\App\Http\Controllers\Auth\ForgotPasswordController@showResetForm')->name('password-reset');
-
-// routes for displaying projects
-Route::get('cordinator/Project', 'App\Http\Controllers\ProjectController@index')->name('Project');
-//route for creating project and storing
-Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
-// Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store')
-
-Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
-//fetching username for dashboard sidebar profile
-Route::get('/fetch-username', 'UserController@fetchUsername');
+Route::get('Authenticate/ForgotPassword', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password-reset');
 
 
-//routes for displaying group
-Route::get('Student/Group', 'App\Http\Controllers\GroupController@index')->name('Group');
+Route::group(
+    [
+        'prefix' => 'cordinator',
+        'as' => 'projectCoordinator.',
+        'middleware' => 'coordinator',
+    ],
+    function () {
+        Route::get('/dashboard', [DashboardController::class, 'projectCoordinator'])->name('dashboard');
 
+        // Route for project.html
+        Route::get('/project',  [ProjectController::class, 'index'])->name('project');
 
-//supervisor from project cordinator
-Route::get('/cordinator/supervisor', [CordinatorSupervisorController::class, 'index'])->name('cordinator.supervisor');
+        // Route for nav-side-project.html
+        Route::get('/nav-side-project', function () {
+            return view('layouts.nav-side-project');
+        })->name('nav-side-project');
 
+        // Route for nav-side-task.html
+        Route::get('/nav-side-task', function () {
+            return view('layouts.nav-side-task');
+        })->name('nav-side-task');
 
+        // Route for nav-side-kanban-board.html
+        Route::get('/nav-side-kanban-board', function () {
+            return view('layouts.nav-side-kanban-board');
+        })->name('nav-side-kanban-board');
+
+        // Add the routes for the ProjectController
+        Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+   // Route for creating projects
+   Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
+   
+
+    // Route for adding supervisors
+    Route::post('/supervisors', [ProjectController::class, 'storeSupervisor'])->name('supervisors.store');
+ 
+    //updating profile
+    Route::post('/profile/update', [ProjectController::class, 'update'])->name('profile.update');
+
+    //deleting
+    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+        
 
 //logout
-Route::get('/logout', [ProjectCordinatorController::class, 'logout'])->name('logout');
 
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    }
+);
+
+Route::group([
+    'prefix' => 'student',
+    'as' => 'student.',
+    'middleware' => 'student',
+], function () {
+    Route::get('/dashboard', [DashboardController::class, 'student'])->name('dashboard');
+    Route::get('/projects', [StudentProjectController::class, 'index'])->name('projects.index');
+});
+
+
+Route::group(
+    [
+        'prefix' => 'supervisor',
+        'as' => 'supervisor.',
+        'middleware' => 'supervisor',
+    ],
+    function () {
+        Route::get('/dashboard', [DashboardController::class, 'supervisor'])->name('dashboard');
+    
+        
+    }
+);
+
+
+
+// Route for the index method
+Route::get('/pusher', [PusherController::class, 'index']);
+
+// Route for the broadcast method
+Route::post('/pusher/broadcast', [PusherController::class, 'broadcast']);
+
+// Route for the receiver method
+Route::post('/pusher/receiver', [PusherController::class, 'receiver']);

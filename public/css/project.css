@@ -266,3 +266,22 @@ body {
       cursor: pointer;
     }
     
+    .dropdown .dropdown-menu .status-dropdown-item {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      clear: both;
+      font-weight: 400;
+      color: #212529;
+      text-align: inherit;
+      white-space: nowrap;
+      background-color: transparent;
+      border: 0;
+    }
+    
+    .dropdown .dropdown-menu .status-dropdown-item:hover {
+      background-color: #f8f9fa;
+      color: #212529;
+    }
+    
+    

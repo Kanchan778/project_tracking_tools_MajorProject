@@ -18,4 +18,8 @@ class ProjectCoordinatorController extends Controller
     Auth::logout();
     return redirect()->route('login')->with('success', 'You have been logged out.');
 }
+
+
+
+
 }

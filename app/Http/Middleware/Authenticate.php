@@ -18,4 +18,10 @@ class Authenticate extends Middleware
             return route('login');
         }
     }
+
+    // protected $except = [
+    //     // ...
+    //     '/pusher/auth',
+    // ];
+    
 }

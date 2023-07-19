@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+
 
 class Project extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'project_name',
         'section',
@@ -14,12 +19,15 @@ class Project extends Model
         'project_type',
         'batch',
         'supervisor',
+        'start_date',
+        'due_date',
+        'visibility',
     ];
 
-    // Define any relationships or additional methods for the Project model here
-
-    public function students()
-    {
-        return $this->belongsToMany(Student::class);
-    }
+    //relationship
+    public function users()
+{
+    return $this->belongsToMany(User::class);
 }
+}
+
