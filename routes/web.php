@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\AuthLoginController; // Import the AuthLoginController
 use App\Http\Controllers\student\StudentProjectController;
 use App\Http\Controllers\Student\StudentGroupController;
 use App\Http\Controllers\PusherController;
+use App\Http\Controllers\cordinator\TaskController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -85,6 +87,17 @@ Route::group(
     //deleting
     Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
         
+    // Route to show tasks for a specific project
+// Route::get('/sidebar-task/{projectId}', [TaskController::class, 'showTasksForProject']);
+
+
+Route::get('layouts/nav-side-project/{projectId}', [TaskController::class, 'showProject'])->name('nav-side-project.task');
+
+//storing data for tasks
+Route::post('/projects/{projectId}/tasks', [TaskController::class, 'createTask'])->name('project.createTask');
+
+
+Route::get('/sidebar-task', [SidebarTaskController::class, 'showSidebarTask']);
 
 //logout
 

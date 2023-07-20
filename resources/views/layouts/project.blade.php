@@ -192,15 +192,26 @@
             </button>
             <div class="dropdown-menu dropdown-menu-right">
               <a class="dropdown-item" href="#">Edit</a>
-              <div class="dropdown">
-  <a class="dropdown-toggle" href="#" role="button" id="statusDropdown{{ $project->id }}" onclick="toggleDropdown('{{ $project->id }}')" aria-haspopup="true" aria-expanded="false">
+              <div class="dropdown mt-2">
+              <button class="btn-options" type="button" id="project-dropdown-button-{{ $project->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Status
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="#">Active</a>
+                <a class="dropdown-item" href="#">In Evaluation</a>
+                <a class="dropdown-item" href="#">Complete</a>
+              </div>
+            </div>
+
+              <!-- <div class="dropdown"> -->
+  <!-- <a class="dropdown-toggle" href="#" role="button" id="statusDropdown{{ $project->id }}" onclick="toggleDropdown('{{ $project->id }}')" aria-haspopup="true" aria-expanded="false">
     Status
   </a>
   <div class="dropdown-menu" id="statusDropdownMenu{{ $project->id }}" aria-labelledby="statusDropdown{{ $project->id }}" style="display: none;">
     <a class="status-dropdown-item" href="#" onclick="setStatus('{{ $project->id }}', 'In Evaluation')">In Evaluation</a>
     <a class="status-dropdown-item" href="#" onclick="setStatus('{{ $project->id }}', 'Complete')">Complete</a>
   </div>
-</div>
+</div> -->
 <a class="dropdown-item delete-project-link" href="#" data-project-id="{{ $project->id }}">Delete Project</a>
 
 <!-- Add this form for each delete project link -->
@@ -215,7 +226,8 @@
             </div>
           </div>
           <div class="card-title">
-            <a href="#"><h5 data-filter-by="text">{{ $project->project_name }}</h5></a>
+            <a href="{{ route('projectCoordinator.nav-side-project.task',$project->id) }}">
+              <h5 data-filter-by="text">{{ $project->project_name }}</h5></a>
           </div>
           <ul class="avatars">
             <li>
@@ -546,6 +558,22 @@
 <script src="{{ asset('js/frontend/list.min.js') }}"></script>
 <!-- Required theme scripts (Do not remove) -->
 <script src="{{ asset('js/frontend/theme.js') }}"></script>
+
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<script>
+$(document).ready(function() {
+  $('.dropdown').on('show.bs.dropdown', function() {
+    console.log('Dropdown show event triggered');
+    $(this).find('.btn').addClass('active');
+  });
+
+  $('.dropdown').on('hide.bs.dropdown', function() {
+    console.log('Dropdown hide event triggered');
+    $(this).find('.btn').removeClass('active');
+  });
+});
+</script>
+
 
 <!-- This appears in the demo only - demonstrates different layouts -->
 <style>

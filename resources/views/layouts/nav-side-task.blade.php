@@ -15,7 +15,7 @@
       gtag('config', 'UA-52115242-14');
     </script>
     <meta charset="utf-8">
-    <title>Pipeline Project Management Bootstrap Theme</title>
+    <title>Project Tracking System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A project management Bootstrap theme by Medium Rare">
     <link href="assets/img/favicon.ico" rel="icon" type="image/x-icon">
@@ -133,15 +133,7 @@
       <div class="main-container">
 
         <div class="navbar bg-white breadcrumb-bar">
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Overview</a>
-              </li>
-              <li class="breadcrumb-item"><a href="pages-app.html#">App Pages</a>
-              </li>
-              <li class="breadcrumb-item active" aria-current="page">Task</li>
-            </ol>
-          </nav>
+          
 
           <div class="dropdown">
             <button class="btn btn-round" role="button" data-toggle="dropdown" aria-expanded="false">

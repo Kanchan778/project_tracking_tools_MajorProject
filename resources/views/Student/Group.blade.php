@@ -127,14 +127,23 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-11 col-xl-10">
-              <h4> GROUP</h4>
+              <div class="page-header">     
+                <div class="d-flex align-items-center">
+                  <ul class="avatars">
+<!-- all users profilepic should be display here-->
+                  </ul>
+                  <!-- <button class="btn btn-round flex-shrink-0" data-toggle="modal" data-target="#user-invite-modal">
+                    <i class="material-icons">add</i>
+                  </button> -->
+                </div>
+              </div>
               <hr>
               <ul class="nav nav-tabs nav-fill" role="tablist">
                 <li class="nav-item">
                   <a class="nav-link active" data-toggle="tab" href="#projects" role="tab" aria-controls="projects" aria-selected="true">Group</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="false">Group Member</a>
+                  <a class="nav-link" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="false">Members</a>
                 </li>
               </ul>
               <div class="tab-content">
@@ -142,7 +151,7 @@
                   <div class="content-list">
                     <div class="row content-list-head">
                       <div class="col-auto">
-                        <h3>Projects</h3>
+                        <h3>Group</h3>
                         <button class="btn btn-round" data-toggle="modal" data-target="#project-add-modal">
                           <i class="material-icons">add</i>
                         </button>
@@ -156,16 +165,73 @@
                           </div>
                           <input type="search" class="form-control filter-list-input" placeholder="Filter projects" aria-label="Filter Projects">
                         </div>
+                      </form>
+                    </div>
+                    <!--end of content list head-->
+                    <div class="content-list-body row">
 
+
+                    <!-- display created group here -->
+</div>
+<!-- </div> -->
                     <!--end of content list body-->
                   </div>
                   <!--end of content list-->
+                </div>
+                <!--end of tab-->
+                <div class="tab-pane fade" id="members" role="tabpanel" data-filter-list="content-list-body">
+                  <div class="content-list">
+                    <div class="row content-list-head">
+                      <div class="col-auto">
+                        <h3>Group Members</h3>
+                        <!-- <button class="btn btn-round" data-toggle="modal" data-target="#user-invite-modal">
+                          <i class="material-icons">add</i>
+                        </button> -->
+                      </div>
+                      <form class="col-md-auto">
+                        <div class="input-group input-group-round">
+                          <div class="input-group-prepend">
+                          <div class="input-group">
+  <span class="input-group-text">
+    <i class="material-icons">filter_list</i>
+  </span>
+  <input type="search" class="form-control filter-list-input" placeholder="Filter supervisor" aria-label="Filter Members">
+</div>
+ </div>
+                      </form>
+                    </div>
+                    <!--end of content list head-->
+                    <div class="content-list-body row">
+    <!-- group members display -->
 </div>
 
                   <!--end of content list-->
                 </div>
               </div>
-  
+              
+              <form class="modal fade" id="team-manage-modal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <!--end of modal head-->
+                    <ul class="nav nav-tabs nav-fill" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="team-manage-details-tab" data-toggle="tab" href="#team-manage-details" role="tab" aria-controls="team-manage-details" aria-selected="true">Details</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="team-manage-members-tab" data-toggle="tab" href="#team-manage-members" role="tab" aria-controls="team-manage-members" aria-selected="false">Members</a>
+                      </li>
+                    </ul>
+                    
+                    </div>
+                    <!--end of modal body-->
+                    <div class="modal-footer">
+                      <button role="button" class="btn btn-primary" type="submit">
+                        Done
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
 
   <form class="modal fade" id="project-add-modal" tabindex="-1" aria-hidden="true" action="" method="POST">
    @csrf
@@ -180,30 +246,41 @@
       <div class="modal-body">
         <div class="tab-content">
           <div class="tab-pane fade show active" id="project-add-details" role="tabpanel">
-            <h6>Project Details</h6>
+            <h6>Group Details</h6>
             <hr>
            
             <div class="form-group row align-items-center">
               <label class="col-3">Group Name:</label>
               <input type="text" class="form-control col" name="project_name" required>
             </div>
-            <div class="input-group">
-                          <div class="input-group-prepend">
-                          <label for="email">Project type:</label></div>
-                          <input type="text" id="email" name="username" required> </div>
- 
-                          <input type="text" id="email" name="group_name" required>
+            <div class="form-group row align-items-center">
+  <label class="col-3">Project_type</label>
+  <select class="form-control col" name="section[]" multiple required>
+    <option value="">Select Project Type</option>
+    <!-- option for project type -->
+  </select>
 </div>
-
-<div id="usernames-container">
-    <!-- Username and Role fields will be dynamically added here -->
-</div>
-
-<button type="button" id="add-username" class="btn btn-primary">Add Username</button>
 
             <div class="form-group row align-items-center">
-              <label class="col-3">Pitch For Supervisor:</label>
-             
+              <label class="col-3">Add Members</label>
+              <select class="form-control col" name="semester" required>
+               <!-- add members -->
+              </select>
+            </div>
+            <div class="form-group row align-items-center">
+              <label class="col-3">Role:</label>
+              <select class="form-control col" name="course" required>
+                <option value="">Select Role</option>
+                <option value="Frontend"> Frontend</option>
+                <option value="Backend">Backend</option>
+                <option value="Testing">Testing</option>
+                <option value="Researcher">Researcher</option>
+                <option value="Researcher">Documentation</option>
+              </select>
+            </div>
+           
+            <div class="alert alert-warning text-small" role="alert">
+              <span>Pitch for your group supervisor.</span>
             </div>
             <hr>
             <h6>Visibility</h6>
@@ -217,14 +294,20 @@
               <div class="col">
                 <div class="custom-control custom-radio">
                 <input type="radio" id="visibility-members" name="visibility" class="custom-control-input" value="members">
-<label class="custom-control-label" for="visibility-members">Project Members</label>
+<label class="custom-control-label" for="visibility-members"> Group Members</label>
    </div>
-   <div class="col">
+              </div>
+              <div class="col">
                 <div class="custom-control custom-radio">
-                <input type="radio" id="visibility-members" name="visibility" class="custom-control-input" value="members">
-<label class="custom-control-label" for="visibility-members">Group Members</label>
-   </div>
-
+                <input type="radio" id="visibility-me" name="visibility" class="custom-control-input" value="me">
+<label class="custom-control-label" for="visibility-me">Project Members</label>  </div>
+              </div>
+            </div>
+          <div class="tab-pane fade" id="project-add-members" role="tabpanel">
+            <!-- Members section content -->
+          </div>
+        </div>
+      </div>
       <div class="modal-footer">
       <button type="submit">Create</button>
       </div>
@@ -238,13 +321,10 @@
             </div>
           </div>
         </div>
-      
-            </div>
-          </div>
+  
         </div>
       </div>
     </div>
-</div>
     <footer>
   <p>&copy; 2023 Kanchan Chaudhary. All rights reserved.</p>
 </footer>

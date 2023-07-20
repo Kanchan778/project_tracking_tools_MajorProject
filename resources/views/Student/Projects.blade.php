@@ -76,17 +76,17 @@
                     <span class="text-small text-muted">Quick Links</span>
                     <ul class="nav nav-small flex-column mt-2">
                         <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.project') }}" class="nav-link">Team Overview</a>
+                            <a href="{{ route('student.projects.index') }}" class="nav-link">Projects</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.nav-side-project') }}" class="nav-link">Project</a>
+                            <a href="{{ route('student.student.group') }}" class="nav-link">Group</a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="{{ route('projectCoordinator.nav-side-task') }}" class="nav-link">Single Task</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('projectCoordinator.nav-side-kanban-board') }}" class="nav-link">Account Setting</a>
-                        </li>
+                        </li> -->
                     </ul>
                     <hr>
                 </div>
@@ -176,7 +176,14 @@
                     </div>
                     <!--end of content list head-->
                     <div class="content-list-body row">
-                    @foreach ($user->projects as $project)
+ 
+
+ <!--end of content list head-->
+ <div class="content-list-body row">
+   <!-- display project from student that is project title -->
+
+
+   @foreach ($user->projects as $project)
     <div class="col-lg-6">
       <div class="card card-project">
         <div class="progress">
@@ -186,7 +193,7 @@
         
           </div>
           <div class="card-title">
-            <a href="#"><h5 data-filter-by="text">{{ $project->project_name }}</h5></a>
+            <a href="#"><h5 data-filter-by="text">{{ $project->project_type }}</h5></a>
           </div>
           <ul class="avatars">
             <li>
@@ -209,10 +216,7 @@
   @endforeach
 
 </div>
-
- <!--end of content list head-->
- <div class="content-list-body row">
-   <!-- display project from student that is project title -->
+</div>
 </div>
 
 

@@ -54,9 +54,10 @@
         <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
           <ul class="navbar-nav d-lg-block">
 
-            <!-- Sidebar with fields -->
+          <!--Sidebar with fields -->
+          <div> Dashboard </div>
       <div class="sidebar-profile">
-        <div> Dashboard </div>
+        
         <div class="profile-avatar">
           <label for="avatar-input" class="avatar-label">
             <i class="fas fa-plus"></i>
@@ -78,13 +79,13 @@
             <span class="text-small text-muted">Quick Links</span>
             <ul class="nav nav-small flex-column mt-2">
               <li class="nav-item">
-                <a href="{{ route('projectCoordinator.project') }}" class="nav-link">Team Overview</a>
+                <a href="{{ route('projectCoordinator.project') }}" class="nav-link">Project </a>
               </li>
               <li class="nav-item">
-              <a href="{{ route('projectCoordinator.nav-side-project') }}" class="nav-link">Project</a>
+              <a href="{{ route('projectCoordinator.nav-side-project') }}" class="nav-link">Group</a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('projectCoordinator.nav-side-task') }}"class="nav-link">Single Task</a>
+                <a href="{{ route('projectCoordinator.nav-side-task') }}"class="nav-link"></a>
               </li>
               <li class="nav-item">
               <a href="{{ route('projectCoordinator.nav-side-kanban-board') }}"class="nav-link">Account Setting</a>
@@ -103,16 +104,7 @@
                 <input type="search" class="form-control form-control-dark" placeholder="Search" aria-label="Search app">
               </div>
             </form>
-            <div class="dropdown mt-2">
-              <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="newContentButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Add New
-              </button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Team</a>
-                <a class="dropdown-item" href="#">Project</a>
-                <a class="dropdown-item" href="#">Task</a>
-              </div>
-            </div>
+           
           </div>
         </div>
         <div class="d-none d-lg-block">

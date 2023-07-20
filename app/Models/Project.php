@@ -24,10 +24,16 @@ class Project extends Model
         'visibility',
     ];
 
-    //relationship
+    //relationship with user
     public function users()
 {
     return $this->belongsToMany(User::class);
 }
+
+//relationship with tasks
+public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }
 
