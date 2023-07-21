@@ -148,9 +148,11 @@
       <div class="main-container">
       <div class="edit-profile-form" style="display: none;">
  
-      <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" id="profile-form">
+      <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" id="profile-form" class="pro-form">
     <!-- Your existing form fields -->
-
+<i class="fas fa-times" id="close-icon" >
+  <button type="submit" class="proclose">X</button>
+</i>
     <input type="file" id="avatar-input" name="profile_img" style="display: none;">
     <div class="profile-avatar">
         <label for="avatar-input">
@@ -158,21 +160,21 @@
             <img class="avatar-label" src="{{ asset('img/Profile.png') }}" id="avatar-preview" alt="Profile Image">
         </label>
     </div>
-    <div>
+    <div class="pro-field">
         <label for="new-username">Username:</label>
         <input type="text" id="new-username" name="new_username" value="{{ Auth::user()->username }}" required>
     </div>
 
     <!-- Your existing form fields -->
-
-    <button type="submit">Update Profile</button>
+    <div class="pro-field">
+    <button type="submit" class="updatebtn">Update Profile</button>
 
     <!-- Close icon -->
-    <i class="fas fa-times" id="close-icon"><button type="submit">Close</button>
-</i>
+    
+
 </form>
 
-</div>
+</div></div>
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-11 col-xl-9">

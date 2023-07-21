@@ -73,30 +73,18 @@ updateButton.addEventListener('click', function(event) {
 
 //status
 
-    function updateStatus(projectId, status) {
-        // Make an AJAX POST request to the Laravel route
-        axios.post(`/update-status/${projectId}`, {
-            status: status = 'Active'
-        }, {
-            headers: {
-                'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the request headers
-            }
-        })
-        .then(response => {
-            // Handle the response, e.g., show a success message to the user
-            console.log(response.data);
-            alert('Project status updated successfully.');
-        })
-        .catch(error => {
-            // Handle errors, e.g., show an error message to the user
-            if (error.response && error.response.status === 422) {
-                const errors = error.response.data.errors;
-                const errorMessage = Object.values(errors).flat().join('\n');
-                alert(errorMessage);
-            } else {
-                console.error(error);
-                alert('Failed to update project status.');
-            }
-        });
-    }
+function updateStatus(status, projectId) {
+  var form = document.getElementById('status-form-' + projectId);
+  var statusInput = document.getElementById('status-input');
+  if (form && statusInput) {
+      statusInput.value = status;
+      form.submit();
+  }
+  // console.log("Status:", status);
+  // console.log("Project ID:", projectId);
+  
+  // You can also update the hidden input field with the selected status if needed.
+  document.getElementById('status-input').value = status;
+}
+
 

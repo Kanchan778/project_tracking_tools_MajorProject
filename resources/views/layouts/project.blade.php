@@ -170,7 +170,7 @@
                     </div>
                     <!--end of content list head-->
                     <div class="content-list-body row">
-                    @foreach ($projects as $project)
+                        @foreach ($projects as $project)
 <div class="col-lg-6">
     <div class="card card-project">
         <div class="progress">
@@ -179,16 +179,18 @@
         <div class="card-body">
             <div class="dropdown card-options">
                 <button class="btn-options" type="button" id="project-dropdown-button-{{ $project->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="material-icons">more_vert</i>
+                    <i class="material-icons"><h6>Status</h6></i>
                 </button>
-                <div class="dropdown-menu dropdown-menu-right">
-    <h6>Status</h6>
-    <a class="dropdown-item" href="#" onclick="updateStatus('{{ $project->id }}', 'Active')">Active</a>
-    <a class="dropdown-item" href="#" onclick="updateStatus('{{ $project->id }}', 'In Evaluation')">In Evaluation</a>
-    <a class="dropdown-item" href="#" onclick="updateStatus('{{ $project->id }}', 'Completed')">Completed</a>
-</div>
 
-            </div>
+<form id="status-form-{{ $project->id }}" action="{{ route('projectCoordinator.projects.updateStatusFromDropdown', ['project' => $project->id, 'status' => 'Active']) }}" method="post">
+    @method('PUT')
+    @csrf
+    <input type="hidden" name="status" id="status-input">
+    <button type="button" class="dropdown-item" onclick="updateStatus('Active', {{ $project->id }})">Active</button>
+    <button type="button" class="dropdown-item" onclick="updateStatus('In Evaluation', {{ $project->id }})">In Evaluation</button>
+    <button type="button" class="dropdown-item" onclick="updateStatus('Completed', {{ $project->id }})">Completed</button>
+</form>
+   </div>
 
           <div class="card-title">
             <a href="{{ route('projectCoordinator.nav-side-project.task',$project->id) }}">
@@ -208,8 +210,7 @@
           
     </div>
 </div>
-
-        </div>
+</div>
       </div>
     </div>
   @endforeach
@@ -523,18 +524,28 @@
 <script src="{{ asset('js/frontend/list.min.js') }}"></script>
 <!-- Required theme scripts (Do not remove) -->
 <script src="{{ asset('js/frontend/theme.js') }}"></script>
-<script src="{{ asset('js/dashboard/projectcordinator.js') }}"></script>
+<!-- <script src="{{ asset('js/dashboard/projectcordinator.js') }}"></script> -->
 <!-- Add this script tag to include Axios from a CDN -->
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  function updateStatus(status, projectId) {
+  var form = document.getElementById('status-form-' + projectId);
+  var statusInput = document.getElementById('status-input');
+  if (form && statusInput) {
+      statusInput.value = status;
+      form.submit();
+  }
+  // console.log("Status:", status);
+  // console.log("Project ID:", projectId);
+  
+  // You can also update the hidden input field with the selected status if needed.
+  document.getElementById('status-input').value = status;
+}</script>
 
-
-<script src="{{ asset('js/project.js') }}"></script>
+<!-- <script src="{{ asset('js/project.js') }}"></script> -->
 
 
 <!-- Include the CSRF token in a JavaScript variable -->
-<script>
-    const csrfToken = '{{ csrf_token() }}';
-</script>
+
 
 <!-- This appears in the demo only - demonstrates different layouts -->
 <style>

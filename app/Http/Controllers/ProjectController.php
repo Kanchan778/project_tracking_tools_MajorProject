@@ -162,53 +162,36 @@ public function storeSupervisor(Request $request)
     }
 
 
-//for edit button
-    public function update(Request $request)
-    {
-        // Validate the form data
-        $validatedData = $request->validate([
-            'username' => 'required',
-            'profile_image' => 'image|mimes:jpeg,png,jpg|max:2048',
-        ]);
-
-        // Retrieve the authenticated user
-        $user = auth()->user();
-
-        // Update the user details
-        $user->username = $validatedData['username'];
-
-        // Handle profile image upload if provided
-        if ($request->hasFile('profile_image')) {
-            // Delete the old profile image if exists
-            Storage::delete($user->profile_image);
-
-            // Store the new profile image
-            $path = $request->file('profile_image')->store('profile_images');
-            $user->profile_image = $path;
-        }
-
-        // Save the updated user details
-        $user->save();
-
-        return redirect()->back()->with('success', 'Profile updated successfully.');
-    }
 
 
 //status update
-public function updateStatus(Request $request, $project,$status)
+// 
+
+public function updateStatusFromDropdown(Request $request, $projectId)
 {
     // Validate the incoming request data
-    // $request->validate([
-    //     'status' => ['required', Rule::in(['Active', 'In Evaluation', 'Completed'])],
-    // ]);
+    // $projectId = $request->input('projectId');
 
-    // If validation passes, update the project status in the database
-    // $newStatus = $request->input('status');
-    $p = Project::find($project);
-    $p->update(['status' => $status]);
+    $request->validate([
+        'status' => ['required', Rule::in(['Active', 'In Evaluation', 'Completed'])],
+    ]);
+    dd($projectId);
+    // Find the project by its ID
+    $project = Project::find($projectId);
+     
 
-    // Optionally, you can redirect back or return a JSON response indicating success.
-    // For example, if you want to redirect back:
+    if (!$project) {
+        // Project not found, handle the error (e.g., return a JSON response)
+        return response()->json(['error' => 'Project not found'], 404);
+    }
+
+    // Get the selected status from the form submission
+    $status = $request->input('status');
+
+    // Update the project status in the database
+    $project->update(['status' => $status]);
+    //  dd($project);
+    // Redirect back with a success message
     return redirect()->back()->with('success', 'Project status updated successfully.');
 }
 }

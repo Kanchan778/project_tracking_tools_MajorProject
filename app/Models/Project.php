@@ -22,6 +22,7 @@ class Project extends Model
         'start_date',
         'due_date',
         'visibility',
+        'status',
     ];
 
     //relationship with user

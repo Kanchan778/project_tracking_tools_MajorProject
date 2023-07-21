@@ -29,7 +29,7 @@ document.querySelector('#avatar-input').addEventListener('change', function () {
 //submit
 document.querySelector('#profile-form').addEventListener('submit', function(event) {
   event.preventDefault();
-  console.log('Form submission triggered'); // Add this line to check if the form submission is triggered
+  // console.log('Form submission triggered'); // Add this line to check if the form submission is triggered
   // Rest of your code to handle form submission
 });
 

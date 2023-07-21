@@ -105,8 +105,14 @@ Route::group(
     Route::post('/profile/update', [ProjectController::class, 'update'])->name('profile.update');
 
     //status
-    Route::get('/update-status/{project}', [ProjectController::class, 'updateStatus'])->name('projects.updateStatus');
+    // Route::post('/update-status/{project}', [ProjectController::class, 'updateStatus'])->name('projects.updateStatus');
+    // 
+    
+    Route::put('/update-status-from-dropdown/{project}/{status}', [ProjectController::class, 'updateStatusFromDropdown'])->name('projects.updateStatusFromDropdown');
+ 
     //deleting
+
+
     Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
         
     // Route to show tasks for a specific project
