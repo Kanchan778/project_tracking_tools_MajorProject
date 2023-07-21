@@ -199,17 +199,11 @@
         <hr>
         <ul class="nav nav-tabs nav-fill" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#tasks" role="tab" aria-controls="tasks" aria-selected="true">Students</a>
-               <ul>
-               @foreach($supervisors as $supervisor)
-               <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">{{ $supervisor->username }}</a>
-</li>
-                @endforeach
-</ul>
+                  <a class="nav-link active" data-toggle="tab" href="#tasks" role="tab" aria-controls="tasks" aria-selected="true">Supervisor</a>
+                  
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Supervisor</a>
+                  <a class="nav-link" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Stusent</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" data-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="false">Group</a>

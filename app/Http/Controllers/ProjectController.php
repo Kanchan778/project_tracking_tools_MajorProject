@@ -11,6 +11,7 @@ use App\Models\Student;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Models\PojectUser;
+use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller
 {
@@ -194,36 +195,20 @@ public function storeSupervisor(Request $request)
 
 
 //status update
-public function updateStatus(Request $request)
+public function updateStatus(Request $request, $project,$status)
 {
-    // Validate the request data
-    $validator = Validator::make($request->all(), [
-        'project_id' => 'required|exists:projects,id', // Ensure project_id exists in the projects table
-        'status' => 'required|in:Active,In Evaluation,Completed', // The status should be one of these values
-    ]);
+    // Validate the incoming request data
+    // $request->validate([
+    //     'status' => ['required', Rule::in(['Active', 'In Evaluation', 'Completed'])],
+    // ]);
 
-    // Check if validation fails
-    if ($validator->fails()) {
-        return response()->json(['errors' => $validator->errors()], 422); // Return the validation errors with status code 422 (Unprocessable Entity)
-    }
+    // If validation passes, update the project status in the database
+    // $newStatus = $request->input('status');
+    $p = Project::find($project);
+    $p->update(['status' => $status]);
 
-    // If validation passes, proceed to update the project status
-    $projectId = $request->input('project_id');
-    $status = $request->input('status');
-dd($status);
-    // Update the project status in the database 
-    $project = Project::find($projectId);
-    if (!$project) {
-        // Project not found, return an error response
-        return response()->json(['error' => 'Project not found'], 404);
-    }
-
-    // saving status in database
-    $project->status = $status;
-    $project->save();
-
-    // Status updated successfully, return a success response
-    return response()->json(['message' => 'Status updated successfully']);
+    // Optionally, you can redirect back or return a JSON response indicating success.
+    // For example, if you want to redirect back:
+    return redirect()->back()->with('success', 'Project status updated successfully.');
 }
 }
-

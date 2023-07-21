@@ -524,47 +524,17 @@
 <!-- Required theme scripts (Do not remove) -->
 <script src="{{ asset('js/frontend/theme.js') }}"></script>
 <script src="{{ asset('js/dashboard/projectcordinator.js') }}"></script>
+<!-- Add this script tag to include Axios from a CDN -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<script src="{{ asset('js/project.js') }}"></script>
 
 
+<!-- Include the CSRF token in a JavaScript variable -->
 <script>
-  function updateStatus(projectId, status) {
-    const formData = new FormData();
-
-    // Retrieve the CSRF token from the meta tag
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-    formData.append('_token', csrfToken); // Use the retrieved CSRF token
-    formData.append('project_id', projectId);
-    formData.append('status', status);
-
-    fetch('/projects/update-status', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Handle the response data here
-        console.log(data);
-        // You can update the UI to reflect the new status if necessary
-    })
-    .catch(error => {
-        // Handle errors here
-        console.error(error);
-        // You can display an error message to the user or perform other error handling as needed
-    });
-}
-
-
+    const csrfToken = '{{ csrf_token() }}';
 </script>
-
 
 <!-- This appears in the demo only - demonstrates different layouts -->
 <style>

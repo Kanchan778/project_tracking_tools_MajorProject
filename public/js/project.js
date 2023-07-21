@@ -72,71 +72,31 @@ updateButton.addEventListener('click', function(event) {
 
 
 //status
-function toggleDropdown(projectId) {
-  const dropdownMenu = document.getElementById(`statusDropdownMenu${projectId}`);
-  const isVisible = dropdownMenu.style.display === 'block';
-  dropdownMenu.style.display = isVisible ? 'none' : 'block';
-}
 
-function setStatus(projectId, status) {
-  console.log('Selected status:', status);
-
-  const statusDropdown = document.getElementById(`statusDropdown${projectId}`);
-  const remainingDays = document.querySelector(`#statusDropdown${projectId} + .dropdown-menu .remaining-days`);
-
-  if (status === 'Complete') {
-    statusDropdown.classList.add('completed');
-    remainingDays.style.display = 'none';
-  } else {
-    statusDropdown.classList.remove('completed');
-    remainingDays.style.display = 'block';
-  }
-
-  // Hide the dropdown menu after selecting a status
-  const dropdownMenu = document.getElementById(`statusDropdownMenu${projectId}`);
-  dropdownMenu.style.display = 'none';
-}
-
-    // Get the delete project link element by its id
-    document.addEventListener('DOMContentLoaded', function() {
-      const deleteProjectLinks = document.getElementsByClassName('delete-project-link');
-    
-      Array.from(deleteProjectLinks).forEach(function(link) {
-        link.addEventListener('click', function(event) {
-          event.preventDefault();
-    
-          const confirmation = confirm("If you delete this now, it won't be recovered again. Would you like to delete it?");
-    
-          if (confirmation) {
-            const projectId = link.dataset.projectId;
-            deleteProject(projectId);
-          }
+    function updateStatus(projectId, status) {
+        // Make an AJAX POST request to the Laravel route
+        axios.post(`/update-status/${projectId}`, {
+            status: status = 'Active'
+        }, {
+            headers: {
+                'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the request headers
+            }
+        })
+        .then(response => {
+            // Handle the response, e.g., show a success message to the user
+            console.log(response.data);
+            alert('Project status updated successfully.');
+        })
+        .catch(error => {
+            // Handle errors, e.g., show an error message to the user
+            if (error.response && error.response.status === 422) {
+                const errors = error.response.data.errors;
+                const errorMessage = Object.values(errors).flat().join('\n');
+                alert(errorMessage);
+            } else {
+                console.error(error);
+                alert('Failed to update project status.');
+            }
         });
-      });
-    
-      function deleteProject(projectId) {
-        const deleteForm = document.getElementById('delete-project-form-' + projectId);
-    
-        deleteForm.addEventListener('submit', function(event) {
-          event.preventDefault();
-    
-          // Perform the deletion action
-          // Replace this with your actual deletion logic
-    
-          alert('Project deleted successfully!');
-        });
-    
-        deleteForm.submit();
-      }
-    });
-    
-
-
-    //editprofile js
-    function openForm() {
-      document.getElementById("myForm").style.display = "block";
     }
-    
-    function closeForm() {
-      document.getElementById("myForm").style.display = "none";
-    }
+

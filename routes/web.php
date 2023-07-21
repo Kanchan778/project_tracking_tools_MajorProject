@@ -105,8 +105,7 @@ Route::group(
     Route::post('/profile/update', [ProjectController::class, 'update'])->name('profile.update');
 
     //status
-Route::post('/projects/update-status', [ProjectController::class, 'updateStatus'])->name('projects.updateStatus');
-
+    Route::get('/update-status/{project}', [ProjectController::class, 'updateStatus'])->name('projects.updateStatus');
     //deleting
     Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
         
