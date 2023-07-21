@@ -52,7 +52,7 @@
                         <div class="profile-name" id="username-placeholder"></div>
                     </div>
                     <div class="username text-center">
-                        <h4><strong>{{ Auth::user()->username }}</strong></h4>
+                    <h4 class="username"><strong>{{ Auth::user()->username }}</strong></h4>
                     </div>
                    <div>
                     <button class="edit-profile-button">Edit Profile</button>

@@ -66,18 +66,19 @@
       <div class="sidebar-profile">
         <div class="profile-avatar">
           <label for="avatar-input" class="avatar-label">
-            <i class="fas fa-plus"></i>
+          <img class="avatar-label" src="{{ asset('img/Profile.png') }}">
+        
           </label>
-          <input type="file" id="avatar-input" style="display: none;">
         </div>
         <div class="profile-name" id="username-placeholder"></div>
       </div>
 
       <div class="username text-center">
-    <h4><strong>{{ Auth::user()->username }}</strong></h4>
+      <h4 class="username"><strong>{{ Auth::user()->username }}</strong></h4>
 </div>
 
-      <button class="edit-profile-button">Edit Profile</button>
+<button class="edit-profile-button">Edit Profile</button>
+
 </ul>
 
           <hr>
@@ -85,13 +86,13 @@
             <span class="text-small text-muted">Quick Links</span>
             <ul class="nav nav-small flex-column mt-2">
               <li class="nav-item">
-                <a href="{{ route('projectCoordinator.project') }}" class="nav-link">Team Overview</a>
+                <a href="{{ route('projectCoordinator.project') }}" class="nav-link">Project Overview</a>
               </li>
               <li class="nav-item">
-              <a href="{{ route('projectCoordinator.nav-side-project') }}" class="nav-link">Project</a>
+              <a href="{{ route('projectCoordinator.sidebartask') }}" class="nav-link">Task</a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('projectCoordinator.nav-side-task') }}"class="nav-link">Single Task</a>
+                <a href="{{ route('projectCoordinator.nav-side-task') }}"class="nav-link">Group</a>
               </li>
               <li class="nav-item">
               <a href="{{ route('projectCoordinator.nav-side-kanban-board') }}"class="nav-link">Account Setting</a>
@@ -145,12 +146,38 @@
 
       </div>
       <div class="main-container">
+      <div class="edit-profile-form" style="display: none;">
+ 
+      <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" id="profile-form">
+    <!-- Your existing form fields -->
 
+    <input type="file" id="avatar-input" name="profile_img" style="display: none;">
+    <div class="profile-avatar">
+        <label for="avatar-input">
+            <i class="fas fa-plus" id="upload-icon"></i>
+            <img class="avatar-label" src="{{ asset('img/Profile.png') }}" id="avatar-preview" alt="Profile Image">
+        </label>
+    </div>
+    <div>
+        <label for="new-username">Username:</label>
+        <input type="text" id="new-username" name="new_username" value="{{ Auth::user()->username }}" required>
+    </div>
+
+    <!-- Your existing form fields -->
+
+    <button type="submit">Update Profile</button>
+
+    <!-- Close icon -->
+    <i class="fas fa-times" id="close-icon"><button type="submit">Close</button>
+</i>
+</form>
+
+</div>
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-11 col-xl-9">
               <section class="py-4 py-lg-5">
-                <h1 class="display-4 mb-3">Project Tracking Tools</h1>
+                <h1 class="display-4 mb-3">Project Tracking System</h1>
                 <p class="lead">
                        </p>
                        
@@ -170,18 +197,30 @@
           <!-- Existing chat module top content -->
         </div>
         <hr>
+        <ul class="nav nav-tabs nav-fill" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#tasks" role="tab" aria-controls="tasks" aria-selected="true">Students</a>
+               <ul>
+               @foreach($supervisors as $supervisor)
+               <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">{{ $supervisor->username }}</a>
+</li>
+                @endforeach
+</ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Supervisor</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="false">Group</a>
+                </li>
+              </ul>
         
-        <!-- Chat -->
-        <div class="messages">
-          @include('chat.receive', ['message' => "Hey! What's up!  👋", 'username' => 'Other User 1'])
-          @include('chat.receive', ['message' => "Ask a friend to open this link and you can chat with them!", 'username' => 'Other User 2'])
-        </div>
-        <!-- End Chat -->
         
         <div class="chat-module-bottom">
           <form id="chat-form">
             <input type="text" id="message" name="message" placeholder="Enter message..." autocomplete="off">
-            <button type="submit"></button>
+            <button type="submit">Send</button>
           </form>
         </div>
       </div>

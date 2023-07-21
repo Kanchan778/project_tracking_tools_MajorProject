@@ -52,7 +52,7 @@
                         <div class="profile-name" id="username-placeholder"></div>
                     </div>
                     <div class="username text-center">
-                        <h4><strong>{{ Auth::user()->username }}</strong></h4>
+                    <h4 class="username"><strong>{{ Auth::user()->username }}</strong></h4>
                     </div>
                     <button class="edit-profile-button">Edit Profile</button>
                 </ul>
@@ -61,13 +61,13 @@
                     <span class="text-small text-muted">Quick Links</span>
                     <ul class="nav nav-small flex-column mt-2">
                         <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.project') }}" class="nav-link">Team Overview</a>
+                            <a href="{{ route('projectCoordinator.project') }}" class="nav-link"> Project Overview</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.nav-side-project') }}" class="nav-link">Project</a>
+                            <a href="{{ route('projectCoordinator.sidebartask') }}" class="nav-link">Task</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.nav-side-task') }}" class="nav-link">Single Task</a>
+                            <a href="{{ route('projectCoordinator.nav-side-task') }}" class="nav-link">Group</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('projectCoordinator.nav-side-kanban-board') }}" class="nav-link">Account Setting</a>
@@ -330,7 +330,8 @@
                       <div class="col-auto">
                         <h3>Files</h3>
                       </div>
-                      <form class="col-md-auto">
+                      <form class="col-md-auto"  >
+                        
                         <div class="input-group input-group-round">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -344,7 +345,7 @@
                     <!--end of content list head-->
                     <div class="content-list-body row">
                       <div class="col">
-                        <ul class="d-none dz-template">
+                        <!-- <ul class="d-none dz-template">
                           <li class="list-group-item dz-preview dz-file-preview">
                             <div class="media align-items-center dz-details">
                               <ul class="avatars">
@@ -386,13 +387,17 @@
                               <div class="progress-bar dz-upload" data-dz-uploadprogress></div>
                             </div>
                           </li>
-                        </ul>
-                        <form class="dropzone" action="https://mediumra.re/dropzone/upload.php">
-                          <span class="dz-message">Drop files here or click here to upload</span>
-                        </form>
+                        </ul> -->
+                        <form class="dropzone" action="{{ route('projectCoordinator.project.files', $project->id) }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <!-- Rest of your form inputs -->
+    <input type="file" id ="file" name="file">
+    <button type="submit">Upload</button>
+</form>
+
 
                         <ul class="list-group list-group-activity dropzone-previews flex-column-reverse">
-
+                        @foreach ($project->files as $file)
                           <li class="list-group-item">
                             <div class="media align-items-center">
                               <ul class="avatars">
@@ -406,11 +411,14 @@
                                 </li>
                               </ul>
                               <div class="media-body d-flex justify-content-between align-items-center">
-                                <div>
-                                  <a href="#" data-filter-by="text">client-questionnaire</a>
-                                  <br>
-                                  <span class="text-small" data-filter-by="text">48kb Text Doc</span>
-                                </div>
+                              <div>
+   
+        <a href="{{ asset($file->file_path) }}" data-filter-by="text">{{ $file->filename }}</a>
+        <br>
+        <span class="text-small" data-filter-by="text">{{ $file->file_type }}</span>
+    
+</div>
+
                                 <div class="dropdown">
                                   <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="material-icons">more_vert</i>
@@ -419,145 +427,19 @@
                                     <a class="dropdown-item" href="#">Download</a>
                                     <a class="dropdown-item" href="#">Share</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="#">Delete</a>
+                                    <!-- Delete form -->
+        <form action="{{ route('projectCoordinator.files.destroy', $file->id) }}" method="post">
+            @csrf
+            @method('delete')
+            <button type="submit" class="dropdown-item text-danger" onclick="return confirm('Are you sure you want to delete this file?')">Delete</button>
+        </form>
+    <!-- </div> -->
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </li>
-
-                          <li class="list-group-item">
-                            <div class="media align-items-center">
-                              <ul class="avatars">
-                                <li>
-                                  <div class="avatar bg-primary">
-                                    <i class="material-icons">folder</i>
-                                  </div>
-                                </li>
-                                <li>
-                                  <img alt="Harry Xai" src="assets/img/avatar-male-2.jpg" class="avatar" data-title="Harry Xai" data-toggle="tooltip" data-filter-by="data-title" />
-                                </li>
-                              </ul>
-                              <div class="media-body d-flex justify-content-between align-items-center">
-                                <div>
-                                  <a href="#" data-filter-by="text">moodboard_images</a>
-                                  <br>
-                                  <span class="text-small" data-filter-by="text">748kb ZIP</span>
-                                </div>
-                                <div class="dropdown">
-                                  <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">more_vert</i>
-                                  </button>
-                                  <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Download</a>
-                                    <a class="dropdown-item" href="#">Share</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="#">Delete</a>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-
-                          <li class="list-group-item">
-                            <div class="media align-items-center">
-                              <ul class="avatars">
-                                <li>
-                                  <div class="avatar bg-primary">
-                                    <i class="material-icons">image</i>
-                                  </div>
-                                </li>
-                                <li>
-                                  <img alt="Ravi Singh" src="assets/img/avatar-male-3.jpg" class="avatar" data-title="Ravi Singh" data-toggle="tooltip" data-filter-by="data-title" />
-                                </li>
-                              </ul>
-                              <div class="media-body d-flex justify-content-between align-items-center">
-                                <div>
-                                  <a href="#" data-filter-by="text">possible-hero-image</a>
-                                  <br>
-                                  <span class="text-small" data-filter-by="text">1.2mb JPEG image</span>
-                                </div>
-                                <div class="dropdown">
-                                  <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">more_vert</i>
-                                  </button>
-                                  <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Download</a>
-                                    <a class="dropdown-item" href="#">Share</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="#">Delete</a>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-
-                          <li class="list-group-item">
-                            <div class="media align-items-center">
-                              <ul class="avatars">
-                                <li>
-                                  <div class="avatar bg-primary">
-                                    <i class="material-icons">insert_drive_file</i>
-                                  </div>
-                                </li>
-                                <li>
-                                  <img alt="Claire Connors" src="assets/img/avatar-female-1.jpg" class="avatar" data-title="Claire Connors" data-toggle="tooltip" data-filter-by="data-title" />
-                                </li>
-                              </ul>
-                              <div class="media-body d-flex justify-content-between align-items-center">
-                                <div>
-                                  <a href="#" data-filter-by="text">LandingPrototypes</a>
-                                  <br>
-                                  <span class="text-small" data-filter-by="text">415kb Sketch Doc</span>
-                                </div>
-                                <div class="dropdown">
-                                  <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">more_vert</i>
-                                  </button>
-                                  <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Download</a>
-                                    <a class="dropdown-item" href="#">Share</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="#">Delete</a>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-
-                          <li class="list-group-item">
-                            <div class="media align-items-center">
-                              <ul class="avatars">
-                                <li>
-                                  <div class="avatar bg-primary">
-                                    <i class="material-icons">insert_drive_file</i>
-                                  </div>
-                                </li>
-                                <li>
-                                  <img alt="David Whittaker" src="assets/img/avatar-male-4.jpg" class="avatar" data-title="David Whittaker" data-toggle="tooltip" data-filter-by="data-title" />
-                                </li>
-                              </ul>
-                              <div class="media-body d-flex justify-content-between align-items-center">
-                                <div>
-                                  <a href="#" data-filter-by="text">Branding-Proforma</a>
-                                  <br>
-                                  <span class="text-small" data-filter-by="text">15kb Text Document</span>
-                                </div>
-                                <div class="dropdown">
-                                  <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">more_vert</i>
-                                  </button>
-                                  <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Download</a>
-                                    <a class="dropdown-item" href="#">Share</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="#">Delete</a>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-
+                        </li>
+                        @endforeach
                         </ul>
                       </div>
                     </div>
@@ -745,329 +627,7 @@
                   <!--end of content list-->
                 </div>
               </div>
-              <form class="modal fade" id="user-manage-modal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Manage Users</h5>
-                      <button type="button" class="close btn btn-round" data-dismiss="modal" aria-label="Close">
-                        <i class="material-icons">close</i>
-                      </button>
-                    </div>
-                    <!--end of modal head-->
-                    <div class="modal-body">
-                      <div class="users-manage" data-filter-list="form-group-users">
-                        <div class="mb-3">
-                          <ul class="avatars text-center">
-
-                            <li>
-                              <img alt="Claire Connors" src="assets/img/avatar-female-1.jpg" class="avatar" data-toggle="tooltip" data-title="Claire Connors" />
-                            </li>
-
-                            <li>
-                              <img alt="Marcus Simmons" src="assets/img/avatar-male-1.jpg" class="avatar" data-toggle="tooltip" data-title="Marcus Simmons" />
-                            </li>
-
-                            <li>
-                              <img alt="Peggy Brown" src="assets/img/avatar-female-2.jpg" class="avatar" data-toggle="tooltip" data-title="Peggy Brown" />
-                            </li>
-
-                            <li>
-                              <img alt="Harry Xai" src="assets/img/avatar-male-2.jpg" class="avatar" data-toggle="tooltip" data-title="Harry Xai" />
-                            </li>
-
-                          </ul>
-                        </div>
-                        <div class="input-group input-group-round">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="material-icons">filter_list</i>
-                            </span>
-                          </div>
-                          <input type="search" class="form-control filter-list-input" placeholder="Filter members" aria-label="Filter Members">
-                        </div>
-                        <div class="form-group-users">
-
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="user-manage-1" checked>
-                            <label class="custom-control-label" for="user-manage-1">
-                              <span class="d-flex align-items-center">
-                                <img alt="Claire Connors" src="assets/img/avatar-female-1.jpg" class="avatar mr-2" />
-                                <span class="h6 mb-0" data-filter-by="text">Claire Connors</span>
-                              </span>
-                            </label>
-                          </div>
-
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="user-manage-2" checked>
-                            <label class="custom-control-label" for="user-manage-2">
-                              <span class="d-flex align-items-center">
-                                <img alt="Marcus Simmons" src="assets/img/avatar-male-1.jpg" class="avatar mr-2" />
-                                <span class="h6 mb-0" data-filter-by="text">Marcus Simmons</span>
-                              </span>
-                            </label>
-                          </div>
-
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="user-manage-3" checked>
-                            <label class="custom-control-label" for="user-manage-3">
-                              <span class="d-flex align-items-center">
-                                <img alt="Peggy Brown" src="assets/img/avatar-female-2.jpg" class="avatar mr-2" />
-                                <span class="h6 mb-0" data-filter-by="text">Peggy Brown</span>
-                              </span>
-                            </label>
-                          </div>
-
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="user-manage-4" checked>
-                            <label class="custom-control-label" for="user-manage-4">
-                              <span class="d-flex align-items-center">
-                                <img alt="Harry Xai" src="assets/img/avatar-male-2.jpg" class="avatar mr-2" />
-                                <span class="h6 mb-0" data-filter-by="text">Harry Xai</span>
-                              </span>
-                            </label>
-                          </div>
-
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="user-manage-5">
-                            <label class="custom-control-label" for="user-manage-5">
-                              <span class="d-flex align-items-center">
-                                <img alt="Sally Harper" src="assets/img/avatar-female-3.jpg" class="avatar mr-2" />
-                                <span class="h6 mb-0" data-filter-by="text">Sally Harper</span>
-                              </span>
-                            </label>
-                          </div>
-
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="user-manage-6">
-                            <label class="custom-control-label" for="user-manage-6">
-                              <span class="d-flex align-items-center">
-                                <img alt="Ravi Singh" src="assets/img/avatar-male-3.jpg" class="avatar mr-2" />
-                                <span class="h6 mb-0" data-filter-by="text">Ravi Singh</span>
-                              </span>
-                            </label>
-                          </div>
-
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="user-manage-7">
-                            <label class="custom-control-label" for="user-manage-7">
-                              <span class="d-flex align-items-center">
-                                <img alt="Kristina Van Der Stroem" src="assets/img/avatar-female-4.jpg" class="avatar mr-2" />
-                                <span class="h6 mb-0" data-filter-by="text">Kristina Van Der Stroem</span>
-                              </span>
-                            </label>
-                          </div>
-
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="user-manage-8">
-                            <label class="custom-control-label" for="user-manage-8">
-                              <span class="d-flex align-items-center">
-                                <img alt="David Whittaker" src="assets/img/avatar-male-4.jpg" class="avatar mr-2" />
-                                <span class="h6 mb-0" data-filter-by="text">David Whittaker</span>
-                              </span>
-                            </label>
-                          </div>
-
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="user-manage-9">
-                            <label class="custom-control-label" for="user-manage-9">
-                              <span class="d-flex align-items-center">
-                                <img alt="Kerri-Anne Banks" src="assets/img/avatar-female-5.jpg" class="avatar mr-2" />
-                                <span class="h6 mb-0" data-filter-by="text">Kerri-Anne Banks</span>
-                              </span>
-                            </label>
-                          </div>
-
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="user-manage-10">
-                            <label class="custom-control-label" for="user-manage-10">
-                              <span class="d-flex align-items-center">
-                                <img alt="Masimba Sibanda" src="assets/img/avatar-male-5.jpg" class="avatar mr-2" />
-                                <span class="h6 mb-0" data-filter-by="text">Masimba Sibanda</span>
-                              </span>
-                            </label>
-                          </div>
-
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="user-manage-11">
-                            <label class="custom-control-label" for="user-manage-11">
-                              <span class="d-flex align-items-center">
-                                <img alt="Krishna Bajaj" src="assets/img/avatar-female-6.jpg" class="avatar mr-2" />
-                                <span class="h6 mb-0" data-filter-by="text">Krishna Bajaj</span>
-                              </span>
-                            </label>
-                          </div>
-
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="user-manage-12">
-                            <label class="custom-control-label" for="user-manage-12">
-                              <span class="d-flex align-items-center">
-                                <img alt="Kenny Tran" src="assets/img/avatar-male-6.jpg" class="avatar mr-2" />
-                                <span class="h6 mb-0" data-filter-by="text">Kenny Tran</span>
-                              </span>
-                            </label>
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-                    <!--end of modal body-->
-                    <div class="modal-footer">
-                      <button role="button" class="btn btn-primary" type="submit">
-                        Done
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-              <form class="modal fade" id="project-edit-modal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Edit Project</h5>
-                      <button type="button" class="close btn btn-round" data-dismiss="modal" aria-label="Close">
-                        <i class="material-icons">close</i>
-                      </button>
-                    </div>
-                    <!--end of modal head-->
-                    <ul class="nav nav-tabs nav-fill" role="tablist">
-                      <li class="nav-item">
-                        <a class="nav-link active" id="project-edit-details-tab" data-toggle="tab" href="#project-edit-details" role="tab" aria-controls="project-edit-details" aria-selected="true">Details</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="project-edit-members-tab" data-toggle="tab" href="#project-edit-members" role="tab" aria-controls="project-edit-members" aria-selected="false">Members</a>
-                      </li>
-                    </ul>
-                    <div class="modal-body">
-                      <div class="tab-content">
-                        <div class="tab-pane fade show active" id="project-edit-details" role="tabpanel">
-                          <h6>General Details</h6>
-                          <div class="form-group row align-items-center">
-                            <label class="col-3">Name</label>
-                            <input class="form-control col" type="text" value="Brand Concept and Design" name="project-name" />
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-3">Description</label>
-                            <textarea class="form-control col" rows="3" placeholder="Project description" name="project-description">Research, ideate and present brand concepts for client consideration</textarea>
-                          </div>
-                          <hr>
-                          <h6>Timeline</h6>
-                          <div class="form-group row align-items-center">
-                            <label class="col-3">Start Date</label>
-                            <input class="form-control col" type="text" name="project-start" placeholder="Select a date" data-flatpickr data-default-date="2021-04-21" data-alt-input="true" />
-                          </div>
-                          <div class="form-group row align-items-center">
-                            <label class="col-3">Due Date</label>
-                            <input class="form-control col" type="text" name="project-due" placeholder="Select a date" data-flatpickr data-default-date="2021-09-15" data-alt-input="true" />
-                          </div>
-                          <div class="alert alert-warning text-small" role="alert">
-                            <span>You can change due dates at any time.</span>
-                          </div>
-                          <hr>
-                          <h6>Visibility</h6>
-                          <div class="row">
-                            <div class="col">
-                              <div class="custom-control custom-radio">
-                                <input type="radio" id="visibility-everyone" name="visibility" class="custom-control-input" checked>
-                                <label class="custom-control-label" for="visibility-everyone">Everyone</label>
-                              </div>
-                            </div>
-                            <div class="col">
-                              <div class="custom-control custom-radio">
-                                <input type="radio" id="visibility-members" name="visibility" class="custom-control-input">
-                                <label class="custom-control-label" for="visibility-members">Members</label>
-                              </div>
-                            </div>
-                            <div class="col">
-                              <div class="custom-control custom-radio">
-                                <input type="radio" id="visibility-me" name="visibility" class="custom-control-input">
-                                <label class="custom-control-label" for="visibility-me">Just me</label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="tab-pane fade" id="project-edit-members" role="tabpanel">
-                          <div class="users-manage" data-filter-list="form-group-users">
-                            <div class="mb-3">
-                              <ul class="avatars text-center">
-
-                                <li>
-                                  <img alt="Claire Connors" src="assets/img/avatar-female-1.jpg" class="avatar" data-toggle="tooltip" data-title="Claire Connors" />
-                                </li>
-
-                                <li>
-                                  <img alt="Marcus Simmons" src="assets/img/avatar-male-1.jpg" class="avatar" data-toggle="tooltip" data-title="Marcus Simmons" />
-                                </li>
-
-                                <li>
-                                  <img alt="Peggy Brown" src="assets/img/avatar-female-2.jpg" class="avatar" data-toggle="tooltip" data-title="Peggy Brown" />
-                                </li>
-
-                                <li>
-                                  <img alt="Harry Xai" src="assets/img/avatar-male-2.jpg" class="avatar" data-toggle="tooltip" data-title="Harry Xai" />
-                                </li>
-
-                              </ul>
-                            </div>
-                            <div class="input-group input-group-round">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                  <i class="material-icons">filter_list</i>
-                                </span>
-                              </div>
-                              <input type="search" class="form-control filter-list-input" placeholder="Filter members" aria-label="Filter Members">
-                            </div>
-                            <div class="form-group-users">
-
-                              <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="project-user-1" checked>
-                                <label class="custom-control-label" for="project-user-1">
-                                  <span class="d-flex align-items-center">
-                                    <img alt="Claire Connors" src="assets/img/avatar-female-1.jpg" class="avatar mr-2" />
-                                    <span class="h6 mb-0" data-filter-by="text">Claire Connors</span>
-                                  </span>
-                                </label>
-                              </div>
-
-                              <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="project-user-2" checked>
-                                <label class="custom-control-label" for="project-user-2">
-                                  <span class="d-flex align-items-center">
-                                    <img alt="Marcus Simmons" src="assets/img/avatar-male-1.jpg" class="avatar mr-2" />
-                                    <span class="h6 mb-0" data-filter-by="text">Marcus Simmons</span>
-                                  </span>
-                                </label>
-                              </div>
-
-                             
-                            
-                              
-
-                              <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="project-user-12">
-                                <label class="custom-control-label" for="project-user-12">
-                                  <span class="d-flex align-items-center">
-                                    <img alt="Kenny Tran" src="assets/img/avatar-male-6.jpg" class="avatar mr-2" />
-                                    <span class="h6 mb-0" data-filter-by="text">Kenny Tran</span>
-                                  </span>
-                                </label>
-                              </div>
-
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!--end of modal body-->
-                    <div class="modal-footer">
-                      <button role="button" class="btn btn-primary" type="submit">
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-
+              
               <form class="modal fade" id="task-add-modal" tabindex="-1" aria-hidden="true" action="{{ route('projectCoordinator.project.createTask', $project->id) }}" method="POST">
               @csrf  
               <div class="modal-dialog" role="document">

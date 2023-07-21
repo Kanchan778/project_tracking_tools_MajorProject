@@ -10,6 +10,7 @@
       gtag('config', 'UA-52115242-14');
     </script>
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Project Tracking Tools</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A project management Bootstrap theme by Medium Rare">
@@ -52,20 +53,10 @@
                         <div class="profile-name" id="username-placeholder"></div>
                     </div>
                     <div class="username text-center">
-                        <h4><strong>{{ Auth::user()->username }}</strong></h4>
+                        <h4 class="username"><strong>{{ Auth::user()->username }}</strong></h4>
                     </div>
-                   <div>
-                    <button class="edit-profile-button">Edit Profile</button>
-                    <div id="edit-profile-form" style="display: none;">
-  <form id="edit-profile" action="{{ route('projectCoordinator.profile.update') }}" method="POST" enctype="multipart/form-data">
-    @csrf
-<input type="file" id="avatar-input" style="display: none;">
-    <label for="username">Username:</label>
-    <input type="text" name="username" id="username" value="{{ $user->username }}" required>
-    
-    <button type="submit">Save</button>
-  </form>
-</div>
+                   <div class ="">
+                   <button class="open-button" onclick="openForm()">Edit Profile</button>
 
 
 </div>
@@ -76,13 +67,13 @@
                     <span class="text-small text-muted">Quick Links</span>
                     <ul class="nav nav-small flex-column mt-2">
                         <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.project') }}" class="nav-link">Team Overview</a>
+                            <a href="{{ route('projectCoordinator.project') }}" class="nav-link">Project Overview</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.nav-side-project') }}" class="nav-link">Project</a>
+                            <a href="{{ route('projectCoordinator.sidebartask') }}" class="nav-link">Task</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.nav-side-task') }}" class="nav-link">Single Task</a>
+                            <a href="{{ route('projectCoordinator.nav-side-task') }}" class="nav-link">Group</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('projectCoordinator.nav-side-kanban-board') }}" class="nav-link">Account Setting</a>
@@ -179,52 +170,26 @@
                     </div>
                     <!--end of content list head-->
                     <div class="content-list-body row">
-  @foreach ($projects as $project)
-    <div class="col-lg-6">
-      <div class="card card-project">
+                    @foreach ($projects as $project)
+<div class="col-lg-6">
+    <div class="card card-project">
         <div class="progress">
-          <div class="progress-bar bg-danger" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar bg-danger" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         <div class="card-body">
-          <div class="dropdown card-options">
-            <button class="btn-options" type="button" id="project-dropdown-button-{{ $project->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="material-icons">more_vert</i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" href="#">Edit</a>
-              <div class="dropdown mt-2">
-              <button class="btn-options" type="button" id="project-dropdown-button-{{ $project->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Status
-              </button>
-              <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#">Active</a>
-                <a class="dropdown-item" href="#">In Evaluation</a>
-                <a class="dropdown-item" href="#">Complete</a>
-              </div>
-            </div>
-
-              <!-- <div class="dropdown"> -->
-  <!-- <a class="dropdown-toggle" href="#" role="button" id="statusDropdown{{ $project->id }}" onclick="toggleDropdown('{{ $project->id }}')" aria-haspopup="true" aria-expanded="false">
-    Status
-  </a>
-  <div class="dropdown-menu" id="statusDropdownMenu{{ $project->id }}" aria-labelledby="statusDropdown{{ $project->id }}" style="display: none;">
-    <a class="status-dropdown-item" href="#" onclick="setStatus('{{ $project->id }}', 'In Evaluation')">In Evaluation</a>
-    <a class="status-dropdown-item" href="#" onclick="setStatus('{{ $project->id }}', 'Complete')">Complete</a>
-  </div>
-</div> -->
-<a class="dropdown-item delete-project-link" href="#" data-project-id="{{ $project->id }}">Delete Project</a>
-
-<!-- Add this form for each delete project link -->
-<form id="delete-project-form-{{ $project->id }}" action="{{ route('projectCoordinator.projects.destroy', $project->id) }}" method="POST" style="display: none;">
-    @csrf
-    @method('DELETE')
-    <!-- Include any additional form fields if needed -->
-</form>
-
-
+            <div class="dropdown card-options">
+                <button class="btn-options" type="button" id="project-dropdown-button-{{ $project->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="material-icons">more_vert</i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+    <h6>Status</h6>
+    <a class="dropdown-item" href="#" onclick="updateStatus('{{ $project->id }}', 'Active')">Active</a>
+    <a class="dropdown-item" href="#" onclick="updateStatus('{{ $project->id }}', 'In Evaluation')">In Evaluation</a>
+    <a class="dropdown-item" href="#" onclick="updateStatus('{{ $project->id }}', 'Completed')">Completed</a>
+</div>
 
             </div>
-          </div>
+
           <div class="card-title">
             <a href="{{ route('projectCoordinator.nav-side-project.task',$project->id) }}">
               <h5 data-filter-by="text">{{ $project->project_name }}</h5></a>
@@ -558,20 +523,46 @@
 <script src="{{ asset('js/frontend/list.min.js') }}"></script>
 <!-- Required theme scripts (Do not remove) -->
 <script src="{{ asset('js/frontend/theme.js') }}"></script>
+<script src="{{ asset('js/dashboard/projectcordinator.js') }}"></script>
+
 
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-<script>
-$(document).ready(function() {
-  $('.dropdown').on('show.bs.dropdown', function() {
-    console.log('Dropdown show event triggered');
-    $(this).find('.btn').addClass('active');
-  });
 
-  $('.dropdown').on('hide.bs.dropdown', function() {
-    console.log('Dropdown hide event triggered');
-    $(this).find('.btn').removeClass('active');
-  });
-});
+
+<script>
+  function updateStatus(projectId, status) {
+    const formData = new FormData();
+
+    // Retrieve the CSRF token from the meta tag
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    formData.append('_token', csrfToken); // Use the retrieved CSRF token
+    formData.append('project_id', projectId);
+    formData.append('status', status);
+
+    fetch('/projects/update-status', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Handle the response data here
+        console.log(data);
+        // You can update the UI to reflect the new status if necessary
+    })
+    .catch(error => {
+        // Handle errors here
+        console.error(error);
+        // You can display an error message to the user or perform other error handling as needed
+    });
+}
+
+
 </script>
 
 

@@ -192,4 +192,38 @@ public function storeSupervisor(Request $request)
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 
+
+//status update
+public function updateStatus(Request $request)
+{
+    // Validate the request data
+    $validator = Validator::make($request->all(), [
+        'project_id' => 'required|exists:projects,id', // Ensure project_id exists in the projects table
+        'status' => 'required|in:Active,In Evaluation,Completed', // The status should be one of these values
+    ]);
+
+    // Check if validation fails
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422); // Return the validation errors with status code 422 (Unprocessable Entity)
+    }
+
+    // If validation passes, proceed to update the project status
+    $projectId = $request->input('project_id');
+    $status = $request->input('status');
+dd($status);
+    // Update the project status in the database 
+    $project = Project::find($projectId);
+    if (!$project) {
+        // Project not found, return an error response
+        return response()->json(['error' => 'Project not found'], 404);
+    }
+
+    // saving status in database
+    $project->status = $status;
+    $project->save();
+
+    // Status updated successfully, return a success response
+    return response()->json(['message' => 'Status updated successfully']);
 }
+}
+

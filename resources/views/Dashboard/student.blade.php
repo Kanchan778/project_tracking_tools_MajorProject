@@ -71,7 +71,7 @@
       </div>
 
       <div class="username text-center">
-    <h4><strong>{{ Auth::user()->username }}</strong></h4>
+      <h4 class="username"><strong>{{ Auth::user()->username }}</strong></h4>
 </div>
 
       <button class="edit-profile-button">Edit Profile</button>
@@ -149,7 +149,7 @@
           <div class="row justify-content-center">
             <div class="col-lg-11 col-xl-9">
               <section class="py-4 py-lg-5">
-                <h1 class="display-4 mb-3">Project Tracking Tools</h1>
+                <h1 class="display-4 mb-3">Project Tracking System</h1>
                 <p class="lead">
                        </p>
               </section>

@@ -35,5 +35,12 @@ public function tasks()
     {
         return $this->hasMany(Task::class);
     }
+
+
+//relationship with files
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
 }
 

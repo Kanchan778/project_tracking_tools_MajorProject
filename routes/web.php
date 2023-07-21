@@ -13,6 +13,13 @@ use App\Http\Controllers\student\StudentProjectController;
 use App\Http\Controllers\Student\StudentGroupController;
 use App\Http\Controllers\PusherController;
 use App\Http\Controllers\cordinator\TaskController;
+use App\Http\Controllers\cordinator\FileController;
+use App\Http\Controllers\cordinator\SideBarTaskController;
+use App\Http\Controllers\ProfileController;
+
+// Route::post('/projects/update-status', 'ProjectCoordinatorController@updateProjectStatus')->name('projectCoordinator.updateStatus');
+
+Route::post('/profile/update', [ProfileController::class,'update'])->name('profile.update');
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,6 +34,19 @@ Route::get('Authenticate/registration', function () {
 })->name('registeration');
 
 Route::post('/register', [RegistrationController::class, 'register'])->name('register');
+
+//comment
+// Route for the index method
+Route::get('/pusher', [PusherController::class, 'index']);
+
+// Route for the broadcast method
+Route::post('/pusher/broadcast', [PusherController::class, 'broadcast']);
+
+// Route for the receiver method
+Route::post('/pusher/receiver', [PusherController::class, 'receiver']);
+
+
+Route::get('/pusher/chat', 'PusherController@displayChat')->name('chat');
 
 Route::get('login/gmail', [AuthLoginController::class, 'redirectToGmail'])->name('login-gmail');
 Route::get('login/gmail/callback', [AuthLoginController::class, 'handleGmailCallback']);
@@ -84,6 +104,9 @@ Route::group(
     //updating profile
     Route::post('/profile/update', [ProjectController::class, 'update'])->name('profile.update');
 
+    //status
+Route::post('/projects/update-status', [ProjectController::class, 'updateStatus'])->name('projects.updateStatus');
+
     //deleting
     Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
         
@@ -93,17 +116,26 @@ Route::group(
 
 Route::get('layouts/nav-side-project/{projectId}', [TaskController::class, 'showProject'])->name('nav-side-project.task');
 
+
+//file 
+Route::post('/projects/{projectId}/files', [FileController::class,'store'])->name('project.files');
+//deastroy
+Route::delete('/files/{file}', [FileController::class, 'destroy'])->name('files.destroy');
+
 //storing data for tasks
 Route::post('/projects/{projectId}/tasks', [TaskController::class, 'createTask'])->name('project.createTask');
 
-
-Route::get('/sidebar-task', [SidebarTaskController::class, 'showSidebarTask']);
+//sidebartask route
+Route::get('/sidebartask', [SideBarTaskController::class, 'viewSidebarTask'])->name('sidebartask');
 
 //logout
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     }
 );
+
+
+///student
 
 Route::group([
     'prefix' => 'student',
@@ -134,15 +166,3 @@ Route::group(
 );
 
 
-
-// Route for the index method
-Route::get('/pusher', [PusherController::class, 'index']);
-
-// Route for the broadcast method
-Route::post('/pusher/broadcast', [PusherController::class, 'broadcast']);
-
-// Route for the receiver method
-Route::post('/pusher/receiver', [PusherController::class, 'receiver']);
-
-
-Route::get('/pusher/chat', 'PusherController@displayChat')->name('chat');

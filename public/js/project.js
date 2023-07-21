@@ -69,13 +69,7 @@ updateButton.addEventListener('click', function(event) {
         editForm.submit();
     }
 });
-// Handle click event of "Edit Profile" button
-const editProfileButton = document.querySelector('.edit-profile-button');
-editProfileButton.addEventListener('click', () => {
-  // Show the edit profile form
-  const editProfileForm = document.getElementById('edit-profile-form');
-  editProfileForm.style.display = 'block';
-});
+
 
 //status
 function toggleDropdown(projectId) {
@@ -136,3 +130,13 @@ function setStatus(projectId, status) {
       }
     });
     
+
+
+    //editprofile js
+    function openForm() {
+      document.getElementById("myForm").style.display = "block";
+    }
+    
+    function closeForm() {
+      document.getElementById("myForm").style.display = "none";
+    }

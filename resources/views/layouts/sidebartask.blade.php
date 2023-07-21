@@ -52,7 +52,7 @@
                         <div class="profile-name" id="username-placeholder"></div>
                     </div>
                     <div class="username text-center">
-                        <h4><strong>{{ Auth::user()->username }}</strong></h4>
+                    <h4 class="username"><strong>{{ Auth::user()->username }}</strong></h4>
                     </div>
                     <button class="edit-profile-button">Edit Profile</button>
                 </ul>
@@ -61,13 +61,13 @@
                     <span class="text-small text-muted">Quick Links</span>
                     <ul class="nav nav-small flex-column mt-2">
                         <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.project') }}" class="nav-link">Team Overview</a>
+                            <a href="{{ route('projectCoordinator.project') }}" class="nav-link">Project Overview</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.nav-side-project') }}" class="nav-link">Project</a>
+                            <a href="{{ route('projectCoordinator.sidebartask') }}" class="nav-link">Task</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.nav-side-task') }}" class="nav-link">Single Task</a>
+                            <a href="{{ route('projectCoordinator.nav-side-task') }}" class="nav-link">Group</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('projectCoordinator.nav-side-kanban-board') }}" class="nav-link">Account Setting</a>
@@ -141,7 +141,7 @@
           <div class="row justify-content-center">
             <div class="col-lg-11 col-xl-10">
               <div class="page-header">
-                <h1>{{ $project->project_name }}</h1>
+                <h1></h1>
                 <p class="lead">Task and ideate</p>
                 <div class="d-flex align-items-center">
                   <ul class="avatars">
@@ -216,12 +216,6 @@
                 <li class="nav-item">
                   <a class="nav-link active" data-toggle="tab" href="#tasks" role="tab" aria-controls="tasks" aria-selected="true">Tasks</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Files</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="false">Activity</a>
-                </li>
               </ul>
               <div class="tab-content">
                 <div class="tab-pane fade show active" id="tasks" role="tabpanel" data-filter-list="card-list-body">
@@ -244,350 +238,16 @@
                     </form>
                   </div>
                   <!--end of content list head-->
+                  
                   <div class="content-list-body">
-                    <div class="card-list">
+                  @foreach ($projectsWithTasks as $project)
+                  
+ @foreach ($project->tasks as $task)
+    <div class="card card-task">
+    <div class="card-list">
                       <div class="card-list-head">
-                        <h6>Evaluation</h6>
-                        <div class="dropdown">
-                          <button class="btn-options" type="button" id="cardlist-dropdown-button-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Rename</a>
-                            <a class="dropdown-item text-danger" href="#">Archive</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card-list-body">
-
-                        <div class="card card-task">
-                          <div class="progress">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                          <div class="card-body">
-                            <div class="card-title">
-                              <a href="#"><h6 data-filter-by="text">Client objective meeting</h6></a>
-                              <span class="text-small">Today</span>
-                            </div>
-                            <div class="card-meta">
-                              <ul class="avatars">
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Kenny">
-                                    <img alt="Kenny Tran" class="avatar" src="assets/img/avatar-male-6.jpg" />
-                                  </a>
-                                </li>
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="David">
-                                    <img alt="David Whittaker" class="avatar" src="assets/img/avatar-male-4.jpg" />
-                                  </a>
-                                </li>
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Sally">
-                                    <img alt="Sally Harper" class="avatar" src="assets/img/avatar-female-3.jpg" />
-                                  </a>
-                                </li>
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Kristina">
-                                    <img alt="Kristina Van Der Stroem" class="avatar" src="assets/img/avatar-female-4.jpg" />
-                                  </a>
-                                </li>
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Claire">
-                                    <img alt="Claire Connors" class="avatar" src="assets/img/avatar-female-1.jpg" />
-                                  </a>
-                                </li>
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Marcus">
-                                    <img alt="Marcus Simmons" class="avatar" src="assets/img/avatar-male-1.jpg" />
-                                  </a>
-                                </li>
-
-                              </ul>
-                              <div class="d-flex align-items-center">
-                                <i class="material-icons">playlist_add_check</i>
-                                <span>3/4</span>
-                              </div>
-                              <div class="dropdown card-options">
-                                <button class="btn-options" type="button" id="task-dropdown-button-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <i class="material-icons">more_vert</i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                  <a class="dropdown-item" href="#">Mark as done</a>
-                                  <div class="dropdown-divider"></div>
-                                  <a class="dropdown-item text-danger" href="#">Archive</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="card card-task">
-                          <div class="progress">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 20%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                          <div class="card-body">
-                            <div class="card-title">
-                              <a href="#"><h6 data-filter-by="text">Target market trend analysis</h6></a>
-                              <span class="text-small">5 days</span>
-                            </div>
-                            <div class="card-meta">
-                              <ul class="avatars">
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Peggy">
-                                    <img alt="Peggy Brown" class="avatar" src="assets/img/avatar-female-2.jpg" />
-                                  </a>
-                                </li>
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="David">
-                                    <img alt="David Whittaker" class="avatar" src="assets/img/avatar-male-4.jpg" />
-                                  </a>
-                                </li>
-
-                              </ul>
-                              <div class="d-flex align-items-center">
-                                <i class="material-icons">playlist_add_check</i>
-                                <span>2/10</span>
-                              </div>
-                              <div class="dropdown card-options">
-                                <button class="btn-options" type="button" id="task-dropdown-button-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <i class="material-icons">more_vert</i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                  <a class="dropdown-item" href="#">Mark as done</a>
-                                  <div class="dropdown-divider"></div>
-                                  <a class="dropdown-item text-danger" href="#">Archive</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="card card-task">
-                          <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                          <div class="card-body">
-                            <div class="card-title">
-                              <a href="#"><h6 data-filter-by="text">Assemble Outcomes Report for client</h6></a>
-                              <span class="text-small">7 days</span>
-                            </div>
-                            <div class="card-meta">
-                              <ul class="avatars">
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Marcus">
-                                    <img alt="Marcus Simmons" class="avatar" src="assets/img/avatar-male-1.jpg" />
-                                  </a>
-                                </li>
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Claire">
-                                    <img alt="Claire Connors" class="avatar" src="assets/img/avatar-female-1.jpg" />
-                                  </a>
-                                </li>
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="David">
-                                    <img alt="David Whittaker" class="avatar" src="assets/img/avatar-male-4.jpg" />
-                                  </a>
-                                </li>
-
-                              </ul>
-                              <div class="d-flex align-items-center">
-                                <i class="material-icons">playlist_add_check</i>
-                                <span>0/6</span>
-                              </div>
-                              <div class="dropdown card-options">
-                                <button class="btn-options" type="button" id="task-dropdown-button-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <i class="material-icons">more_vert</i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                  <a class="dropdown-item" href="#">Mark as done</a>
-                                  <div class="dropdown-divider"></div>
-                                  <a class="dropdown-item text-danger" href="#">Archive</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                    <div class="card-list">
-                      <div class="card-list-head">
-                        <h6>Ideation</h6>
-                        <div class="dropdown">
-                          <button class="btn-options" type="button" id="cardlist-dropdown-button-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Rename</a>
-                            <a class="dropdown-item text-danger" href="#">Archive</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card-list-body">
-
-                        <div class="card card-task">
-                          <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                          <div class="card-body">
-                            <div class="card-title">
-                              <a href="#"><h6 data-filter-by="text">Create brand mood boards</h6></a>
-                              <span class="text-small">14 days</span>
-                            </div>
-                            <div class="card-meta">
-                              <ul class="avatars">
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Sally">
-                                    <img alt="Sally Harper" class="avatar" src="assets/img/avatar-female-3.jpg" />
-                                  </a>
-                                </li>
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Claire">
-                                    <img alt="Claire Connors" class="avatar" src="assets/img/avatar-female-1.jpg" />
-                                  </a>
-                                </li>
-
-                              </ul>
-                              <div class="d-flex align-items-center">
-                                <i class="material-icons">playlist_add_check</i>
-                                <span>1/4</span>
-                              </div>
-                              <div class="dropdown card-options">
-                                <button class="btn-options" type="button" id="task-dropdown-button-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <i class="material-icons">more_vert</i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                  <a class="dropdown-item" href="#">Mark as done</a>
-                                  <div class="dropdown-divider"></div>
-                                  <a class="dropdown-item text-danger" href="#">Archive</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="card card-task">
-                          <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                          <div class="card-body">
-                            <div class="card-title">
-                              <a href="#"><h6 data-filter-by="text">Produce broad concept directions</h6></a>
-                              <span class="text-small">21 days</span>
-                            </div>
-                            <div class="card-meta">
-                              <ul class="avatars">
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Peggy">
-                                    <img alt="Peggy Brown" class="avatar" src="assets/img/avatar-female-2.jpg" />
-                                  </a>
-                                </li>
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="David">
-                                    <img alt="David Whittaker" class="avatar" src="assets/img/avatar-male-4.jpg" />
-                                  </a>
-                                </li>
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Ravi">
-                                    <img alt="Ravi Singh" class="avatar" src="assets/img/avatar-male-3.jpg" />
-                                  </a>
-                                </li>
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Sally">
-                                    <img alt="Sally Harper" class="avatar" src="assets/img/avatar-female-3.jpg" />
-                                  </a>
-                                </li>
-
-                              </ul>
-                              <div class="d-flex align-items-center">
-                                <i class="material-icons">playlist_add_check</i>
-                                <span>0/5</span>
-                              </div>
-                              <div class="dropdown card-options">
-                                <button class="btn-options" type="button" id="task-dropdown-button-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <i class="material-icons">more_vert</i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                  <a class="dropdown-item" href="#">Mark as done</a>
-                                  <div class="dropdown-divider"></div>
-                                  <a class="dropdown-item text-danger" href="#">Archive</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="card card-task">
-                          <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                          <div class="card-body">
-                            <div class="card-title">
-                              <a href="#"><h6 data-filter-by="text">Present concepts and establish direction</h6></a>
-                              <span class="text-small">28 days</span>
-                            </div>
-                            <div class="card-meta">
-                              <ul class="avatars">
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Kristina">
-                                    <img alt="Kristina Van Der Stroem" class="avatar" src="assets/img/avatar-female-4.jpg" />
-                                  </a>
-                                </li>
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Peggy">
-                                    <img alt="Peggy Brown" class="avatar" src="assets/img/avatar-female-2.jpg" />
-                                  </a>
-                                </li>
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Ravi">
-                                    <img alt="Ravi Singh" class="avatar" src="assets/img/avatar-male-3.jpg" />
-                                  </a>
-                                </li>
-
-                              </ul>
-                              <div class="d-flex align-items-center">
-                                <i class="material-icons">playlist_add_check</i>
-                                <span>0/3</span>
-                              </div>
-                              <div class="dropdown card-options">
-                                <button class="btn-options" type="button" id="task-dropdown-button-6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <i class="material-icons">more_vert</i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                  <a class="dropdown-item" href="#">Mark as done</a>
-                                  <div class="dropdown-divider"></div>
-                                  <a class="dropdown-item text-danger" href="#">Archive</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                    <div class="card-list">
-                      <div class="card-list-head">
-                        <h6>Design</h6>
+                      <h2>{{ $project->project_name }}</h2>
+                       
                         <div class="dropdown">
                           <button class="btn-options" type="button" id="cardlist-dropdown-button-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">more_vert</i>
@@ -599,14 +259,14 @@
                         </div>
                       </div>
                       <div class="card-list-body">
-
+                      <h6>{{ $task->name }}</h6>
                         <div class="card card-task">
                           <div class="progress">
                             <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                           <div class="card-body">
                             <div class="card-title">
-                              <a href="#"><h6 data-filter-by="text">Produce realised brand package</h6></a>
+                              <a href="#"><h6 data-filter-by="text">{{ $task->description }}</h6></a>
                               <span class="text-small">Unscheduled</span>
                             </div>
                             <div class="card-meta">
@@ -648,6 +308,14 @@
                             </div>
                           </div>
                         </div>
+
+                      </div>
+                    </div>
+    </div>
+@endforeach
+@endforeach
+
+         
 
                       </div>
                     </div>
@@ -1400,7 +1068,7 @@
                 </div>
               </form>
 
-              <form class="modal fade" id="task-add-modal" tabindex="-1" aria-hidden="true" action="{{ route('projectCoordinator.project.createTask', $project->id) }}" method="POST">
+              <form class="modal fade" id="task-add-modal" tabindex="-1" aria-hidden="true" action="" method="POST">
               @csrf  
               <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -1465,17 +1133,7 @@
                             </div>
                             <div class="form-group-users">
                            
-    @foreach ($project->users as $user)
-    <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="task-user-{{ $user->id }}">
-        <label class="custom-control-label" for="task-user-{{ $user->id }}">
-            <span class="d-flex align-items-center">
-                <!-- <img alt="{{ $user->username }}" src="assets/img/{{ $user->avatar }}" class="avatar mr-2" /> -->
-                <span class="h6 mb-0" data-filter-by="text">{{ $user->username  }}</span>
-            </span>
-        </label>
-    </div>
-    @endforeach
+    
 </div>
 
                           </div>
