@@ -1,5 +1,6 @@
 <?php
 
+// database/migrations/<timestamp>_create_groups_table.php
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -10,11 +11,12 @@ class CreateGroupsTable extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('project_id');
-            $table->unsignedBigInteger('supervisor_id');
-            $table->string('name');
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade');
+            $table->string('group_name');
+            $table->string('project_type');
+            $table->text('members');
+            $table->text('roles');
+            $table->text('pitch')->nullable();
+            $table->string('visibility');
             $table->timestamps();
         });
     }

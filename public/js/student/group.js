@@ -1,43 +1,35 @@
-document.getElementById('add-member').addEventListener('click', function() {
-    var container = document.getElementById('members-container');
-    var membersCount = container.children.length;
-    var memberDiv = document.createElement('div');
-    memberDiv.classList.add('member');
+// JavaScript to handle dynamic addition of username and role selection fields
 
-    var emailInput = document.createElement('input');
-    emailInput.type = 'email';
-    emailInput.name = 'members[' + membersCount + '][email]';
-    emailInput.required = true;
-    memberDiv.appendChild(emailInput);
+let userRolesCounter = 1;
 
-    var rolesDiv = document.createElement('div');
-    rolesDiv.classList.add('roles');
-    var rolesLabel = document.createElement('label');
-    rolesLabel.htmlFor = 'member_roles';
-    rolesLabel.textContent = 'Roles:';
-    rolesDiv.appendChild(rolesLabel);
+function addUserRolesField() {
+    const userRolesForm = document.getElementById('userRolesForm');
 
-    var rolesSelect = document.createElement('select');
-    rolesSelect.name = 'members[' + membersCount + '][roles][]';
-    rolesSelect.multiple = true;
-    rolesSelect.required = true;
-    var rolesOptions = [
-        { value: 'Frontend', text: 'Frontend' },
-        { value: 'Backend', text: 'Backend' },
-        { value: 'Testing', text: 'Testing' },
-        { value: 'Report', text: 'Report' },
-        { value: 'Research', text: 'Research' },
-        { value: 'Full Stack', text: 'Full Stack' },
-    ];
-    rolesOptions.forEach(function(option) {
-        var roleOption = document.createElement('option');
-        roleOption.value = option.value;
-        roleOption.text = option.text;
-        rolesSelect.appendChild(roleOption);
-    });
-    rolesDiv.appendChild(rolesSelect);
+    const userRolesField = `
+        <div class="user-roles-field mt-3">
+            <label for="username_${userRolesCounter}">Select Username:</label>
+            <select id="username_${userRolesCounter}" class="form-control" name="selectedUsernames[]" required>
+                <option value="">Select Username</option>
+                @foreach ($studentUsernames as $username)
+                    <option value="{{ $username }}">{{ $username }}</option>
+                @endforeach
+            </select>
 
-    memberDiv.appendChild(rolesDiv);
+            <div class="form-group row align-items-center mt-2">
+                <label class="col-3">Role:</label>
+                <select class="form-control col" name="selectedRoles_${userRolesCounter}[]" multiple required>
+                    <option value="">Select Roles</option>
+                    <option value="Leader">Leader</option>
+                    <option value="Frontend">Frontend</option>
+                    <option value="Backend">Backend</option>
+                    <option value="Testing">Testing</option>
+                    <option value="Researcher">Researcher</option>
+                    <option value="Documentation">Documentation</option>
+                </select>
+            </div>
+        </div>
+    `;
 
-    container.appendChild(memberDiv);
-});
+    userRolesForm.insertAdjacentHTML('beforeend', userRolesField);
+    userRolesCounter++;
+}

@@ -1,3 +1,7 @@
+@php
+    use App\Models\User;
+@endphp
+
 <!doctype html>
 <html lang="en">
 
@@ -15,7 +19,7 @@
       gtag('config', 'UA-52115242-14');
     </script>
     <meta charset="utf-8">
-    <title>Project Tracking System</title>
+    <title>Project Tracking Tools</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A project management Bootstrap theme by Medium Rare">
     <link href="assets/img/favicon.ico" rel="icon" type="image/x-icon">
@@ -23,6 +27,10 @@
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
     <link href="{{ asset('css/frontend/theme.css') }}" rel="stylesheet" type="text/css" media="all" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/projectcordinator.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/chatify/dark.mode.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/chatify/light.mode.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/chatify/style.css') }}">
+    
   </head>
 
   <body>
@@ -55,18 +63,15 @@
           <ul class="navbar-nav d-lg-block">
 
             <!-- Sidebar with fields -->
-
-            <div>Student Dashboard </div><br>
-
       <div class="sidebar-profile">
-        
+      <div class="profile-avatar">
+    <label for="avatar-input" class="avatar-label">
+   
+    <img class="avatar-image" src="{{asset(auth()->user()->profile_img ?: $defaultImage )}}"  alt="Profile Image">
        
-        <div class="profile-avatar">
-          <label for="avatar-input" class="avatar-label">
-            <i class="fas fa-plus"></i>
-          </label>
-          <input type="file" id="avatar-input" style="display: none;">
-        </div>
+    </label>
+</div>
+
         <div class="profile-name" id="username-placeholder"></div>
       </div>
 
@@ -74,13 +79,18 @@
       <h4 class="username"><strong>{{ Auth::user()->username }}</strong></h4>
 </div>
 
-      <button class="edit-profile-button">Edit Profile</button>
+<button class="edit-profile-button">Edit Profile</button>
 </ul>
 
           <hr>
           <div class="d-none d-lg-block w-100">
             <span class="text-small text-muted">Quick Links</span>
+    
             <ul class="nav nav-small flex-column mt-2">
+            <li class="nav-item">
+    <a href="{{ route('student.dashboard') }}" class="nav-link">Dashboard</a>
+</li>
+
             <li class="nav-item">
     <a href="{{ route('student.projects.index') }}" class="nav-link">Projects Overview</a>
 </li>
@@ -89,12 +99,9 @@
               <li class="nav-item">
               <a href="{{ route('student.student.group') }}" class="nav-link">Group</a>
               </li>
-              <!-- <li class="nav-item">
-                <a href="{{ route('projectCoordinator.nav-side-task') }}"class="nav-link">Single Task</a>
-              </li>
               <li class="nav-item">
-              <a href="{{ route('projectCoordinator.nav-side-kanban-board') }}"class="nav-link">Account Setting</a>
-              </li> -->
+              <a href="#"class="nav-link">Account Setting</a>
+              </li>
             </ul>
             <hr>
           </div>
@@ -144,6 +151,45 @@
 
       </div>
       <div class="main-container">
+      <div class="edit-profile-form" style="display: none;">
+ 
+      <form action="{{ route('projectCoordinator.profile.update') }}" method="POST" enctype="multipart/form-data" id="profile-form" class="pro-form">
+   @csrf
+      <!-- Your existing form fields -->
+<i class="fas fa-times" id="close-icon" >
+  <button type="submit" class="proclose">X</button>
+</i>
+    <input type="file" id="avatar-input" name="profile_img" style="display: none;">
+    <div class="profile-avatar">
+    <label for="avatar-input">
+            <i class="fas fa-plus" id="upload-icon"></i>
+            @if(Auth::user()->prodile_img)
+                <img class="avatar-label" src="{{ asset(Auth::user()->profile_img) }}" id="avatar-preview" alt="Profile Image">
+            @else
+                <img class="avatar-label" src="{{ asset('img/profile.png') }}" id="avatar-preview" alt="Default Profile Image">
+            @endif
+        </label>
+    </div>
+    <div class="pro-field">
+        <label for="new-username">Username:</label>
+        <input type="text" id="new-username" name="new_username" value="{{ Auth::user()->username }}" required>
+        @error('new_username')
+        <span class="error-message">{{ $message }}</span>
+        @enderror
+      </div>
+
+    <!-- Your existing form fields -->
+    <div class="pro-field">
+    <button type="submit" class="updatebtn">Update Profile</button>
+
+    <!-- Close icon -->
+    
+
+</form>
+
+</div>
+</div>
+      <div class="main-container">
 
         <div class="container">
           <div class="row justify-content-center">
@@ -161,7 +207,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2023 Kanchan Chaudhary. All rights reserved.</p>
+        <p>&copy; 2023 Kanchan Chaudhary. All rights reserved.</p>-->
       </footer>
 
     <!-- Required vendor scripts (Do not remove) -->

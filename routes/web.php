@@ -15,11 +15,8 @@ use App\Http\Controllers\PusherController;
 use App\Http\Controllers\cordinator\TaskController;
 use App\Http\Controllers\cordinator\FileController;
 use App\Http\Controllers\cordinator\SideBarTaskController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectCoordinatorController;
 
-// Route::post('/projects/update-status', 'ProjectCoordinatorController@updateProjectStatus')->name('projectCoordinator.updateStatus');
-
-Route::post('/profile/update', [ProfileController::class,'update'])->name('profile.update');
 
 Route::get('/', function () {
     return view('welcome');
@@ -88,9 +85,9 @@ Route::group(
         })->name('nav-side-task');
 
         // Route for nav-side-kanban-board.html
-        Route::get('/nav-side-kanban-board', function () {
-            return view('layouts.nav-side-kanban-board');
-        })->name('nav-side-kanban-board');
+        Route::get('/evaluation', function () {
+            return view('layouts.evaluation');
+        })->name('evaluation');
 
         // Add the routes for the ProjectController
         Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
@@ -101,8 +98,10 @@ Route::group(
     // Route for adding supervisors
     Route::post('/supervisors', [ProjectController::class, 'storeSupervisor'])->name('supervisors.store');
  
-    //updating profile
-    Route::post('/profile/update', [ProjectController::class, 'update'])->name('profile.update');
+    // //updating profile
+    // Route::get('/', [ProjectCoordinatorController::class, 'getProfileImage'])->name('profile.image');
+
+    Route::post('/update', [ProjectCoordinatorController::class, 'updateProfile'])->name('profile.update');
 
     //status
     // Route::post('/update-status/{project}', [ProjectController::class, 'updateStatus'])->name('projects.updateStatus');
@@ -112,8 +111,7 @@ Route::group(
  
     //deleting
 
-
-    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+    Route::delete('/projects/{projectId}', [ProjectController::class, 'destroy'])->name('projects.destroy');
         
     // Route to show tasks for a specific project
 // Route::get('/sidebar-task/{projectId}', [TaskController::class, 'showTasksForProject']);
@@ -140,6 +138,9 @@ Route::get('/sidebartask', [SideBarTaskController::class, 'viewSidebarTask'])->n
 );
 
 
+
+
+
 ///student
 
 Route::group([
@@ -153,6 +154,9 @@ Route::group([
     // Add the route for the Group blade
 
 Route::get('/group', [StudentGroupController::class, 'viewGroup'])->name('student.group');
+// //get project type
+// Route::get('/project-types', [StudentGroupController::class, 'getProjectTypes'])->name('project-types');
+
 
 });
 

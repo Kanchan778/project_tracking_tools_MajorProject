@@ -84,9 +84,7 @@
                         <!-- <li class="nav-item">
                             <a href="{{ route('projectCoordinator.nav-side-task') }}" class="nav-link">Single Task</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.nav-side-kanban-board') }}" class="nav-link">Account Setting</a>
-                        </li> -->
+                       -->
                     </ul>
                     <hr>
                 </div>

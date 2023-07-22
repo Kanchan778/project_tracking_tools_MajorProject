@@ -14,6 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A project management Bootstrap theme by Medium Rare">
     <link href="assets/img/favicon.ico" rel="icon" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
     <link href="{{ asset('css/frontend/theme.css') }}"  rel="stylesheet" type="text/css" media="all" />
@@ -74,9 +76,7 @@
                         <!-- <li class="nav-item">
                             <a href="{{ route('projectCoordinator.nav-side-task') }}" class="nav-link">Single Task</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.nav-side-kanban-board') }}" class="nav-link">Account Setting</a>
-                        </li> -->
+                      -->
                     </ul>
                     <hr>
                 </div>
@@ -254,30 +254,55 @@
               <input type="text" class="form-control col" name="project_name" required>
             </div>
             <div class="form-group row align-items-center">
-  <label class="col-3">Project_type</label>
-  <select class="form-control col" name="section[]" multiple required>
-    <option value="">Select Project Type</option>
-    <!-- option for project type -->
-  </select>
+              <div>
+
+              <div class="form-group row align-items-center">
+  <label class="col-3">Project Type:</label>
+  @foreach ($projectTypes as $projectType)
+    <p>{{ $projectType }}</p>
+@endforeach
 </div>
 
-            <div class="form-group row align-items-center">
-              <label class="col-3">Add Members</label>
-              <select class="form-control col" name="semester" required>
-               <!-- add members -->
-              </select>
-            </div>
-            <div class="form-group row align-items-center">
-              <label class="col-3">Role:</label>
-              <select class="form-control col" name="course" required>
-                <option value="">Select Role</option>
-                <option value="Frontend"> Frontend</option>
-                <option value="Backend">Backend</option>
-                <option value="Testing">Testing</option>
-                <option value="Researcher">Researcher</option>
-                <option value="Researcher">Documentation</option>
-              </select>
-            </div>
+<div id="userRolesForm">
+    <!-- Username and Role selection fields will be added here dynamically -->
+</div>
+
+<div>
+    <button class="btn btn-outline-primary mt-2" type="button" onclick="addUserRolesField()">
+        <i class="fas fa-plus"></i> Add Username & Role
+    </button>
+</div>
+<div id="selectedDataContainer"></div>
+<div>
+    <label for="username">Select Username:</label>
+    <select id="username" class="form-control" name="selectedUsername" required>
+        <option value="">Select Username</option>
+        @foreach ($studentUsernames as $username)
+            <option value="{{ $username }}">{{ $username }}</option>
+        @endforeach
+    </select>
+   
+</div>
+
+<div id="roleSelectionContainer" style="display: none;">
+    <div class="form-group row align-items-center">
+        <label class="col-3" id="selectedUsernameLabel"></label>
+        <select class="form-control col" name="selectedRoles[]" multiple required>
+            <option value="">Select Roles</option>
+            <option value="Leader">Leader</option>
+            <option value="Frontend">Frontend</option>
+            <option value="Backend">Backend</option>
+            <option value="Testing">Testing</option>
+            <option value="Researcher">Researcher</option>
+            <option value="Documentation">Documentation</option>
+        </select>
+    </div>
+</div>
+<button class="btn btn-outline-primary mt-2" type="button" onclick="toggleRoleSelection()">
+        <i class="fas fa-caret-down"></i>
+    </button>
+
+</div>
            
             <div class="alert alert-warning text-small" role="alert">
               <span>Pitch for your group supervisor.</span>
@@ -348,8 +373,11 @@
 <script src="{{ asset('js/frontend/dropzone.min.js') }}"></script>
 <!-- List.js - filter list elements -->
 <script src="{{ asset('js/frontend/list.min.js') }}"></script>
+
 <!-- Required theme scripts (Do not remove) -->
 <script src="{{ asset('js/frontend/theme.js') }}"></script>
+<!-- groupjs -->
+<script src="{{ asset('js/student/group.js') }}"></script>
 
 <!-- This appears in the demo only - demonstrates different layouts -->
 <style>

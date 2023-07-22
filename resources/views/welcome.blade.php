@@ -39,7 +39,7 @@
 <body>
     <!-- Add your splash screen content here -->
     <div class="splash-container">
-        <img class="splash-logo" src="{{ asset('img/logo.png') }}" alt="Logo">
+        <img class="splash-logo" src="{{ asset('img/plogo.mp4') }}" alt="Logo">
         <h1 class="splash-message">Welcome to PTT</h1>
       
     </div>

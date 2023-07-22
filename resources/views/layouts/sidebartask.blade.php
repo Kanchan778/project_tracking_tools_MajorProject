@@ -1,5 +1,13 @@
+@php
+    use App\Models\User;
+@endphp
+
 <!doctype html>
 <html lang="en">
+
+  
+<!-- Mirrored from pipeline.mediumra.re/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 14 Jul 2023 08:23:11 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-52115242-14"></script>
@@ -7,6 +15,7 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
+    
       gtag('config', 'UA-52115242-14');
     </script>
     <meta charset="utf-8">
@@ -16,91 +25,115 @@
     <link href="assets/img/favicon.ico" rel="icon" type="image/x-icon">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
-    <link href="{{ asset('css/frontend/theme.css') }}"  rel="stylesheet" type="text/css" media="all" />
+    <link href="{{ asset('css/frontend/theme.css') }}" rel="stylesheet" type="text/css" media="all" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/projectcordinator.css') }}">
-</head>
-<body>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/chatify/dark.mode.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/chatify/light.mode.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/chatify/style.css') }}">
+    
+  </head>
+
+  <body>
+  @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+  @endif
+
     <div class="layout layout-nav-side">
-        <div class="navbar navbar-expand-lg bg-dark navbar-dark sticky-top">
-            <div class="d-flex align-items-center">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="d-block d-lg-none ml-2">
-                    <div class="dropdown">
-                        <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img alt="Image" src="assets/img/avatar-male-4.jpg" class="avatar" />
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a href="nav-side-user.html" class="dropdown-item">Profile</a>
-                            <a href="utility-account-settings.html" class="dropdown-item">Account Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
-                        </div>
-                    </div>
-                </div>
+      <div class="navbar navbar-expand-lg bg-dark navbar-dark sticky-top">
+        <div class="d-flex align-items-center">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="d-block d-lg-none ml-2">
+            <div class="dropdown">
+              <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img alt="Image" src="assets/img/avatar-male-4.jpg" class="avatar" />
+              </a>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a href="nav-side-user.html" class="dropdown-item">Profile</a>
+                <a href="utility-account-settings.html" class="dropdown-item">Account Settings</a>
+                <a href="#" class="dropdown-item">Log Out</a>
+              </div>
             </div>
-            <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
-                <ul class="navbar-nav d-lg-block">
-                    <!-- Sidebar with fields -->
-                    <div class="sidebar-profile">
-                        <div class="profile-avatar">
-                            <label for="avatar-input" class="avatar-label">
-                                <i class="fas fa-plus"></i>
-                            </label>
-                            <input type="file" id="avatar-input" style="display: none;">
-                        </div>
-                        <div class="profile-name" id="username-placeholder"></div>
-                    </div>
-                    <div class="username text-center">
-                    <h4 class="username"><strong>{{ Auth::user()->username }}</strong></h4>
-                    </div>
-                    <button class="edit-profile-button">Edit Profile</button>
-                </ul>
-                <hr>
-                <div class="d-none d-lg-block w-100">
-                    <span class="text-small text-muted">Quick Links</span>
-                    <ul class="nav nav-small flex-column mt-2">
-                        <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.project') }}" class="nav-link">Project Overview</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.sidebartask') }}" class="nav-link">Task</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.nav-side-task') }}" class="nav-link">Group</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.nav-side-kanban-board') }}" class="nav-link">Account Setting</a>
-                        </li>
-                    </ul>
-                    <hr>
+          </div>
+        </div>
+        <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
+          <ul class="navbar-nav d-lg-block">
+
+            <!-- Sidebar with fields -->
+      <div class="sidebar-profile">
+      <div class="profile-avatar">
+    <label for="avatar-input" class="avatar-label">
+   
+    <img class="avatar-image" src="{{asset(auth()->user()->profile_img ?: $defaultImage )}}"  alt="Profile Image">
+       
+    </label>
+</div>
+
+        <div class="profile-name" id="username-placeholder"></div>
+      </div>
+
+      <div class="username text-center">
+      <h4 class="username"><strong>{{ Auth::user()->username }}</strong></h4>
+</div>
+
+<button class="edit-profile-button">Edit Profile</button>
+
+</ul>
+
+          <hr>
+          <div class="d-none d-lg-block w-100">
+            <span class="text-small text-muted">Quick Links</span>
+            <ul class="nav nav-small flex-column mt-2">
+            <li class="nav-item">
+                <a href="{{ route('projectCoordinator.dashboard') }}" class="nav-link">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('projectCoordinator.project') }}" class="nav-link">Project Overview</a>
+              </li>
+              <li class="nav-item">
+              <a href="{{ route('projectCoordinator.sidebartask') }}" class="nav-link">Task</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('projectCoordinator.nav-side-task') }}"class="nav-link">Group</a>
+              </li>
+              <li class="nav-item">
+              <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Evaluation</a>
+              </li>
+              <li class="nav-item">
+              <a href="#"class="nav-link">Account Setting</a>
+              </li>
+            </ul>
+            <hr>
+          </div>
+          <div>
+            <form>
+              <div class="input-group input-group-dark input-group-round">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="material-icons">search</i>
+                  </span>
                 </div>
-                <div>
-                    <form>
-                        <div class="input-group input-group-dark input-group-round">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="material-icons">search</i>
-                                </span>
-                            </div>
-                            <input type="search" class="form-control form-control-dark" placeholder="Search" aria-label="Search app">
-                        </div>
-                    </form>
-                    <div class="dropdown mt-2">
-                        <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="newContentButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Add New
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Team</a>
-                            <a class="dropdown-item" href="#">Project</a>
-                            <a class="dropdown-item" href="#">Task</a>
-                        </div>
-                    </div>
-                </div>
+                <input type="search" class="form-control form-control-dark" placeholder="Search" aria-label="Search app">
+              </div>
+            </form>
+            <div class="dropdown mt-2">
+              <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="newContentButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Add New
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Team</a>
+                <a class="dropdown-item" href="#">Project</a>
+                <a class="dropdown-item" href="#">Task</a>
+              </div>
             </div>
-            <div class="d-none d-lg-block">
-                <div class="dropup">
-                <a href="{{ route('projectCoordinator.logout') }}"
+          </div>
+        </div>
+        <div class="d-none d-lg-block">
+          <div class="dropup">
+          <a href="{{ route('projectCoordinator.logout') }}"
    onclick="event.preventDefault();
             document.getElementById('logout-form').submit();">
     Logout
@@ -109,34 +142,56 @@
 <form id="logout-form" action="{{ route('projectCoordinator.logout') }}" method="POST" style="display: none;">
     @csrf
 </form>
-                    </a>
-                    <div class="dropdown-menu">
-                        <a href="nav-side-user.html" class="dropdown-item">Profile</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-   
-      <div class="main-container">
 
-        <div class="navbar bg-white breadcrumb-bar">
-          
-          <div class="dropdown">
-            <button class="btn btn-round" role="button" data-toggle="dropdown" aria-expanded="false">
-              <i class="material-icons">settings</i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right">
-
-              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#project-edit-modal">Edit Project</a>
-              <a class="dropdown-item" href="#">Share</a>
-              <a class="dropdown-item" href="#">Mark as Complete</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item text-danger" href="#">Archive</a>
-
+            </a>
+            <div class="dropdown-menu">
+              <a href="nav-side-user.html" class="dropdown-item">Profile</a>
+              
+              
             </div>
           </div>
-
         </div>
+
+      </div>
+      <div class="main-container">
+      <div class="edit-profile-form" style="display: none;">
+ 
+      <form action="{{ route('projectCoordinator.profile.update') }}" method="POST" enctype="multipart/form-data" id="profile-form" class="pro-form">
+   @csrf
+      <!-- Your existing form fields -->
+<i class="fas fa-times" id="close-icon" >
+  <button type="submit" class="proclose">X</button>
+</i>
+    <input type="file" id="avatar-input" name="profile_img" style="display: none;">
+    <div class="profile-avatar">
+    <label for="avatar-input">
+            <i class="fas fa-plus" id="upload-icon"></i>
+            @if(Auth::user()->prodile_img)
+                <img class="avatar-label" src="{{ asset(Auth::user()->profile_img) }}" id="avatar-preview" alt="Profile Image">
+            @else
+                <img class="avatar-label" src="{{ asset('img/profile.png') }}" id="avatar-preview" alt="Default Profile Image">
+            @endif
+        </label>
+    </div>
+    <div class="pro-field">
+        <label for="new-username">Username:</label>
+        <input type="text" id="new-username" name="new_username" value="{{ Auth::user()->username }}" required>
+        @error('new_username')
+        <span class="error-message">{{ $message }}</span>
+        @enderror
+      </div>
+
+    <!-- Your existing form fields -->
+    <div class="pro-field">
+    <button type="submit" class="updatebtn">Update Profile</button>
+
+    <!-- Close icon -->
+    
+
+</form>
+
+</div>
+</div>
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-11 col-xl-10">

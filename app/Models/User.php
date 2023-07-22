@@ -25,8 +25,18 @@ use App\Models\Project;
 class User extends Authenticatable
 {
     // ...
+
+    protected $fillable = [
+        'name', 'email', 'password', 'profile_img', // Add 'profile_img' to the fillable fields
+    ];
     public function projects()
     {
         return $this->belongsToMany(Project::class);
     }
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
+
 }    

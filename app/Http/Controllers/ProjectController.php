@@ -175,7 +175,7 @@ public function updateStatusFromDropdown(Request $request, $projectId)
     $request->validate([
         'status' => ['required', Rule::in(['Active', 'In Evaluation', 'Completed'])],
     ]);
-    dd($projectId);
+    // dd($projectId);
     // Find the project by its ID
     $project = Project::find($projectId);
      

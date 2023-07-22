@@ -196,7 +196,7 @@
           <div class="row justify-content-center">
             <div class="col-lg-11 col-xl-9">
               <section class="py-4 py-lg-5">
-                <h1 class="display-4 mb-3">Project Tracking System</h1>
+                <h1 class="display-4 mb-3">Evaluation</h1>
                 <p class="lead">
                        </p>
                        

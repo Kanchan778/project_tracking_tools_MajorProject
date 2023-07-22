@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Group;
 
 
 class Project extends Model
@@ -43,5 +44,12 @@ public function tasks()
     {
         return $this->hasMany(File::class);
     }
+
+//rltncp with group
+public function group()
+{
+    return $this->hasMany(Group::class);
+}
+
 }
 
