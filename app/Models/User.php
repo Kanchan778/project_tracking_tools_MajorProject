@@ -38,5 +38,11 @@ class User extends Authenticatable
         return $this->belongsTo(Group::class);
     }
 
+    //group users roles
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 
+    
 }    

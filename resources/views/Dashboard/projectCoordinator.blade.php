@@ -1,6 +1,9 @@
 @php
     use App\Models\User;
+
+    $defaultImage = 'public/img/Profile.png';
 @endphp
+
 
 <!doctype html>
 <html lang="en">

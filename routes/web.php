@@ -35,35 +35,6 @@ Route::get('Authenticate/registration', function () {
 
 Route::post('/register', [RegistrationController::class, 'register'])->name('register');
 
-//comment
-// Route for the index method
-Route::get('/pusher', [PusherController::class, 'index']);
-
-// Route for the broadcast method
-Route::post('/pusher/broadcast', [PusherController::class, 'broadcast']);
-
-// Route for the receiver method
-Route::post('/pusher/receiver', [PusherController::class, 'receiver']);
-
-
-Route::get('/pusher/chat', 'PusherController@displayChat')->name('chat');
-
-Route::get('login/gmail', [AuthLoginController::class, 'redirectToGmail'])->name('login-gmail');
-Route::get('login/gmail/callback', [AuthLoginController::class, 'handleGmailCallback']);
-
-Route::get('login/facebook', [AuthLoginController::class, 'redirectToFacebook'])->name('login-facebook');
-Route::get('login/facebook/callback', [AuthLoginController::class, 'handleFacebookCallback']);
-Route::get('Authenticate/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('Authenticate/login', [LoginController::class, 'login'])->name('login.submit');
-// Route::post('Authenticate/logout', [LoginController::class, 'logout'])->name('logout');
-
-
-// For handling the password reset form submission
-Route::post('Authenticate/ForgotPassword', 'ResetPasswordController@reset')->name('password-reset');
-
-// For displaying the password reset form
-Route::get('Authenticate/ForgotPassword', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password-reset');
-
 
 Route::group(
     [
@@ -160,7 +131,7 @@ Route::group([
 
 
      // Route to handle the form submission and store the group
-Route::post('/student/group', [StudentGroupController::class, 'store'])->name('group.store');
+     Route::post('/group', [StudentGroupController::class, 'store'])->name('group.store');
 
 });
 
@@ -189,3 +160,36 @@ Route::group(
 );
 
 
+
+
+
+
+
+//comment
+// Route for the index method
+Route::get('/pusher', [PusherController::class, 'index']);
+
+// Route for the broadcast method
+Route::post('/pusher/broadcast', [PusherController::class, 'broadcast']);
+
+// Route for the receiver method
+Route::post('/pusher/receiver', [PusherController::class, 'receiver']);
+
+
+Route::get('/pusher/chat', 'PusherController@displayChat')->name('chat');
+
+Route::get('login/gmail', [AuthLoginController::class, 'redirectToGmail'])->name('login-gmail');
+Route::get('login/gmail/callback', [AuthLoginController::class, 'handleGmailCallback']);
+
+Route::get('login/facebook', [AuthLoginController::class, 'redirectToFacebook'])->name('login-facebook');
+Route::get('login/facebook/callback', [AuthLoginController::class, 'handleFacebookCallback']);
+Route::get('Authenticate/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('Authenticate/login', [LoginController::class, 'login'])->name('login.submit');
+// Route::post('Authenticate/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+// For handling the password reset form submission
+Route::post('Authenticate/ForgotPassword', 'ResetPasswordController@reset')->name('password-reset');
+
+// For displaying the password reset form
+Route::get('Authenticate/ForgotPassword', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password-reset');

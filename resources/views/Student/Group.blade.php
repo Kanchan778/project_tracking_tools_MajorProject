@@ -232,7 +232,7 @@
                   </div>
                 </div>
               </form>
-    <form class="modal fade" id="project-add-modal" tabindex="-1" aria-hidden="true" action="student.group.store" method="POST">
+    <form class="modal fade" id="project-add-modal" tabindex="-1" aria-hidden="true" action="{{ route('student.group.store') }}" method="POST">
     @csrf
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -325,17 +325,10 @@
                     </div>
                 </div>
             </div>
-            @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
         </ul>
     </div>
-@endif -->
             <div class="modal-footer">
-              <button type="submit">Add</button>
+              <button id ="addButton" type="submit">Add</button>
               </div>
         </div>
     </div>
@@ -379,6 +372,7 @@
 <!-- Required theme scripts (Do not remove) -->
 <script src="{{ asset('js/frontend/theme.js') }}"></script>
 <!-- groupjs -->
+<script src="{{ asset('js/student/group.js') }}"></script>
 <!-- Your HTML code (unchanged) -->
 
 <!-- JavaScript to handle dynamic addition of username and role selection fields -->

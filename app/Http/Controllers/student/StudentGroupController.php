@@ -83,27 +83,33 @@ public function store(Request $request)
     $group->project_type = $validatedData['project_type'];
     $group->pitch = $validatedData['pitch'];
     $group->visibility = $validatedData['visibility'];
-dd($group); 
+
     // Save the group to the database
+     dd($group);
     $group->save();
 
-    // Attach users to the group with their respective roles
-    if ($request->has('members')) {
-        $members = $validatedData['members'];
-        foreach ($members as $memberId) {
-            $user = User::find($memberId);
-            if ($user) {
-                // Attach the user to the group
-                $group->users()->attach($user->id);
+    // Attach users to the group with their respective roles using the sync method
+    // Attach users to the group with their respective roles using the sync method
+if ($request->has('members')) {
+    $members = $validatedData['members'];
+    $roles = $validatedData['selectedRoles'];
 
-                // Attach roles to the user in the context of this group
-                $roles = $validatedData['selectedRoles'];
-                $user->roles()->attach($roles, ['group_id' => $group->id]);
-            }
-        }
+    // Create an associative array to map users with their roles
+    $group->members()->sync($roles);
+    $usersWithRoles = [];
+    foreach ($members as $index => $memberId) {
+        $usersWithRoles[$memberId] = ['role' => $roles[$index]];
     }
 
-    // Redirect to a success page or wherever you want after saving the data
-    return redirect()->back()->with('success', 'Group created successfully.');
+    // Attach users and their roles to the group
+    $group->users()->sync($usersWithRoles);
 }
+
+
+    // Redirect to a success page or wherever you want after saving the data
+    // Redirect to a success page or wherever you want after saving the data
+    return redirect()->route('student.group')->with('success', 'Group created successfully.');
+
+}
+
     }

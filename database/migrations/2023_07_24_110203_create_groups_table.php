@@ -13,8 +13,6 @@ class CreateGroupsTable extends Migration
             $table->id();
             $table->string('group_name');
             $table->string('project_type');
-            $table->text('members');
-            $table->text('roles');
             $table->text('pitch')->nullable();
             $table->string('visibility');
             $table->timestamps();
