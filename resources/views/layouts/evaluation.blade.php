@@ -97,7 +97,7 @@
               <a href="{{ route('projectCoordinator.sidebartask') }}" class="nav-link">Task</a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('projectCoordinator.nav-side-task') }}"class="nav-link">Group</a>
+                <a href="{{ route('projectCoordinator.group') }}"class="nav-link">Group</a>
               </li>
               <li class="nav-item">
               <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Evaluation</a>
@@ -222,7 +222,7 @@
                   
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Stusent</a>
+                  <a class="nav-link" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Student</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" data-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="false">Group</a>

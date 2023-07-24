@@ -103,7 +103,7 @@
               <a href="{{ route('projectCoordinator.sidebartask') }}" class="nav-link">Task</a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('projectCoordinator.nav-side-task') }}"class="nav-link">Group</a>
+                <a href="{{ route('projectCoordinator.group') }}"class="nav-link">Group</a>
               </li>
               <li class="nav-item">
               <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Evaluation</a>
@@ -199,10 +199,13 @@
 </div>
 </div>
         <div class="container">
+          {{-- <h1> Projects Tracking System</h1> --}}
           <div class="row justify-content-center">
             <div class="col-lg-11 col-xl-9">
               <section class="py-4 py-lg-5"></section>
-                       <div id="pie"></div>
+              
+                <div id="pie"></div>
+            
               </section>
               
             </div> 
@@ -244,12 +247,7 @@
     </div>
   </div>
 </div>
-
 </div>
-
-     </div>
-          </div>
-          </div>
         </div>
 
       </div>
@@ -292,6 +290,7 @@
       <!-- Cordinator js-->
       <script src="{{ asset('js/dashboard/projectcordinator.js') }}"></script>
       <script src="{{ asset('js/pusher.js') }}"></script>
+<!-- Add Chart.js library -->
 
       <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
 <script>
@@ -334,6 +333,7 @@
     });
 </script>
 
+
 <script>
  
   var pie = new ej.charts.AccumulationChart({
@@ -341,7 +341,7 @@
       series: [
           {
               dataSource: [
-                  { 'x': 'Evaluation', y: 40 },
+                  { 'x': 'Evaluation', y: 30 },
                   { 'x': 'Active', y: 20 },
                   { 'x': 'Complete', y: 40 },
                                      ],
@@ -356,8 +356,10 @@
   });
   pie.appendTo('#pie');
 </script>
+
+
       
-    <!-- This appears in the demo only - demonstrates different layouts -->
+    // <!-- This appears in the demo only - demonstrates different layouts -->
     <style type="text/css">
       .layout-switcher{ position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(73px); color: #fff; transition: all .35s ease; background: #343a40; border-radius: .25rem .25rem 0 0; padding: .75rem; z-index: 999; }
             .layout-switcher:not(:hover){ opacity: .95; }

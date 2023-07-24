@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateTasksTable extends Migration
 {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::create('tasks', function (Blueprint $table) {
@@ -17,10 +22,16 @@ class CreateTasksTable extends Migration
             $table->date('due_date')->nullable();
             $table->timestamps();
 
+            // Define foreign key constraint for project_id
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::dropIfExists('tasks');

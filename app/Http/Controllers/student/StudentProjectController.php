@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
 
@@ -15,10 +16,16 @@ class StudentProjectController extends Controller
     // foreach ($projects as $project) {
     //     echo $project->name; // Example attribute, adjust it based on your project model attributes
     // }
-    // dd($projects);
+    $projectsall = Project::all();
+    //  dd($projectsall);
+
+
     // Return the projects and user to the view
-    return view('student.projects', compact('projects', 'user'));
+    return view('student.projects', compact('projects', 'projectsall','user'));
 }
 
+
+   // Calculate the remaining days
+   
 
 }

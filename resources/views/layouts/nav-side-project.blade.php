@@ -97,7 +97,7 @@
               <a href="{{ route('projectCoordinator.sidebartask') }}" class="nav-link">Task</a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('projectCoordinator.nav-side-task') }}"class="nav-link">Group</a>
+                <a href="{{ route('projectCoordinator.group') }}"class="nav-link">Group</a>
               </li>
               <li class="nav-item">
               <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Evaluation</a>
@@ -201,7 +201,19 @@
                   <ul class="avatars">
 <!-- all users profilepic should be display here-->
                   </ul>
-                
+                  <form>
+                    <div class="input-group input-group-dark input-group-round" >
+                      <div class="input-group-prepend" >
+                        <span class="input-group-text" >
+                          <i class="material-icons">search</i>
+                        </span>
+                      </div>
+
+                      <input type="search" class="form-control form-control-dark" placeholder="Search" aria-label="Search app" id="searchInput">
+                  
+                    <button type="button" class="btn btn-primary" onclick="validateSearch()">Search</button>
+                  
+                    </div></form>
                 </div>
               </div>
               <hr>
@@ -350,9 +362,9 @@
     <label class="col-3">Due Date</label>
     <input class="form-control col" type="date" name="due_date" placeholder="Select a date" />
 </div>
-                          <div class="alert alert-warning text-small" role="alert">
+                          {{-- <div class="alert alert-warning text-small" role="alert">
                             <span>You can change due dates at any time.</span>
-                          </div>
+                          </div> --}}
                         </div>
                         <div class="tab-pane fade" id="task-add-members" role="tabpanel">
                           <div class="users-manage" data-filter-list="form-group-users">
@@ -374,17 +386,17 @@
                             </div>
                             <div class="form-group-users">
                            
-    @foreach ($project->users as $user)
-    <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="task-user-{{ $user->id }}">
-        <label class="custom-control-label" for="task-user-{{ $user->id }}">
-            <span class="d-flex align-items-center">
-                <!-- <img alt="{{ $user->username }}" src="assets/img/{{ $user->avatar }}" class="avatar mr-2" /> -->
-                <span class="h6 mb-0" data-filter-by="text">{{ $user->username  }}</span>
-            </span>
-        </label>
-    </div>
-    @endforeach
+                              @foreach ($project->users->unique() as $user)
+                              <div class="custom-control custom-checkbox">
+                                  <input type="checkbox" class="custom-control-input" id="task-user-{{ $user->id }}">
+                                  <label class="custom-control-label" for="task-user-{{ $user->id }}">
+                                      <span class="d-flex align-items-center">
+                                          <!-- <img alt="{{ $user->username }}" src="assets/img/{{ $user->avatar }}" class="avatar mr-2" /> -->
+                                          <span class="h6 mb-0" data-filter-by="text">{{ $user->username }}</span>
+                                      </span>
+                                  </label>
+                              </div>
+                              @endforeach
 </div>
 
                           </div>
@@ -418,7 +430,7 @@
   <span class="input-group-text">
     <i class="material-icons">filter_list</i>
   </span>
-  <input type="search" class="form-control filter-list-input" placeholder="Filter supervisor" aria-label="Filter Members">
+  <input type="search" class="form-control filter-list-input" placeholder="Filter files" aria-label="Filter Members">
 </div>
  </div>
                       </form>
@@ -519,6 +531,35 @@
 <script src="{{ asset('js/frontend/theme.js') }}"></script>
 <!-- <script src="{{ asset('js/dashboard/projectcordinator.js') }}"></script> -->
 <!-- Add this script tag to include Axios from a CDN -->
+<script>
+  function validateSearch() {
+    const searchInput = document.getElementById('searchInput');
+    const searchTerm = searchInput.value.trim();
+    
+    if (searchTerm === '') {
+      alert('Please enter a search term.');
+      searchInput.focus();
+      return;
+    }
+    
+    // Perform the search here, you can use AJAX to send the search term to the server and fetch search results dynamically.
+    // For demonstration purposes, we will use a simple client-side search.
+
+    const projects = document.querySelectorAll('.card-project');
+    const searchResultsContainer = document.getElementById('searchResultsContainer');
+    searchResultsContainer.innerHTML = '';
+
+    tasks.forEach(task => {
+      const taskName = task.querySelector('h5[data-filter-by="text"]').innerText.toLowerCase();
+      if (taskName.includes(searchTerm.toLowerCase())) {
+        searchResultsContainer.appendChild(project.cloneNode(true));
+      }
+    });
+  }
+</script>
+
+
+
 <script>
   function updateStatus(status, projectId) {
   var form = document.getElementById('status-form-' + projectId);

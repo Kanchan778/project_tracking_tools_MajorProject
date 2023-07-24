@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use App\Models\Project;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;// Replace "Project" with the actual model class for your projects
 
@@ -14,22 +17,32 @@ use Illuminate\Support\Facades\Storage;// Replace "Project" with the actual mode
 
 class ProjectCoordinatorController extends Controller
 {
+  
+
+    public function index()
+    {
+        // Retrieve the authenticated user (Assuming you are using Laravel's built-in authentication)
+        $user = Auth::user();
     
-public function index()
-{
-    // Retrieve the authenticated user (Assuming you are using Laravel's built-in authentication)
-    $user = Auth::user();
-   
-    // Set the default image path
-    $defaultImage = '/path/to/default/Profile.png';
-
-    // Retrieve supervisors and students (assuming 'role' is the field indicating the user's role)
-    $students = User::where('role', 'student')->pluck('username');
-    $supervisors = User::where('role', 'supervisor')->pluck('username');
-
-    return view('dashboard.projectCoordinator', compact('user', 'supervisors', 'students', 'defaultImage'));
-}
-
+        // Set the default image path
+        $defaultImage = '/path/to/default/Profile.png';
+    
+        // Retrieve supervisors and students (assuming 'role' is the field indicating the user's role)
+        $students = User::where('role', 'student')->pluck('username');
+        $supervisors = User::where('role', 'supervisor')->pluck('username');
+        // 
+        $projects = DB::table('projects')->get();
+        dd($projects);
+        $projectStatuses = DB::table('projects')
+        ->select(DB::raw('COUNT(*) as total_status, status'))
+        ->groupBy('status')
+        ->get();
+           // Fetch project statuses from the database
+           
+           
+        return view('projectCoordinator.dashboard', compact('user', 'supervisors', 'students', 'defaultImage', 'projectStatuses'));
+    }
+    
     
     
 
@@ -41,21 +54,6 @@ public function index()
     Auth::logout();
     return redirect()->route('login')->with('success', 'You have been logged out.');
 }
-
-// public function updateProjectStatus(Request $request)
-// {
-//     $projectId = $request->input('project_id');
-//     $status = $request->input('status');
-
-//     // Retrieve the project by its ID
-//     $project = Project::findOrFail($projectId);
-
-//     // Update the status
-//     $project->status = $status;
-//     $project->save();
-
-//     return response()->json(['message' => 'Status updated successfully']);
-// }
 
 
 //update Profile

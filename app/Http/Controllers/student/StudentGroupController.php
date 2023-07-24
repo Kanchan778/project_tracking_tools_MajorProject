@@ -52,64 +52,61 @@ $projectTypes = Project::distinct('project_type')
     ->distinct() // Use the distinct() method to get unique usernames
     ->pluck('users.username'); // Specify the table using alias 'users'
 
+// Retrieve the groups attached to the user
+$userGroups = Group::whereHas('users', function ($query) use ($authUserId) {
+    $query->where('user_id', $authUserId);
+})->get();
+// dd($userGroups);
+// Pass the data to the view
+return view('student.group', [
+    'projectTypes' => $projectTypes,
+    'studentUsernames' => $studentUsernames,
+    'userGroups' => $userGroups,
+]);
 
-
-//  dd($projectTypes,$authUserId,$studentUsernames);
- // Pass the data to the view
- return view('student.group', [
-     'projectTypes' => $projectTypes,
-     'studentUsernames' => $studentUsernames,
- ]);
 }
 
 //store group 
 public function store(Request $request)
 {
-    // Validate the form data
-    $validatedData = $request->validate([
-        'project_name' => 'required|string|max:255',
-        'project_type' => 'required|string',
-        'members' => 'required|array',
-        'members.*' => 'integer', // Assuming the member IDs are integers
-        'selectedRoles' => 'required|array',
-        'selectedRoles.*' => 'string',
-        'pitch' => 'string|nullable',
-        'visibility' => 'required|string|in:everyone,members,me',
-    ]);
+    try {
+        // Validate the form data
+        $validatedData = $request->validate([
+            'project_name' => 'required|string|max:255',
+            'project_type' => 'required|string',
+            'selectedUsernames' => 'required|array',
+            'selectedUsernames.*' => 'string',
+            'pitch' => 'string|nullable',
+            'visibility' => 'required|string|in:everyone,members,me',
+        ]);
 
-    // Create a new Group instance and fill it with the validated data
-    $group = new Group();
-    $group->group_name = $validatedData['project_name'];
-    $group->project_type = $validatedData['project_type'];
-    $group->pitch = $validatedData['pitch'];
-    $group->visibility = $validatedData['visibility'];
+        // Create a new Group instance and fill it with the validated data
+        $group = new Group();
+        $group->group_name = $validatedData['project_name'];
+        $group->project_type = $validatedData['project_type'];
+        $group->pitch = $validatedData['pitch'];
+        $group->visibility = $validatedData['visibility'];
 
-    // Save the group to the database
-     dd($group);
-    $group->save();
+        // Save the group to the database
+        $group->save();
 
-    // Attach users to the group with their respective roles using the sync method
-    // Attach users to the group with their respective roles using the sync method
-if ($request->has('members')) {
-    $members = $validatedData['members'];
-    $roles = $validatedData['selectedRoles'];
+        // Retrieve user IDs based on selected usernames
+        $userIds = User::whereIn('username', $validatedData['selectedUsernames'])->pluck('id')->toArray();
 
-    // Create an associative array to map users with their roles
-    $group->members()->sync($roles);
-    $usersWithRoles = [];
-    foreach ($members as $index => $memberId) {
-        $usersWithRoles[$memberId] = ['role' => $roles[$index]];
+        // Attach users to the group using the attach method
+        $group->users()->attach($userIds);
+
+        // Redirect to a success page or wherever you want after saving the data
+        return redirect()->route('student.group')->with('success', 'Group created successfully.');
+    } catch (\Exception $e) {
+        // Log the error
+        Log::error('Error creating group: ' . $e->getMessage());
+
+        // Redirect back to the form with an error message
+        return redirect()->back()->with('error', 'An error occurred while creating the group.');
     }
-
-    // Attach users and their roles to the group
-    $group->users()->sync($usersWithRoles);
 }
 
 
-    // Redirect to a success page or wherever you want after saving the data
-    // Redirect to a success page or wherever you want after saving the data
-    return redirect()->route('student.group')->with('success', 'Group created successfully.');
 
 }
-
-    }

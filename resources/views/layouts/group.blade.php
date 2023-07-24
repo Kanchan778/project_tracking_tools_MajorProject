@@ -1,7 +1,9 @@
-
 @php
+    use App\Models\User;
+
     $defaultImage = 'public/img/Profile.png';
 @endphp
+
 
 <!doctype html>
 <html lang="en">
@@ -26,6 +28,9 @@
     <link href="assets/img/favicon.ico" rel="icon" type="image/x-icon">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css" />
+<link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css" />
+
     <link href="{{ asset('css/frontend/theme.css') }}" rel="stylesheet" type="text/css" media="all" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/projectcordinator.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/chatify/dark.mode.css') }}">
@@ -81,24 +86,27 @@
 </div>
 
 <button class="edit-profile-button">Edit Profile</button>
+
 </ul>
 
           <hr>
           <div class="d-none d-lg-block w-100">
             <span class="text-small text-muted">Quick Links</span>
-    
             <ul class="nav nav-small flex-column mt-2">
             <li class="nav-item">
-    <a href="{{ route('student.dashboard') }}" class="nav-link">Dashboard</a>
-</li>
-
-            <li class="nav-item">
-    <a href="{{ route('student.projects.index') }}" class="nav-link">Projects Overview</a>
-</li>
-
-
+                <a href="{{ route('projectCoordinator.dashboard') }}" class="nav-link">Dashboard</a>
+              </li>
               <li class="nav-item">
-              <a href="{{ route('student.student.group') }}" class="nav-link">Group</a>
+                <a href="{{ route('projectCoordinator.project') }}" class="nav-link">Project Overview</a>
+              </li>
+              <li class="nav-item">
+              <a href="{{ route('projectCoordinator.sidebartask') }}" class="nav-link">Task</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('projectCoordinator.group') }}"class="nav-link">Group</a>
+              </li>
+              <li class="nav-item">
+              <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Evaluation</a>
               </li>
               <li class="nav-item">
               <a href="#"class="nav-link">Account Setting</a>
@@ -154,7 +162,7 @@
       <div class="main-container">
       <div class="edit-profile-form" style="display: none;">
  
-      <form action="{{ route('student.profile.update') }}" method="POST" enctype="multipart/form-data" id="profile-form" class="pro-form">
+      <form action="{{ route('projectCoordinator.profile.update') }}" method="POST" enctype="multipart/form-data" id="profile-form" class="pro-form">
    @csrf
       <!-- Your existing form fields -->
 <i class="fas fa-times" id="close-icon" >
@@ -243,29 +251,30 @@
                             </div>
                             <div class="card-body">
                                 <div class="dropdown card-options">
-                      @if ($userGroups->isEmpty())
-                          <p>No groups found.</p>
-                      @else
-                          <ul>
-                              @foreach ($userGroups as $group)
-                                  <li>
-                                      <h1>{{ $group->group_name }}</h1> 
-                                    
-                                       {{ $group->project_type }}
-                                      <br>
-                                      <strong>Pitch:</strong> {{ $group->pitch }}
-                                     <br>
-                                      <strong>Members:</strong>
+                                  <h1>All Groups</h1>
+                                  @if ($groups->isEmpty())
+                                      <p>No groups found.</p>
+                                  @else
                                       <ul>
-                                          @foreach ($group->users as $user)
-                                              <li>{{ $user->username }}</li>
+                                          @foreach ($groups as $group)
+                                              <li>
+                                                <h1><strong>Project Type:</strong> {{ $group->project_type }}</h1>
+                                                  <h6>{{ $group->group_name }}</h6>
+                                                 
+                                                  <br>
+                                                  <strong>Pitch:</strong> {{ $group->pitch }}
+                                                  <br>
+                                                  <strong>Members:</strong>
+                                                  <ul>
+                                                      @foreach ($group->users as $user)
+                                                          <li>{{ $user->username }}</li>
+                                                      @endforeach
+                                                  </ul>
+                                              </li>
+                                              <br>
                                           @endforeach
                                       </ul>
-                                  </li>
-                                  <br>
-                              @endforeach
-                          </ul>
-                      @endif
+                                  @endif
                         </div>
                         <div>
 

@@ -19,6 +19,9 @@ use App\Http\Controllers\ProjectCoordinatorController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\supervisor\SupervisorProjectController;
+use App\Http\Controllers\student\StudentTaskController;
+use App\Http\Controllers\cordinator\GroupController;
+
 
 
 Route::get('/', function () {
@@ -54,9 +57,9 @@ Route::group(
         })->name('nav-side-project');
 
         // Route for nav-side-task.html
-        Route::get('/nav-side-task', function () {
-            return view('layouts.nav-side-task');
-        })->name('nav-side-task');
+        Route::get('/group', function () {
+            return view('layouts.group');
+        })->name('group');
 
         // Route for nav-side-kanban-board.html
         Route::get('/evaluation', function () {
@@ -102,6 +105,9 @@ Route::post('/projects/{projectId}/tasks', [TaskController::class, 'createTask']
 //sidebartask route
 Route::get('/sidebartask', [SideBarTaskController::class, 'viewSidebarTask'])->name('sidebartask');
 
+
+//
+Route::get('/cordinator/group', [GroupController::class, 'index'])->name('groups.index');
 //logout
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -132,6 +138,9 @@ Route::group([
 
      // Route to handle the form submission and store the group
      Route::post('/group', [StudentGroupController::class, 'store'])->name('group.store');
+
+     //route for tasks
+    Route::resource('tasks', StudentTaskController::class);
 
 });
 

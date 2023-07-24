@@ -1,15 +1,18 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Find the "Add" button by its ID
-    var addButton = document.getElementById('addButton');
-    console.log('addButton:', addButton);
-
-    // Attach a click event listener to the button
-    addButton.addEventListener('click', function () {
-        // Find the form by its ID
+    function submitForm() {
+        // Get the form element
         var form = document.getElementById('project-add-modal');
-        console.log('form:', form);
 
-        // Submit the form
+        // Validate if at least one username is selected
+        var selectedUsernames = form.elements['selectedUsernames[]'];
+        if (!selectedUsernames || selectedUsernames.length === 0) {
+            alert('Please select at least one username.');
+            return false;
+        }
+
+        // You can add more validation if needed.
+
+        // If the validation passes, submit the form
         form.submit();
-    });
-});
+        return true;
+    }
+

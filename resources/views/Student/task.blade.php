@@ -190,6 +190,7 @@
 
 </div>
 </div>
+   
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-11 col-xl-10">
@@ -198,26 +199,27 @@
                   <ul class="avatars">
 <!-- all users profilepic should be display here-->
                   </ul>
-                  {{-- <button class="btn btn-round flex-shrink-0" data-toggle="modal" data-target="#user-invite-modal">
+                  <!-- <button class="btn btn-round flex-shrink-0" data-toggle="modal" data-target="#user-invite-modal">
                     <i class="material-icons">add</i>
-                  </button> --}}
+                  </button> -->
                 </div>
               </div>
               <hr>
               <ul class="nav nav-tabs nav-fill" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#projects" role="tab" aria-controls="projects" aria-selected="true">Your Projects</a>
+                  <a class="nav-link active" data-toggle="tab" href="#projects" role="tab" aria-controls="projects" aria-selected="true">Group</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="false">All Projects</a>
-                </li>
+
               </ul>
               <div class="tab-content">
                 <div class="tab-pane fade show active" id="projects" role="tabpanel" data-filter-list="content-list-body">
                   <div class="content-list">
                     <div class="row content-list-head">
                       <div class="col-auto">
-                        <h3>Projects</h3>
+                        <h3>Group</h3>
+                        <button class="btn btn-round" data-toggle="modal" data-target="#project-add-modal">
+                          <i class="material-icons">add</i>
+                        </button>
                       </div>
                       <form class="col-md-auto">
                         <div class="input-group input-group-round">
@@ -232,77 +234,175 @@
                     </div>
                     <!--end of content list head-->
                     <div class="content-list-body row">
- 
-<!-- Add this inside the <div class="content-list-body row"> where you want to display projects -->
-  @foreach ($projects as $project)
-  <div class="col-md-4">
-      <div class="card mb-3">
-          <div class="card-body">
-              <h5 class="card-title">{{ $project->project_name }}</h5>
-              <p class="card-text"><strong>Project Type:</strong> {{ $project->project_type }}</p>
-              <div>
-                <!-- Display the project status from the status column -->
-                <span class="text-small">{{ $project->status }}</span>
-            </div>
-          </div>
-      </div>
-  </div>
-@endforeach
+                      <div class="col-lg-6">
+                        <div class="card card-project">
+                            <div class="progress">
+                                <div class="progress-bar bg-danger" role="progressbar"
+                                    style="width: 60%" aria-valuenow="60" aria-valuemin="0"
+                                    aria-valuemax="100"></div>
+                            </div>
+                            <div class="card-body">
+                                <div class="dropdown card-options">
+                      @if ($userGroups->isEmpty())
+                          <p>No groups found.</p>
+                      @else
+                          <ul>
+                              @foreach ($userGroups as $group)
+                                  <li>
+                                      <h1>{{ $group->group_name }}</h1> 
+                                    
+                                       {{ $group->project_type }}
+                                      <br>
+                                      <strong>Pitch:</strong> {{ $group->pitch }}
+                                     <br>
+                                      <strong>Members:</strong>
+                                      <ul>
+                                          @foreach ($group->users as $user)
+                                              <li>{{ $user->username }}</li>
+                                          @endforeach
+                                      </ul>
+                                  </li>
+                                  <br>
+                              @endforeach
+                          </ul>
+                      @endif
+                        </div>
+                        <div>
 
- 
-<div class="tab-content">
-  <div class="tab-pane fade show active" id="projects" role="tabpanel" data-filter-list="content-list-body">
-    <div class="content-list">
-      <div class="row content-list-head">
-        <div class="col-auto">
-          <h3>All Projects</h3>
-        </div>
-        <form class="col-md-auto">
-          <div class="input-group input-group-round">
-            <div class="input-group-prepend">
-              <span class="input-group-text">
-                <i class="material-icons">filter_list</i>
-              </span>
-            </div>
-            <input type="search" class="form-control filter-list-input" placeholder="Filter projects" aria-label="Filter Projects">
-          </div>
-        </form>
-      </div>
-      <!--end of content list head-->
-      <div class="content-list-body row">
-        @foreach ($projectsall as $project)
-        <div class="col-md-4">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $project->project_name }}</h5>
-                    <p class="card-text"><strong>Project Type:</strong> {{ $project->project_type }}</p>
-                    <div>
-                      <!-- Display the project status from the status column -->
-                      <span class="text-small">{{ $project->status }}</span>
+                        </div>
+                        </div><!-- display created group here -->
+</div>
+<!-- </div> -->
+                    <!--end of content list body-->
+                  </div>
+                  <!--end of content list-->
+                </div>
+                <!--end of tab-->
+                <div class="tab-pane fade" id="members" role="tabpanel" data-filter-list="content-list-body">
+                  <div class="content-list">
+                    <div class="row content-list-head">
+                      <div class="col-auto">
+                        <h3>Group Members</h3>
+                        <!-- <button class="btn btn-round" data-toggle="modal" data-target="#user-invite-modal">
+                          <i class="material-icons">add</i>
+                        </button> -->
+                      </div>
+                      <form class="col-md-auto">
+                        <div class="input-group input-group-round">
+                          <div class="input-group-prepend">
+                          <div class="input-group">
+  <span class="input-group-text">
+    <i class="material-icons">filter_list</i>
+  </span>
+  <input type="search" class="form-control filter-list-input" placeholder="Filter supervisor" aria-label="Filter Members">
+</div>
+ </div>
+                      </form>
+                    </div>
+                    <!--end of content list head-->
+                    <div class="content-list-body row">
+    <!-- group members display -->
+</div>
+
+                  <!--end of content list-->
+                </div>
+              </div>
+              
+              <form class="modal fade" id="team-manage-modal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <!--end of modal head-->
+                    <ul class="nav nav-tabs nav-fill" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="team-manage-details-tab" data-toggle="tab" href="#team-manage-details" role="tab" aria-controls="team-manage-details" aria-selected="true">Tasks</a>
+                      </li>
+                      {{-- <li class="nav-item">
+                        <a class="nav-link" id="team-manage-members-tab" data-toggle="tab" href="#team-manage-members" role="tab" aria-controls="team-manage-members" aria-selected="false">Members</a>
+                      </li> --}}
+                    </ul>
+                    
+                    </div>
+                    <!--end of modal body-->
+                    <div class="modal-footer">
+                      <button role="button" class="btn btn-primary" type="submit">
+                        Done
+                      </button>
+                    </div>
                   </div>
                 </div>
-            </div>
-        </div>
-      @endforeach
+              </form>
+              <form class="modal fade" id="project-add-modal" tabindex="-1" aria-hidden="true" action="{{ route('student.group.store') }}" method="POST" onsubmit="return submitForm()">
 
-<!--end of content list head-->
+                @csrf
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Submit Task</h5>
+                            <button type="button" class="close btn btn-round" data-dismiss="modal" aria-label="Close">
+                                <i class="material-icons">close</i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="project-add-details" role="tabpanel">
+                                    <h6>Group Details</h6>
+                                    <hr>
+            
+                                    <div class="form-group row align-items-center">
+                                        <label class="col-3">Group Name:</label>
+                                        <input type="text" class="form-control col" name="project_name" required>
+                                    </div>
+            
+                                    <div class="form-group row align-items-center">
+                                        <label class="col-3">Project Type:</label>
+                                        <div class="col">
+                                            @foreach ($projectTypes as $projectType)
+                                                <div>
+                                                    <input type="radio" id="project_type_{{ $projectType }}" name="project_type" value="{{ $projectType }}">
+                                                    <label for="project_type_{{ $projectType }}">{{ $projectType }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="project-add-members" role="tabpanel">
+                                    <!-- Members section content -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button id="addButton" type="submit" onclick="return submitForm()">Add</button>
 
-</div>
-</div>
 
+                        </div>
+                    </div>
+                </div>
+            </form>
 
-                   
-</div>    </div>
-            </div>
+          
           </div>
+        </div>
+    </div>  
+
+</div>
+  @if(session('success'))
+    <div class="success-message">{{ session('success') }}</div>
+  @endif
+            </div>
+            
+          </div>
+        </div>
+  
         </div>
       </div>
     </div>
-  </div>
-</div>
     <footer>
   <p>&copy; 2023 Kanchan Chaudhary. All rights reserved.</p>
 </footer>
+
 <!-- Required vendor scripts (Do not remove) -->
 <script src="{{ asset('js/frontend/jquery.min.js') }}"></script>
 <script src="{{ asset('js/frontend/popper.min.js') }}"></script>
@@ -322,8 +422,15 @@
 <script src="{{ asset('js/frontend/dropzone.min.js') }}"></script>
 <!-- List.js - filter list elements -->
 <script src="{{ asset('js/frontend/list.min.js') }}"></script>
+
 <!-- Required theme scripts (Do not remove) -->
 <script src="{{ asset('js/frontend/theme.js') }}"></script>
+<!-- groupjs -->
+<script src="{{ asset('js/student/group.js') }}"></script>
+<!-- Your HTML code (unchanged) -->
+
+<!-- JavaScript to handle dynamic addition of username and role selection fields -->
+
 
 <!-- This appears in the demo only - demonstrates different layouts -->
 <style>
