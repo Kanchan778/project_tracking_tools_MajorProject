@@ -16,6 +16,9 @@ use App\Http\Controllers\cordinator\TaskController;
 use App\Http\Controllers\cordinator\FileController;
 use App\Http\Controllers\cordinator\SideBarTaskController;
 use App\Http\Controllers\ProjectCoordinatorController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SupervisorController;
+use App\Http\Controllers\supervisor\SupervisorProjectController;
 
 
 Route::get('/', function () {
@@ -99,15 +102,12 @@ Route::group(
     Route::post('/supervisors', [ProjectController::class, 'storeSupervisor'])->name('supervisors.store');
  
     // //updating profile
-    // Route::get('/', [ProjectCoordinatorController::class, 'getProfileImage'])->name('profile.image');
-
+  
     Route::post('/update', [ProjectCoordinatorController::class, 'updateProfile'])->name('profile.update');
 
     //status
-    // Route::post('/update-status/{project}', [ProjectController::class, 'updateStatus'])->name('projects.updateStatus');
-    // 
     
-    Route::put('/update-status-from-dropdown/{project}/{status}', [ProjectController::class, 'updateStatusFromDropdown'])->name('projects.updateStatusFromDropdown');
+    Route::get('/update-status-from-dropdown/{project}/{status}', [ProjectController::class, 'updateStatusFromDropdown'])->name('projects.updateStatusFromDropdown');
  
     //deleting
 
@@ -153,10 +153,14 @@ Route::group([
 
     // Add the route for the Group blade
 
-Route::get('/group', [StudentGroupController::class, 'viewGroup'])->name('student.group');
-// //get project type
-// Route::get('/project-types', [StudentGroupController::class, 'getProjectTypes'])->name('project-types');
+    Route::get('/group', [StudentGroupController::class, 'viewGroup'])->name('student.group');
 
+//update profile
+     Route::post('/update', [StudentController::class, 'updatestudentProfile'])->name('profile.update');
+
+
+     // Route to handle the form submission and store the group
+Route::post('/student/group', [StudentGroupController::class, 'store'])->name('group.store');
 
 });
 
@@ -170,6 +174,16 @@ Route::group(
     function () {
         Route::get('/dashboard', [DashboardController::class, 'supervisor'])->name('dashboard');
     
+        //updating profile
+        
+        Route::post('/update', [SupervisorController::class, 'updatesupervisorProfile'])->name('profile.update');
+
+        //route for projects blade
+
+        // Route for project.html
+        Route::get('/projects', [SupervisroProjectController::class, 'index'])->name('projects.index');
+        Route::get('/project',  [SupervisorProjectController::class, 'index'])->name('projects');
+
         
     }
 );

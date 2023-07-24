@@ -167,18 +167,17 @@ public function storeSupervisor(Request $request)
 //status update
 // 
 
-public function updateStatusFromDropdown(Request $request, $projectId)
+public function updateStatusFromDropdown($projectId, $status)
 {
     // Validate the incoming request data
     // $projectId = $request->input('projectId');
-
-    $request->validate([
-        'status' => ['required', Rule::in(['Active', 'In Evaluation', 'Completed'])],
-    ]);
+    
+    // $this->validate([
+    //     'status' => ['required', Rule::in(['Active', 'In Evaluation', 'Completed'])],
+    // ]);
     // dd($projectId);
     // Find the project by its ID
     $project = Project::find($projectId);
-     
 
     if (!$project) {
         // Project not found, handle the error (e.g., return a JSON response)
@@ -186,11 +185,11 @@ public function updateStatusFromDropdown(Request $request, $projectId)
     }
 
     // Get the selected status from the form submission
-    $status = $request->input('status');
+    //$status = $request->input('status');
 
     // Update the project status in the database
     $project->update(['status' => $status]);
-    //  dd($project);
+//    dd($projectId);
     // Redirect back with a success message
     return redirect()->back()->with('success', 'Project status updated successfully.');
 }

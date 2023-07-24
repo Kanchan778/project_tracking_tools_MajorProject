@@ -109,16 +109,7 @@
             <hr>
           </div>
           <div>
-            <form>
-              <div class="input-group input-group-dark input-group-round">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">
-                    <i class="material-icons">search</i>
-                  </span>
-                </div>
-                <input type="search" class="form-control form-control-dark" placeholder="Search" aria-label="Search app">
-              </div>
-            </form>
+           
             <div class="dropdown mt-2">
               <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="newContentButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Add New
@@ -193,7 +184,7 @@
 
 </div>
    
-        <div class="container">
+        <div class="container"  id="searchResultsContainer">
           <div class="row justify-content-center">
             <div class="col-lg-11 col-xl-10">
               <div class="page-header">     
@@ -201,9 +192,22 @@
                   <ul class="avatars">
 <!-- all users profilepic should be display here-->
                   </ul>
+
                   <button class="btn btn-round flex-shrink-0" data-toggle="modal" data-target="#user-invite-modal">
                     <i class="material-icons">add</i>
                   </button>
+                  <form>
+                    <div class="input-group input-group-dark input-group-round">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="material-icons">search</i>
+                        </span>
+                      </div>
+                      <input type="search" class="form-control form-control-dark" placeholder="Search" aria-label="Search app" id="searchInput">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="validateSearch()">Search</button>
+                  </form>
+                  
                 </div>
               </div>
               <hr>
@@ -254,9 +258,9 @@
     @method('PUT')
     @csrf
     <input type="hidden" name="status" id="status-input">
-    <button type="button" class="dropdown-item" onclick="updateStatus('Active', {{ $project->id }})">Active</button>
-    <button type="button" class="dropdown-item" onclick="updateStatus('In Evaluation', {{ $project->id }})">In Evaluation</button>
-    <button type="button" class="dropdown-item" onclick="updateStatus('Completed', {{ $project->id }})">Completed</button>
+    <a href="{{route('projectCoordinator.projects.updateStatusFromDropdown', [ $project->id, 'Active'])}}" class="dropdown-item" >Active</a>
+    <a href="{{route('projectCoordinator.projects.updateStatusFromDropdown', [ $project->id, 'In Evaluation'])}}" class="dropdown-item" onclick="updateStatus('In Evaluation', {{ $project->id }})">In Evaluation</a>
+    <a href="{{route('projectCoordinator.projects.updateStatusFromDropdown', [ $project->id, 'Completed'])}}" class="dropdown-item" onclick="updateStatus('Completed', {{ $project->id }})">Completed</a>
 </form>
    </div>
 
@@ -586,6 +590,34 @@
 <script src="{{ asset('js/frontend/theme.js') }}"></script>
 <!-- <script src="{{ asset('js/dashboard/projectcordinator.js') }}"></script> -->
 <!-- Add this script tag to include Axios from a CDN -->
+<script>
+  function validateSearch() {
+    const searchInput = document.getElementById('searchInput');
+    const searchTerm = searchInput.value.trim();
+    
+    if (searchTerm === '') {
+      alert('Please enter a search term.');
+      searchInput.focus();
+      return;
+    }
+    
+    // Perform the search here, you can use AJAX to send the search term to the server and fetch search results dynamically.
+    // For demonstration purposes, we will use a simple client-side search.
+
+    const projects = document.querySelectorAll('.card-project');
+    const searchResultsContainer = document.getElementById('searchResultsContainer');
+    searchResultsContainer.innerHTML = '';
+
+    projects.forEach(project => {
+      const projectName = project.querySelector('h5[data-filter-by="text"]').innerText.toLowerCase();
+      if (projectName.includes(searchTerm.toLowerCase())) {
+        searchResultsContainer.appendChild(project.cloneNode(true));
+      }
+    });
+  }
+</script>
+
+
 <script>
   function updateStatus(status, projectId) {
   var form = document.getElementById('status-form-' + projectId);

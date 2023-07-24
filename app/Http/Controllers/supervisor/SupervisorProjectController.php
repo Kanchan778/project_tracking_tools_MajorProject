@@ -1,9 +1,11 @@
 <?php
+namespace App\Http\Controllers\Supervisor;
+use App\Http\Controllers\Controller;
 
-namespace App\Http\Controllers;
-
-use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class SupervisorProjectController extends Controller
 {

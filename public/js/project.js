@@ -83,7 +83,6 @@ function updateStatus(status, projectId) {
   // console.log("Status:", status);
   // console.log("Project ID:", projectId);
   
-  // You can also update the hidden input field with the selected status if needed.
   document.getElementById('status-input').value = status;
 }
 

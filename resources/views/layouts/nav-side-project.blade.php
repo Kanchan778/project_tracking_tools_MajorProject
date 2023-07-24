@@ -333,7 +333,7 @@
                         <div class="tab-pane fade show active" id="task-add-details" role="tabpanel">
                           <h6>General Details</h6>
                           <div class="form-group row align-items-center">
-                            <label class="col-3">Name</label>
+                            <label class="cor-label col-3">Name</label>
                             <input class="form-control col" type="text" placeholder="Task name" name="task-name" />
                           </div>
                           <div class="form-group row">
@@ -429,7 +429,7 @@
     @csrf
     <!-- Rest of your form inputs -->
     <input type="file" id ="file" class="inputfile" name="file">
-    <label for="file">Choose a file</label>
+    <label   class="label-file" for="file">Choose a file</label>
     <button type="submit" class="uploadfile">Upload</button>
 </form>
 <div class="filelist">

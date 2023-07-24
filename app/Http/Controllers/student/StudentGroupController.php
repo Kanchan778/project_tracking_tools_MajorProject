@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Student;
 
-use App\Models\Project;
+use App\Models\Group;
 use App\Models\User;
+use App\Models\Role;
+use App\Models\Project;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -59,4 +62,48 @@ $projectTypes = Project::distinct('project_type')
  ]);
 }
 
+//store group 
+public function store(Request $request)
+{
+    // Validate the form data
+    $validatedData = $request->validate([
+        'project_name' => 'required|string|max:255',
+        'project_type' => 'required|string',
+        'members' => 'required|array',
+        'members.*' => 'integer', // Assuming the member IDs are integers
+        'selectedRoles' => 'required|array',
+        'selectedRoles.*' => 'string',
+        'pitch' => 'string|nullable',
+        'visibility' => 'required|string|in:everyone,members,me',
+    ]);
+
+    // Create a new Group instance and fill it with the validated data
+    $group = new Group();
+    $group->group_name = $validatedData['project_name'];
+    $group->project_type = $validatedData['project_type'];
+    $group->pitch = $validatedData['pitch'];
+    $group->visibility = $validatedData['visibility'];
+dd($group); 
+    // Save the group to the database
+    $group->save();
+
+    // Attach users to the group with their respective roles
+    if ($request->has('members')) {
+        $members = $validatedData['members'];
+        foreach ($members as $memberId) {
+            $user = User::find($memberId);
+            if ($user) {
+                // Attach the user to the group
+                $group->users()->attach($user->id);
+
+                // Attach roles to the user in the context of this group
+                $roles = $validatedData['selectedRoles'];
+                $user->roles()->attach($roles, ['group_id' => $group->id]);
+            }
+        }
+    }
+
+    // Redirect to a success page or wherever you want after saving the data
+    return redirect()->back()->with('success', 'Group created successfully.');
+}
     }

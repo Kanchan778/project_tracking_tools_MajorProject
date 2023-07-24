@@ -1,6 +1,7 @@
 @php
-    use App\Models\User;
+    $defaultImage = 'public/img/Profile.png';
 @endphp
+
 
 <!doctype html>
 <html lang="en">
@@ -87,16 +88,13 @@
             <span class="text-small text-muted">Quick Links</span>
             <ul class="nav nav-small flex-column mt-2">
               <li class="nav-item">
-                <a href="{{ route('projectCoordinator.project') }}" class="nav-link">Project </a>
+                <a href="{{ route('supervisor.projects') }}" class="nav-link">Project </a>
               </li>
-              <li class="nav-item">
-              <a href="{{ route('projectCoordinator.nav-side-project') }}" class="nav-link">Group</a>
-              </li>
+             
               <li class="nav-item">
                 <a href="{{ route('projectCoordinator.nav-side-task') }}"class="nav-link"></a>
-              </li>
-              <li class="nav-item">
-              <a href="{{ route('projectCoordinator.nav-side-kanban-board') }}"class="nav-link">Account Setting</a>
+            
+           
               </li>
               <li class="nav-item">
               <a href="#"class="nav-link">Account Setting</a>
@@ -152,7 +150,7 @@
       <div class="main-container">
       <div class="edit-profile-form" style="display: none;">
  
-      <form action="{{ route('projectCoordinator.profile.update') }}" method="POST" enctype="multipart/form-data" id="profile-form" class="pro-form">
+      <form action="{{ route('supervisor.profile.update') }}" method="POST" enctype="multipart/form-data" id="profile-form" class="pro-form">
    @csrf
       <!-- Your existing form fields -->
 <i class="fas fa-times" id="close-icon" >
@@ -201,6 +199,7 @@
             </div>
           </div>
         </div>
+</div>
 
       </div>
     </div>

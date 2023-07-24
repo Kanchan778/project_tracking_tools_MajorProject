@@ -1,5 +1,6 @@
+
 @php
-    use App\Models\User;
+    $defaultImage = 'public/img/Profile.png';
 @endphp
 
 <!doctype html>
@@ -153,7 +154,7 @@
       <div class="main-container">
       <div class="edit-profile-form" style="display: none;">
  
-      <form action="{{ route('projectCoordinator.profile.update') }}" method="POST" enctype="multipart/form-data" id="profile-form" class="pro-form">
+      <form action="{{ route('student.profile.update') }}" method="POST" enctype="multipart/form-data" id="profile-form" class="pro-form">
    @csrf
       <!-- Your existing form fields -->
 <i class="fas fa-times" id="close-icon" >
@@ -202,7 +203,7 @@
             </div>
           </div>
         </div>
-
+</div>
       </div>
     </div>
 

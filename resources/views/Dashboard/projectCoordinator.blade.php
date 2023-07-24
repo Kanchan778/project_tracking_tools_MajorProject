@@ -25,6 +25,9 @@
     <link href="assets/img/favicon.ico" rel="icon" type="image/x-icon">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css" />
+<link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css" />
+
     <link href="{{ asset('css/frontend/theme.css') }}" rel="stylesheet" type="text/css" media="all" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/projectcordinator.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/chatify/dark.mode.css') }}">
@@ -195,12 +198,10 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-11 col-xl-9">
-              <section class="py-4 py-lg-5">
-                <h1 class="display-4 mb-3">Project Tracking System</h1>
-                <p class="lead">
-                       </p>
-                       
+              <section class="py-4 py-lg-5"></section>
+                       <div id="pie"></div>
               </section>
+              
             </div> 
              <button class="btn btn-primary btn-round btn-floating btn-lg" type="button" data-toggle="collapse" data-target="#floating-chat" aria-expanded="false">
   <i class="material-icons">chat_bubble</i>
@@ -222,7 +223,7 @@
                   
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Stusent</a>
+                  <a class="nav-link" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Student</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" data-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="false">Group</a>
@@ -281,6 +282,10 @@
 
     <!-- Required theme scripts (Do not remove) -->
     <script type="text/javascript" src="{{ asset('js/frontend/theme.js') }}"></script>
+    
+    <!-- Add the following Essential JS 2 scripts -->
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
+
       <!-- Cordinator js-->
       <script src="{{ asset('js/dashboard/projectcordinator.js') }}"></script>
       <script src="{{ asset('js/pusher.js') }}"></script>
@@ -326,7 +331,29 @@
     });
 </script>
 
-
+<script>
+ 
+  var pie = new ej.charts.AccumulationChart({
+      //Initializing Series
+      series: [
+          {
+              dataSource: [
+                  { 'x': 'Evaluation', y: 40 },
+                  { 'x': 'Active', y: 20 },
+                  { 'x': 'Complete', y: 40 },
+                                     ],
+              dataLabel: {
+                  visible: true,
+                  position: 'Inside',
+              },
+              xName: 'x',
+              yName: 'y'
+          }
+      ],
+  });
+  pie.appendTo('#pie');
+</script>
+      
     <!-- This appears in the demo only - demonstrates different layouts -->
     <style type="text/css">
       .layout-switcher{ position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(73px); color: #fff; transition: all .35s ease; background: #343a40; border-radius: .25rem .25rem 0 0; padding: .75rem; z-index: 999; }

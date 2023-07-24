@@ -232,113 +232,115 @@
                   </div>
                 </div>
               </form>
-
-  <form class="modal fade" id="project-add-modal" tabindex="-1" aria-hidden="true" action="" method="POST">
-   @csrf
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">New Group</h5>
-        <button type="button" class="close btn btn-round" data-dismiss="modal" aria-label="Close">
-          <i class="material-icons">close</i>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="tab-content">
-          <div class="tab-pane fade show active" id="project-add-details" role="tabpanel">
-            <h6>Group Details</h6>
-            <hr>
-           
-            <div class="form-group row align-items-center">
-              <label class="col-3">Group Name:</label>
-              <input type="text" class="form-control col" name="project_name" required>
+    <form class="modal fade" id="project-add-modal" tabindex="-1" aria-hidden="true" action="student.group.store" method="POST">
+    @csrf
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New Group</h5>
+                <button type="button" class="close btn btn-round" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
             </div>
-            <div class="form-group row align-items-center">
-              <div>
+            <div class="modal-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="project-add-details" role="tabpanel">
+                        <h6>Group Details</h6>
+                        <hr>
 
-              <div class="form-group row align-items-center">
-  <label class="col-3">Project Type:</label>
-  @foreach ($projectTypes as $projectType)
-    <p>{{ $projectType }}</p>
-@endforeach
-</div>
+                        <div class="form-group row align-items-center">
+                            <label class="col-3">Group Name:</label>
+                            <input type="text" class="form-control col" name="project_name" required>
+                        </div>
 
-<div id="userRolesForm">
-    <!-- Username and Role selection fields will be added here dynamically -->
-</div>
+                        <div class="form-group row align-items-center">
+                            <label class="col-3">Project Type:</label>
+                            <div class="col">
+                                @foreach ($projectTypes as $projectType)
+                                    <div>
+                                        <input type="radio" id="project_type_{{ $projectType }}" name="project_type" value="{{ $projectType }}">
+                                        <label for="project_type_{{ $projectType }}">{{ $projectType }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
 
-<div>
-    <button class="btn btn-outline-primary mt-2" type="button" onclick="addUserRolesField()">
-        <i class="fas fa-plus"></i> Add Username & Role
-    </button>
-</div>
-<div id="selectedDataContainer"></div>
-<div>
-    <label for="username">Select Username:</label>
-    <select id="username" class="form-control" name="selectedUsername" required>
-        <option value="">Select Username</option>
-        @foreach ($studentUsernames as $username)
-            <option value="{{ $username }}">{{ $username }}</option>
-        @endforeach
-    </select>
-   
-</div>
+                        <div id="userRolesForm">
+                            <!-- Username and Role selection fields will be added here dynamically -->
+                        </div>
 
-<div id="roleSelectionContainer" style="display: none;">
-    <div class="form-group row align-items-center">
-        <label class="col-3" id="selectedUsernameLabel"></label>
-        <select class="form-control col" name="selectedRoles[]" multiple required>
-            <option value="">Select Roles</option>
-            <option value="Leader">Leader</option>
-            <option value="Frontend">Frontend</option>
-            <option value="Backend">Backend</option>
-            <option value="Testing">Testing</option>
-            <option value="Researcher">Researcher</option>
-            <option value="Documentation">Documentation</option>
-        </select>
+                        <div>
+                            <button class="btn btn-outline-primary mt-2" type="button" onclick="addUserRolesField()">
+                                <i class="fas fa-plus"></i> Add Username & Role
+                            </button>
+                        </div>
+
+                        <div id="selectedDataContainer"></div>
+                        <div>
+           
+
+                        <div id="roleSelectionContainer" style="display: none;">
+                            <div class="form-group row align-items-center">
+                                <label class="col-3" id="selectedUsernameLabel"></label>
+                                <select class="form-control col" name="selectedRoles[]" multiple required>
+                                    <option value="Leader">Leader</option>
+                                    <option value="Frontend">Frontend</option>
+                                    <option value="Backend">Backend</option>
+                                    <option value="Testing">Testing</option>
+                                    <option value="Researcher">Researcher</option>
+                                    <option value="Documentation">Documentation</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-warning text-small mt-3" role="alert">
+                            <span>Pitch for your group supervisor.</span>
+                            <input type="text" class="form-control col" name="project_name" required>
+                        </div>
+                        <hr>
+                        <h6>Visibility</h6>
+                        <div class="row">
+                            <div class="col">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="visibility-everyone" name="visibility" class="custom-control-input" value="everyone" checked>
+                                    <label class="custom-control-label" for="visibility-everyone">Everyone</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="visibility-members" name="visibility" class="custom-control-input" value="members">
+                                    <label class="custom-control-label" for="visibility-members">Group Members</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="visibility-me" name="visibility" class="custom-control-input" value="me">
+                                    <label class="custom-control-label" for="visibility-me">Project Members</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="project-add-members" role="tabpanel">
+                        <!-- Members section content -->
+                    </div>
+                </div>
+            </div>
+            @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
     </div>
-</div>
-<button class="btn btn-outline-primary mt-2" type="button" onclick="toggleRoleSelection()">
-        <i class="fas fa-caret-down"></i>
-    </button>
-
-</div>
-           
-            <div class="alert alert-warning text-small" role="alert">
-              <span>Pitch for your group supervisor.</span>
-            </div>
-            <hr>
-            <h6>Visibility</h6>
-            <div class="row">
-              <div class="col">
-                <div class="custom-control custom-radio">
-                <input type="radio" id="visibility-everyone" name="visibility" class="custom-control-input" value="everyone" checked>
-<label class="custom-control-label" for="visibility-everyone">Everyone</label>
- </div>
+@endif -->
+            <div class="modal-footer">
+              <button type="submit">Add</button>
               </div>
-              <div class="col">
-                <div class="custom-control custom-radio">
-                <input type="radio" id="visibility-members" name="visibility" class="custom-control-input" value="members">
-<label class="custom-control-label" for="visibility-members"> Group Members</label>
-   </div>
-              </div>
-              <div class="col">
-                <div class="custom-control custom-radio">
-                <input type="radio" id="visibility-me" name="visibility" class="custom-control-input" value="me">
-<label class="custom-control-label" for="visibility-me">Project Members</label>  </div>
-              </div>
-            </div>
-          <div class="tab-pane fade" id="project-add-members" role="tabpanel">
-            <!-- Members section content -->
-          </div>
         </div>
-      </div>
-      <div class="modal-footer">
-      <button type="submit">Create</button>
-      </div>
     </div>
-  </div>
 </form>
+
 </div>
   @if(session('success'))
     <div class="success-message">{{ session('success') }}</div>
@@ -377,7 +379,58 @@
 <!-- Required theme scripts (Do not remove) -->
 <script src="{{ asset('js/frontend/theme.js') }}"></script>
 <!-- groupjs -->
-<script src="{{ asset('js/student/group.js') }}"></script>
+<!-- Your HTML code (unchanged) -->
+
+<!-- JavaScript to handle dynamic addition of username and role selection fields -->
+<script>
+  let userRolesCounter = 1;
+
+  function addUserRolesField() {
+    const userRolesForm = document.getElementById('userRolesForm');
+
+    const userRolesField = `
+      <div class="user-roles-field mt-3">
+        <label for="username_${userRolesCounter}">Select Username:</label>
+        <select id="username_${userRolesCounter}" class="form-control" name="selectedUsernames[]" required>
+          <option value="">Select Username</option>
+          @foreach ($studentUsernames as $username)
+            <option value="{{ $username }}">{{ $username }}</option>
+          @endforeach
+        </select>
+
+        <div class="form-group row align-items-center mt-2">
+          <label class="col-3">Role:</label>
+          <select class="form-control col" name="selectedRoles_${userRolesCounter}[]" multiple required>
+            <option value="">Select Roles</option>
+            <option value="Leader">Leader</option>
+            <option value="Frontend">Frontend</option>
+            <option value="Backend">Backend</option>
+            <option value="Testing">Testing</option>
+            <option value="Researcher">Researcher</option>
+            <option value="Documentation">Documentation</option>
+          </select>
+        </div>
+      </div>
+    `;
+
+    userRolesForm.insertAdjacentHTML('beforeend', userRolesField);
+    userRolesCounter++;
+  }
+
+  function toggleRoleSelection() {
+    const roleSelectionContainer = document.getElementById('roleSelectionContainer');
+    const selectedUsernameLabel = document.getElementById('selectedUsernameLabel');
+
+    if (roleSelectionContainer.style.display === 'none') {
+      roleSelectionContainer.style.display = 'block';
+      selectedUsernameLabel.textContent = 'Select Roles for Username:';
+    } else {
+      roleSelectionContainer.style.display = 'none';
+      selectedUsernameLabel.textContent = '';
+    }
+  }
+</script>
+
 
 <!-- This appears in the demo only - demonstrates different layouts -->
 <style>
