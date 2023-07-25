@@ -105,7 +105,7 @@
                             <a href="{{ route('projectCoordinator.sidebartask') }}" class="nav-link">Task</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.group') }}"class="nav-link">Group</a>
+                            <a href="{{ route('projectCoordinator.groups.index') }}"class="nav-link">Group</a>
                           </li>
                         <li class="nav-item">
                             <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Evaluation</a>
@@ -319,7 +319,7 @@
                                                             <span class="text-small">
                                                                 @if ($remainingDays > 0)
                                                                     {{ $remainingDays }}
-                                                                    day{{ $remainingDays == 1 ? '' : 's' }}
+                                                                    day{{ $remainingDays == 1 ? '' : 's' }} <br>
                                                                     remaining for due date
                                                                 @else
                                                                     Due date has passed
@@ -414,25 +414,25 @@
                                     <!--end of modal head-->
                                     <div class="modal-body">
                                         <div>
-                                            <div class="input-group">
+                                            <div class="input-group1">
                                                 <div class="input-group-prepend">
                                                     <label for="email">Email:</label>
                                                 </div>
                                                 <input type="email" id="email" name="email" required>
                                             </div>
-                                            <div class="input-group">
+                                            <div class="input-group1">
                                                 <div class="input-group-prepend">
                                                     <label for="email">Username:</label>
                                                 </div>
                                                 <input type="text" id="email" name="username" required>
                                             </div>
-                                            <div class="input-group">
+                                            <div class="input-group1">
                                                 <div class="input-group-prepend">
                                                     <label for="email">Password:</label>
                                                 </div>
                                                 <input type="password" id="password" name="password" required>
                                             </div>
-                                            <div class="input-group">
+                                            <div class="input-group1">
                                                 <div class="input-group-prepend">
                                                     <label for="email">Department:</label>
                                                 </div>
@@ -442,7 +442,7 @@
                                     </div>
                                     <!--end of modal body-->
                                     <div class="modal-footer">
-                                        <button type="submit">Add</button>
+                                        <button class="cor-btn" type="submit">Add</button>
                                     </div>
                                 </div>
                             </div>

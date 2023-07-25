@@ -90,10 +90,12 @@
               <li class="nav-item">
                 <a href="{{ route('supervisor.projects') }}" class="nav-link">Project </a>
               </li>
-             
-             <li class="nav-item">
-                <a href="{{ route('supervisor.progress') }}"class="nav-link">Progress</a>
-            </li> 
+{{--              
+              <li class="nav-item">
+                <a href="{{ route('projectCoordinator.nav-side-task') }}"class="nav-link"></a>
+            
+           
+              </li> --}}
               <li class="nav-item">
               <a href="#"class="nav-link">Account Setting</a>
               </li>
@@ -190,9 +192,114 @@
           <div class="row justify-content-center">
             <div class="col-lg-11 col-xl-9">
               <section class="py-4 py-lg-5">
-                <h1 class="display-4 mb-3">Project Tracking System</h1>
-                <p class="lead">
-                       </p>
+               
+                <style>
+                  p {
+                      font-size: 20px;
+                  }
+          
+                  .container {
+                      background-color: rgb(250, 249, 249);
+                      width: 80%;
+                      border-radius: 15px;
+                  }
+          
+                  .progress-bar {
+                      background-color: rgb(192, 192, 192);
+                      height: 30px;
+                      border-radius: 15px;
+                      position: relative;
+                      margin-bottom: 20px;
+                  }
+                  .progress1{
+                    margin-left: 200px;
+                    margin-bottom: 50px;
+                  }
+          
+                  .progress-bar .status {
+                      background-color: rgb(116, 194, 92);
+                      color: white;
+                      padding: 1%;
+                      text-align: center;
+                      font-size: 20px;
+                      border-radius: 15px;
+                      position: absolute;
+                      top: 0;
+                      left: 0;
+                      width: 0;
+                      height: 100%;
+                      transition: width 0.5s ease;
+                  }
+          .bar-super{
+            font-size: 20px;
+          }
+                  .concept {
+                      width: 100%;
+                  }
+          
+                  .proposal {
+                      width: 100%;
+                  }
+          
+                  .report {
+                      width: 100%;
+                  }
+          
+                  .code {
+                      width: 100%;
+                  }
+              </style>
+          </head>
+          <body>
+            <h2 class="progress1">Progress Bar</h2>
+              <label class="checkbox-super">
+                  <input type="checkbox" name="checkbox1" onclick="toggleItem('concept')"> Concept Paper
+              </label>
+          
+              <label  class="checkbox-super">
+                  <input type="checkbox" name="checkbox2" onclick="toggleItem('proposal')"> Proposal
+              </label>
+          
+              <label  class="checkbox-super">
+                  <input type="checkbox" name="checkbox3" onclick="toggleItem('report')"> Report
+              </label>
+          
+              <label  class="checkbox-super">
+                  <input type="checkbox" name="checkbox4" onclick="toggleItem('code')"> Source Code
+              </label>
+
+          
+              <p class="bar-super">Concept Paper</p>
+              <div class="container concept" id="conceptContainer">
+                  <div class="progress-bar">
+                      <div class="status concept-paper" id="conceptStatus">100%</div>
+                  </div>
+              </div>
+          
+              <p>Proposal</p>
+              <div class="container proposal" id="proposalContainer">
+                  <div class="progress-bar">
+                      <div class="status proposal-paper" id="proposalStatus">100%</div>
+                  </div>
+              </div>
+          
+              
+              <p>Report</p>
+              <div class="container report" id="reportContainer">
+                  <div class="progress-bar">
+                      <div class="status report-paper" id="reportStatus">100%</div>
+                  </div>
+              </div>
+          
+              <p>Source Code</p>
+              <div class="container code" id="codeContainer">
+                  <div class="progress-bar">
+                      <div class="status code-paper" id="codeStatus">100%</div>
+                  </div>
+              </div>
+          
+
+            </div>
               </section>
             </div>
           </div>
@@ -231,6 +338,25 @@
     <script type="text/javascript" src="{{ asset('js/frontend/theme.js') }}"></script>
       <!-- Cordinator js-->
       <script src="{{ asset('js/dashboard/projectcordinator.js') }}"></script>
+
+
+      <script>
+        function toggleItem(itemName) {
+            const itemContainer = document.querySelector(`#${itemName}Container`);
+            const itemStatus = document.querySelector(`#${itemName}Status`);
+            if (itemContainer.style.display === 'none' || itemContainer.style.display === '') {
+                itemContainer.style.display = 'block';
+                setTimeout(() => {
+                    itemStatus.style.width = '100%';
+                }, 10);
+            } else {
+                itemStatus.style.width = '0';
+                setTimeout(() => {
+                    itemContainer.style.display = 'none';
+                }, 500);
+            }
+        }
+    </script>
 
     <!-- This appears in the demo only - demonstrates different layouts -->
     <style type="text/css">

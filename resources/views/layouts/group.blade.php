@@ -103,7 +103,7 @@
               <a href="{{ route('projectCoordinator.sidebartask') }}" class="nav-link">Task</a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('projectCoordinator.group') }}"class="nav-link">Group</a>
+                <a href="{{ route('projectCoordinator.groups.index') }}"class="nav-link">Group</a>
               </li>
               <li class="nav-item">
               <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Evaluation</a>
@@ -225,9 +225,6 @@
                     <div class="row content-list-head">
                       <div class="col-auto">
                         <h3>Group</h3>
-                        <button class="btn btn-round" data-toggle="modal" data-target="#project-add-modal">
-                          <i class="material-icons">add</i>
-                        </button>
                       </div>
                       <form class="col-md-auto">
                         <div class="input-group input-group-round">
@@ -242,8 +239,9 @@
                     </div>
                     <!--end of content list head-->
                     <div class="content-list-body row">
+                       @foreach ($groups as $group)
                       <div class="col-lg-6">
-                        <div class="card card-project">
+                        <div class="card2 card-project">
                             <div class="progress">
                                 <div class="progress-bar bg-danger" role="progressbar"
                                     style="width: 60%" aria-valuenow="60" aria-valuemin="0"
@@ -251,39 +249,54 @@
                             </div>
                             <div class="card-body">
                                 <div class="dropdown card-options">
-                                  <h1>All Groups</h1>
-                                  @if ($groups->isEmpty())
-                                      <p>No groups found.</p>
-                                  @else
-                                      <ul>
-                                          @foreach ($groups as $group)
-                                              <li>
-                                                <h1><strong>Project Type:</strong> {{ $group->project_type }}</h1>
-                                                  <h6>{{ $group->group_name }}</h6>
-                                                 
-                                                  <br>
-                                                  <strong>Pitch:</strong> {{ $group->pitch }}
-                                                  <br>
-                                                  <strong>Members:</strong>
-                                                  <ul>
-                                                      @foreach ($group->users as $user)
-                                                          <li>{{ $user->username }}</li>
-                                                      @endforeach
-                                                  </ul>
-                                              </li>
-                                              <br>
-                                          @endforeach
-                                      </ul>
-                                  @endif
+                   
                         </div>
                         <div>
 
                         </div>
-                        </div><!-- display created group here -->
+                        </div><!-- display created group here -->   
+                        <ul>
+                           
+                                <li>
+                                    <strong>Project Type:</strong> {{ $group->project_type }}
+                                    {{ $group->group_name }}
+                                    <br>
+                                    <strong>Pitch:</strong> {{ $group->pitch }}
+                                    <br>
+                                    <strong>Members:</strong>
+                                    <ul>
+                                      @foreach ($group->users as $user)
+                                      <li>{{ $user->username }}</li>
+                                  @endforeach
+                                    </ul>
+                                </li>
+                           
+                        </ul>
+                  
+                
 </div>
-<!-- </div> -->
+</div> <div class="dropdown">
+                    <button class="btn-options1" type="button" id="cardlist-dropdown-button-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="material-icons">more_vert</i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                     <!-- Add the link with a data attribute for group_id -->
+<a class="dropdown-item assign-supervisor-link" href="#" data-group-id="{{ $group->id }}">Assign Supervisor</a>
+
+<!-- Add a container for the supervisor usernames -->
+<div class="supervisor-list-container">
+  <!-- The list of supervisor usernames will be displayed here -->
+</div>
+
+                      <a class="dropdown-item text-danger" href="#">Note</a>
+                    </div>
+                  </div>
+<div></div>
+<!-- </div> --> @endforeach
                     <!--end of content list body-->
                   </div>
+                </div>
+                 
                   <!--end of content list-->
                 </div>
                 <!--end of tab-->
@@ -340,89 +353,7 @@
                   </div>
                 </div>
               </form>
-              <form class="modal fade" id="project-add-modal" tabindex="-1" aria-hidden="true" action="{{ route('student.group.store') }}" method="POST" onsubmit="return submitForm()">
-
-                @csrf
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">New Group</h5>
-                            <button type="button" class="close btn btn-round" data-dismiss="modal" aria-label="Close">
-                                <i class="material-icons">close</i>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="tab-content">
-                                <div class="tab-pane fade show active" id="project-add-details" role="tabpanel">
-                                    <h6>Group Details</h6>
-                                    <hr>
             
-                                    <div class="form-group row align-items-center">
-                                        <label class="col-3">Group Name:</label>
-                                        <input type="text" class="form-control col" name="project_name" required>
-                                    </div>
-            
-                                    <div class="form-group row align-items-center">
-                                        <label class="col-3">Project Type:</label>
-                                        <div class="col">
-                                            @foreach ($projectTypes as $projectType)
-                                                <div>
-                                                    <input type="radio" id="project_type_{{ $projectType }}" name="project_type" value="{{ $projectType }}">
-                                                    <label for="project_type_{{ $projectType }}">{{ $projectType }}</label>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-            
-                                    <select class="form-control" name="selectedUsernames[]" required multiple>
-                                      
-                                      @foreach ($studentUsernames as $username)
-                                          <option value="{{ $username }}">{{ $username }}</option>
-                                      @endforeach
-                                  </select>
-                                  
-            
-                                    <div class="alert alert-warning text-small mt-3" role="alert">
-                                        <span>Pitch for your group supervisor.</span>
-                                        <input type="text" class="form-control col" name="pitch" required>
-                                    </div>
-                                    <hr>
-                                    <h6>Visibility</h6>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="visibility-everyone" name="visibility" class="custom-control-input" value="everyone" checked>
-                                                <label class="custom-control-label" for="visibility-everyone">Everyone</label>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="visibility-members" name="visibility" class="custom-control-input" value="members">
-                                                <label class="custom-control-label" for="visibility-members">Group Members</label>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="visibility-me" name="visibility" class="custom-control-input" value="me">
-                                                <label class="custom-control-label" for="visibility-me">Project Members</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="project-add-members" role="tabpanel">
-                                    <!-- Members section content -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button id="addButton" type="submit" onclick="return submitForm()">Add</button>
-
-
-                        </div>
-                    </div>
-                </div>
-            </form>
-
           
           </div>
         </div>

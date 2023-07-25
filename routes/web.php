@@ -21,6 +21,7 @@ use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\supervisor\SupervisorProjectController;
 use App\Http\Controllers\student\StudentTaskController;
 use App\Http\Controllers\cordinator\GroupController;
+use App\Http\Controllers\Supervisor\ProgressBarController;
 
 
 
@@ -51,17 +52,12 @@ Route::group(
         // Route for project.html
         Route::get('/project',  [ProjectController::class, 'index'])->name('project');
 
-        // Route for nav-side-project.html
+        // Route forprojects
         Route::get('/nav-side-project', function () {
             return view('layouts.nav-side-project');
         })->name('nav-side-project');
 
-        // Route for nav-side-task.html
-        Route::get('/group', function () {
-            return view('layouts.group');
-        })->name('group');
-
-        // Route for nav-side-kanban-board.html
+        // Route for evaluation
         Route::get('/evaluation', function () {
             return view('layouts.evaluation');
         })->name('evaluation');
@@ -106,8 +102,13 @@ Route::post('/projects/{projectId}/tasks', [TaskController::class, 'createTask']
 Route::get('/sidebartask', [SideBarTaskController::class, 'viewSidebarTask'])->name('sidebartask');
 
 
-//
-Route::get('/cordinator/group', [GroupController::class, 'index'])->name('groups.index');
+// //
+Route::get('/group', [GroupController::class, 'index'])->name('groups.index');
+
+// Route::get('/supervisors/{groupId}', 'AssignSupervisorController@getSupervisorsByGroup');
+// [GroupController::class, 'AssignSupervisorController'])->name('assign');
+
+
 //logout
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -139,8 +140,8 @@ Route::group([
      // Route to handle the form submission and store the group
      Route::post('/group', [StudentGroupController::class, 'store'])->name('group.store');
 
-     //route for tasks
-    Route::resource('tasks', StudentTaskController::class);
+    //  //route for tasks
+    // Route::resource('tasks', StudentTaskController::class);
 
 });
 
@@ -164,7 +165,13 @@ Route::group(
         Route::get('/projects', [SupervisroProjectController::class, 'index'])->name('projects.index');
         Route::get('/project',  [SupervisorProjectController::class, 'index'])->name('projects');
 
-        
+        //
+
+
+
+// Add a route to handle the form submission for updating progress
+Route::get('/progress', [ProgressBarController::class, 'index'])->name('progress');
+
     }
 );
 

@@ -4,33 +4,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400&display=swap" rel="stylesheet"> 
     <title>Registration Form</title>
     <style>
-        /* CSS styles omitted for brevity */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin-top: 30px;
+           margin-bottom: 30px;
+        }
+
+        form {
+            background-color: rgb(255, 255, 255,0.6);
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+           margin-top: 30px;
+           margin-bottom: 30px;
+            align-items: center;
+            width: 30%;
+            height:90%;
+            border-radius:10px;
+        }
+
+      .avatar{
+        margin-left: 120px;
+      }
+        .username{
+            margin-top:20px;
+            margin-left:20px;
+            font-size:18px;
+            font-family: 'Roboto Slab', serif;
+        }
+        .username input{
+            padding:5px 5px 5px 5px;
+            width:100%;
+            border-radius:10px;
+        }
+        .username select{
+            margin-top:10px;
+            background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 253, 255) 1%, rgb(237, 240, 247) 100%);
+            font-size:18px;
+            padding:8px 50px 8px 50px ;
+            border-radius:10px;
+            border:none;
+            box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
+        }
+        .btn{
+            margin-top:30px;
+            background: linear-gradient(90deg, rgba(238,174,174,1) 0%, rgba(225,174,237,1) 1%, rgba(148,171,233,1) 100%);
+            font-size:18px;
+            padding:8px 50px 8px 50px ;
+            border-radius:10px;
+            border:none;
+            margin-left: 30px;
+            box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
+        }
+        .signwith{
+            margin-top:20px;
+            font-size:14px;
+            font-family: 'Roboto Slab', serif;
+            text-decoration:none;
+           
+        }
+        .signwith1{
+            margin-top:20px;
+            font-size:14px;
+            font-family: 'Roboto Slab', serif;
+            text-decoration:none;
+           color:blue;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            
+        }
     </style>
 </head>
 
-<body>
-    <div class="form-container">
-        <h2>Registration Form</h2>
+<body style="background: rgb(238,174,174);
+background: linear-gradient(90deg, rgba(238,174,174,1) 0%, rgba(225,174,237,1) 1%, rgba(148,171,233,1) 100%);">
+    <div class="container">
+       
 
         <form action="{{ route('register') }}" method="POST" onsubmit="return validateForm()">
             @csrf
             <div>
-                <img class="avatar" src="{{ asset('img/apexlogo.png') }}" alt="Avatar" style="width: 150px; height: 50px; margin-bottom: 10px;">
+                <img class="avatar" src="{{ asset('img/apexlogo.png') }}" alt="Avatar" style="width: 190px; height: 50px; margin-bottom: 10px;">
             </div>
-
-            <div>
+                 <h2 class="avatar" >Registration Form</h2>
+            <div  class="username">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
             </div>
 
-            <div>
+            <div  class="username">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
             </div>
 
-            <div class="password-toggle">
+            <div  class="username">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
                 <span class="toggle-icon" onclick="togglePasswordVisibility('password')">
@@ -38,7 +113,7 @@
                 </span>
             </div>
 
-            <div class="password-toggle">
+            <div class="username">
                 <label for="confirm-password">Confirm Password:</label>
                 <input type="password" id="confirm-password" name="confirm-password" required>
                 <span class="toggle-icon" onclick="togglePasswordVisibility('confirm-password')">
@@ -48,13 +123,13 @@
             </div>
 
             <!-- Add Section field -->
-            <div>
+            <div  class="username">
                 <label for="section">Section:</label>
                 <input type="text" id="section" name="section" required>
             </div>
 
             <!-- Add Semester field -->
-            <div>
+            <div  class="username">
                 <label for="semester">Semester:</label>
                 <select id="semester" name="semester" required>
                     <option value="">Select Semester</option>
@@ -70,7 +145,7 @@
             </div>
 
             <!-- Add Course field -->
-            <div>
+            <div  class="username">
                 <label for="course">Course:</label>
                 <select id="course" name="course" required>
                     <option value="">Select Course</option>
@@ -84,8 +159,8 @@
             <input type="hidden" name="role" value="student">
 
             <div>
-                <button type="submit">Register</button>
-                <button onclick="redirectToLogin()">Login</button>
+                <button type="submit" class="btn">Register</button>
+                <button onclick="redirectToLogin()" class="btn">Login</button>
             </div>
         </form>
     </div>

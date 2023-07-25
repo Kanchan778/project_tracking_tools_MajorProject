@@ -103,7 +103,7 @@
               <a href="{{ route('projectCoordinator.sidebartask') }}" class="nav-link">Task</a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('projectCoordinator.group') }}"class="nav-link">Group</a>
+                <a href="{{ route('projectCoordinator.groups.index') }}"class="nav-link">Group</a>
               </li>
               <li class="nav-item">
               <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Evaluation</a>

@@ -232,23 +232,23 @@
                         </div>
                       </form>
                     </div>
-                    <!--end of content list head-->
+                    <!--end of content list head--> 
+                    
                     <div class="content-list-body row">
-                      <div class="col-lg-6">
-                        <div class="card card-project">
-                            <div class="progress">
-                                <div class="progress-bar bg-danger" role="progressbar"
-                                    style="width: 60%" aria-valuenow="60" aria-valuemin="0"
-                                    aria-valuemax="100"></div>
-                            </div>
-                            <div class="card-body">
-                                <div class="dropdown card-options">
                       @if ($userGroups->isEmpty())
-                          <p>No groups found.</p>
-                      @else
-                          <ul>
-                              @foreach ($userGroups as $group)
-                                  <li>
+                      <p>No groups found.</p>
+                  @else
+                     
+                          @foreach ($userGroups as $group)
+                          <div class="col-lg-6">
+                              <div class="card1 card-project">
+                                  <div class="progress">
+                                      <div class="progress-bar bg-danger" role="progressbar"
+                                          style="width: 60%" aria-valuenow="60" aria-valuemin="0"
+                                          aria-valuemax="100"></div>
+                                  </div>
+                                  <div class="card-body">
+                                    <li>
                                       <h1>{{ $group->group_name }}</h1> 
                                     
                                        {{ $group->project_type }}
@@ -263,15 +263,18 @@
                                       </ul>
                                   </li>
                                   <br>
-                              @endforeach
-                          </ul>
-                      @endif
-                        </div>
-                        <div>
+                                </div>
+                          
+                                  </div>
+                              </div>
+                          
+                 @endforeach
+                          
 
-                        </div>
-                        </div><!-- display created group here -->
-</div>
+                               @endif
+                  </div>
+                              
+                          
 <!-- </div> -->
                     <!--end of content list body-->
                   </div>

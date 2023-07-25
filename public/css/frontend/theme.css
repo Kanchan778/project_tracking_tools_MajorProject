@@ -7423,6 +7423,28 @@ h3 + .btn-round, h5 + .btn-round {
   cursor: pointer;
   display: flex;
   align-items: center; }
+  .btn-options1 {
+    color: #6c757d;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    margin-top: 20px;
+  }
+  .input-group1 {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+    margin-top: 20px;
+  }
+  .input-group1 input{
+   
+    width: 100%;
+   
+  }
 
 .btn-floating {
   position: fixed;
@@ -7906,7 +7928,13 @@ form.dropzone {
 label:hover {
   background-color: #4285a6;
 }
-
+.checkbox-super{
+  color: #000;
+  font-weight: 40px;
+  margin-left: 30px;
+  font-size: 20px;
+  margin-bottom: 50px;
+}
 .uploadfile{
   display: inline-block;
   padding: 10px 20px;
@@ -7924,6 +7952,36 @@ label:hover {
   display: flex;
   flex-direction:column;
   width: 70%;
+}
+.card1{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background: #ffffff;
+    background-clip: border-box;
+  box-shadow: inset 6px 6px 8px #f8f8f8, inset -6px -6px 8px #cfcccc;
+  background-clip: border-box;
+  border: none;
+  border-radius: 0.5rem;
+  height: auto;
+  width:100%;
+}
+.card2{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background: #ffffff;
+    background-clip: border-box;
+  box-shadow: inset 6px 6px 8px #f8f8f8, inset -6px -6px 8px #cfcccc;
+  background-clip: border-box;
+  border: none;
+  border-radius: 0.5rem;
+  height: auto;
+  width:115%;
 }
 .dz-message {
   text-align: center;
