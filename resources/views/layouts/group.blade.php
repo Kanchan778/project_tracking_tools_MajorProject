@@ -73,7 +73,7 @@
       <div class="profile-avatar">
     <label for="avatar-input" class="avatar-label">
    
-    <img class="avatar-image" src="{{asset(auth()->user()->profile_img ?: $defaultImage )}}"  alt="Profile Image">
+    <img class="avatar-label" src="{{asset(auth()->user()->profile_img ?: $defaultImage )}}"  alt="Profile Image">
        
     </label>
 </div>
@@ -106,10 +106,7 @@
                 <a href="{{ route('projectCoordinator.groups.index') }}"class="nav-link">Group</a>
               </li>
               <li class="nav-item">
-              <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Evaluation</a>
-              </li>
-              <li class="nav-item">
-              <a href="#"class="nav-link">Account Setting</a>
+              <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Change Password</a>
               </li>
             </ul>
             <hr>
@@ -275,23 +272,86 @@
                   
                 
 </div>
-</div> <div class="dropdown">
-                    <button class="btn-options1" type="button" id="cardlist-dropdown-button-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="material-icons">more_vert</i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                     <!-- Add the link with a data attribute for group_id -->
-<a class="dropdown-item assign-supervisor-link" href="#" data-group-id="{{ $group->id }}">Assign Supervisor</a>
-
-<!-- Add a container for the supervisor usernames -->
-<div class="supervisor-list-container">
-  <!-- The list of supervisor usernames will be displayed here -->
 </div>
+ <div class="dropdown">
+     <!-- Add this code for the modal popup form -->
+<div class="modal fade" id="assignSupervisorModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
 
-                      <a class="dropdown-item text-danger" href="#">Note</a>
-                    </div>
-                  </div>
-<div></div>
+      <form action="{{ route('projectCoordinator.group', $group->id) }}" method="post">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title">Assign Supervisor</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label for="supervisor">Select Supervisor:</label>
+          <select name="supervisor" id="supervisor" class="form-control">
+            @foreach ($supervisors as $supervisor)
+              <option value="{{ $supervisor->username }}">{{ $supervisor->username }}</option>
+            @endforeach
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Assign Supervisor</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Modal popup for Create Note -->
+<div class="modal fade" id="createNoteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="{{ route('projectCoordinator.group', $group->id) }}" method="post">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title">Create Note</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label for="note">Note:</label>
+          <textarea name="note" id="note" class="form-control" rows="4" required></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Note</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Modify the "Assign Supervisor" link to open the modal popup form -->
+@foreach ($groups as $group)
+<div class="col-lg-6">
+  <div class="card2 card-project">
+    <!-- ... other card content ... -->
+    <div class="dropdown">
+      <button class="btn-options1" type="button" id="cardlist-dropdown-button-{{ $group->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="material-icons">more_vert</i>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right">
+        <!-- Add a data attribute for group_id to identify which group to assign the supervisor to -->
+        <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#assignSupervisorModal" data-group-id="{{ $group->id }}">Assign Supervisor</a>
+        
+        <!-- Add a data attribute for group_id to identify which group to create a note for -->
+        <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#createNoteModal" data-group-id="{{ $group->id }}">Create Note</a>
+        <!-- Other dropdown menu items -->
+      </div>
+    </div>
+    <!-- ... other card content ... -->
+  </div>
+</div>
+@endforeach
+
+               
+</div>
 <!-- </div> --> @endforeach
                     <!--end of content list body-->
                   </div>
@@ -319,7 +379,7 @@
   <input type="search" class="form-control filter-list-input" placeholder="Filter supervisor" aria-label="Filter Members">
 </div>
  </div>
-                      </form>
+                      </form>   
                     </div>
                     <!--end of content list head-->
                     <div class="content-list-body row">
@@ -399,9 +459,6 @@
 <script src="{{ asset('js/frontend/theme.js') }}"></script>
 <!-- groupjs -->
 <script src="{{ asset('js/student/group.js') }}"></script>
-<!-- Your HTML code (unchanged) -->
-
-<!-- JavaScript to handle dynamic addition of username and role selection fields -->
 
 
 <!-- This appears in the demo only - demonstrates different layouts -->
