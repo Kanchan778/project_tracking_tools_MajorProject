@@ -16,45 +16,35 @@ class GroupController extends Controller
     $groupsall = Group::all();
     // dd($groupsall);
     // Pass the groups data to the view
-    return view(' layouts.group', ['groups' => $groupsall]);
+    $supervisors = User::all();
+    return view(' layouts.group', ['groups' => $groupsall, 'supervisors'=>$supervisors]);
 }
 
 
 //assign supervisor
-public function assignSupervisor(Request $request)
+public function assignSupervisor(Request $request, $groupId)
     {
-        // Get the group ID and supervisor ID from the request
-        $groupId = $request->input('group_id');
-        $supervisorId = $request->input('supervisor_id');
+        $request->validate([
+            'supervisor' => 'required|string',
+        ]);
 
-        // Find the group
-        $group = Group::find($groupId);
+        $group = Group::findOrFail($groupId);
 
-        // Check if the group exists
-        if (!$group) {
-            return response()->json(['message' => 'Group not found'], 404);
+        // Find the user with the selected supervisor username
+        $supervisor = User::where('username', $request->input('supervisor'))->first();
+        
+        if ($supervisor) {
+            // Sync the supervisor with the group (many-to-many relationship)
+            $group->supervisors()->syncWithoutDetaching([$supervisor->id => ['supervisor_username' => $supervisor->username]]);
+
+            // Redirect or return a response as needed
+            return redirect()->back()->with('success', 'Supervisor assigned successfully.');
+        }
+        else{
+            $supervisors = null;
         }
 
-        // Find the project associated with the group
-        $project = $group->project;
-
-        // Check if the project exists and has a supervisor assigned
-        if (!$project || $project->supervisor_id) {
-            return response()->json(['message' => 'Project not found or already has a supervisor assigned'], 404);
-        }
-
-        // Find the supervisor user
-        $supervisor = User::find($supervisorId);
-
-        // Check if the supervisor user exists and is a supervisor role
-        if (!$supervisor || $supervisor->role !== 'supervisor') {
-            return response()->json(['message' => 'Supervisor not found or invalid role'], 404);
-        }
-
-        // Assign the supervisor to the project
-        $project->supervisor_id = $supervisor->id;
-        $project->save();
-
-        return response()->json(['message' => 'Supervisor assigned successfully'], 200);
+        // Redirect or return a response if the supervisor username is not found
+        return redirect()->back()->with('error', 'Supervisor not found.');
     }
 }

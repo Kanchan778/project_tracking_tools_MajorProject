@@ -68,7 +68,7 @@
       <div class="profile-avatar">
     <label for="avatar-input" class="avatar-label">
    
-    <img class="avatar-image" src="{{asset(auth()->user()->profile_img ?: $defaultImage )}}"  alt="Profile Image">
+    <img class="avatar-label" src="{{asset(auth()->user()->profile_img ?: $defaultImage )}}"  alt="Profile Image">
        
     </label>
 </div>
@@ -97,10 +97,7 @@
 </li>
 
 
-              <li class="nav-item">
-              <a href="{{ route('student.student.group') }}" class="nav-link">Group</a>
-              </li>
-              <li class="nav-item">
+               <li class="nav-item">
               <a href="#"class="nav-link">Account Setting</a>
               </li>
             </ul>
@@ -238,7 +235,10 @@
   <div class="col-md-4">
       <div class="card mb-3">
           <div class="card-body">
-              <h5 class="card-title">{{ $project->project_name }}</h5>
+            <a href="{{ route('student.student.group', ['projectId' => $project->id, 'groupId' => $group->first()->id]) }}">
+              <h4 class="card-title" data-filter-by="text">{{ $project->project_name }}
+              </h4>
+          </a>
               <p class="card-text"><strong>Project Type:</strong> {{ $project->project_type }}</p>
               <div>
                 <!-- Display the project status from the status column -->

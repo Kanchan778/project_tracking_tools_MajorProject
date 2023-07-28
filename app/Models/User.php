@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Project;
+use App\Models\ProjectUser;
 
 // class User extends Model
 // {
@@ -38,11 +39,17 @@ class User extends Authenticatable
         return $this->belongsTo(Group::class);
     }
 
+    public function hasNotInProject()
+    {
+        return $this->belongsTo(ProjectUser::class, 'id', 'user_id');
+    }
+
     //group users roles
     public function role()
     {
         return $this->belongsTo(Role::class);
     }
+
 
     
 }    

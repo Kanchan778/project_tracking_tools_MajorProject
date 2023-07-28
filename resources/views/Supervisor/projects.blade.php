@@ -68,7 +68,7 @@
       <div class="profile-avatar">
     <label for="avatar-input" class="avatar-label">
    
-    <img class="avatar-image" src="{{asset(auth()->user()->profile_img ?: $defaultImage )}}"  alt="Profile Image">
+    <img class="avatar-label" src="{{asset(auth()->user()->profile_img ?: $defaultImage )}}"  alt="Profile Image">
        
     </label>
 </div>

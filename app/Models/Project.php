@@ -51,5 +51,10 @@ public function group()
     return $this->hasMany(Group::class);
 }
 
+public function hasNotInGroup()
+    {
+        return $this->belongsTo(GroupUser::class, 'id', 'user_id');
+    }
+
 }
 

@@ -20,6 +20,7 @@ class DashboardController extends Controller
 
     public function projectCoordinator()
     {
+        
         // Logic for project coordinator dashboard
         return view('dashboard.projectCoordinator');
     }

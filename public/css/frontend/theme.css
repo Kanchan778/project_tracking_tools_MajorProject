@@ -7274,8 +7274,19 @@ a.text-dark:hover, a.text-dark:focus {
       display: flex;
 justify-content: center;
 align-items: center;
-width: 180px;
-height: 180px;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+background-color: #f1f6f8;
+box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
+cursor: pointer;
+    }
+    .avatar-label2{
+      display: flex;
+justify-content: center;
+align-items: center;
+width: 100px;
+height: 100px;
 border-radius: 50%;
 background-color: #f1f6f8;
 box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);

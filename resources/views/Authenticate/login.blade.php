@@ -95,15 +95,7 @@ background: linear-gradient(90deg, rgba(238,174,174,1) 0%, rgba(225,174,237,1) 1
             <div>
                 <button class="btn" type="submit">Login</button>
             </div>
-            <div>
-                <p class="signwith">Or Sign Up with:</p>
-                <div>
-                    <a href="{{ route('login-facebook') }}"><img class="facebook-icon" src="{{ asset('img/fblogo.png') }}" alt="Facebook" style="width: 220px; height: 50px;"></a>
-                </div>
-                <div>
-                   <a href="{{ route('login-gmail') }}"><img class="gmail-icon" src="{{ asset('img/google.jpg') }}" alt="Gmail" style="width: 220px; height: 50x;"></a>
-                </div>
-            </div>
+           
             <div class="signwith1">
                 <a class="signwith1" href="{{ route('password-reset') }}">Forgot Password?</a>
             </div>

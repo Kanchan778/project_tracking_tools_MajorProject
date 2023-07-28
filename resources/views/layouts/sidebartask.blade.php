@@ -74,7 +74,7 @@
                         <div class="profile-avatar">
                             <label for="avatar-input" class="avatar-label">
 
-                                <img class="avatar-image"
+                                <img class="avatar-label"
                                     src="{{ asset(auth()->user()->profile_img ?: $defaultImage) }}"
                                     alt="Profile Image">
 
@@ -109,10 +109,7 @@
                             <a href="{{ route('projectCoordinator.group') }}"class="nav-link">Group</a>
                           </li>
                         <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Evaluation</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#"class="nav-link">Account Setting</a>
+                            <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Change Password</a>
                         </li>
                     </ul>
                     <hr>
@@ -215,7 +212,7 @@
                         <h1></h1>
                         <p class="lead">Tasks</p>
                         <div class="d-flex align-items-center">
-                            <ul class="avatars">
+                            {{-- <ul class="avatars">
 
                                 <li>
                                     <a href="#" data-toggle="tooltip" data-placement="top"
@@ -225,7 +222,7 @@
                                     </a>
                                 </li>
 
-                            </ul>
+                            </ul> --}}
                             <button class="btn btn-round flex-shrink-0" data-toggle="modal"
                                 data-target="#user-manage-modal">
                                 <i class="material-icons">add</i>

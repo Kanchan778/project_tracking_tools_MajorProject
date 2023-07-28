@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\ChangePasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\supervisor\SupervisorProjectController;
 use App\Http\Controllers\student\StudentTaskController;
 use App\Http\Controllers\cordinator\GroupController;
 use App\Http\Controllers\Supervisor\ProgressBarController;
+use App\Http\Controllers\Student\InnerGroupController;
 
 
 
@@ -47,7 +49,7 @@ Route::group(
         'middleware' => 'coordinator',
     ],
     function () {
-        Route::get('/dashboard', [DashboardController::class, 'projectCoordinator'])->name('dashboard');
+        Route::get('/dashboard', [ProjectCoordinatorController::class, 'index'])->name('dashboard');
 
         // Route for project.html
         Route::get('/project',  [ProjectController::class, 'index'])->name('project');
@@ -104,17 +106,25 @@ Route::get('/sidebartask', [SideBarTaskController::class, 'viewSidebarTask'])->n
 
 // //
 Route::get('/group', [GroupController::class, 'index'])->name('groups.index');
+Route::post('/group', [GroupController::class, 'assignSupervisor'])->name('group');
 
-// Route::get('/supervisors/{groupId}', 'AssignSupervisorController@getSupervisorsByGroup');
-// [GroupController::class, 'AssignSupervisorController'])->name('assign');
+Route::get('/get-project-status', [ProjectCoordinatorController::class, 'getProjectStatus']);
 
 
 //logout
-
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     }
 );
 
+
+// routes/web.php
+
+
+// Route to display the change password form
+Route::get('layouts/evaluation', [ChangePasswordController::class, 'showChangePasswordForm'])->name('change-password.form');
+
+// Route to handle the change password form submission
+Route::post('layouts/evaluation', [ChangePasswordController::class, 'changePassword'])->name('change-password.submit');
 
 
 
@@ -131,18 +141,16 @@ Route::group([
 
     // Add the route for the Group blade
 
-    Route::get('/group', [StudentGroupController::class, 'viewGroup'])->name('student.group');
+    Route::get('student/{projectId}/group/{groupId}', [StudentGroupController::class, 'viewGroup'])->name('student.group');
 
 //update profile
      Route::post('/update', [StudentController::class, 'updatestudentProfile'])->name('profile.update');
 
 
      // Route to handle the form submission and store the group
-     Route::post('/group', [StudentGroupController::class, 'store'])->name('group.store');
+     Route::post('student/{projectId}/group', [StudentGroupController::class, 'store'])->name('group.store');
 
-    //  //route for tasks
-    // Route::resource('tasks', StudentTaskController::class);
-
+     Route::get('student/innergroup/{groupId}', [StudentGroupController::class, 'viewGroup'])->name('innergroup');
 });
 
 
@@ -194,11 +202,6 @@ Route::post('/pusher/receiver', [PusherController::class, 'receiver']);
 
 Route::get('/pusher/chat', 'PusherController@displayChat')->name('chat');
 
-Route::get('login/gmail', [AuthLoginController::class, 'redirectToGmail'])->name('login-gmail');
-Route::get('login/gmail/callback', [AuthLoginController::class, 'handleGmailCallback']);
-
-Route::get('login/facebook', [AuthLoginController::class, 'redirectToFacebook'])->name('login-facebook');
-Route::get('login/facebook/callback', [AuthLoginController::class, 'handleFacebookCallback']);
 Route::get('Authenticate/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('Authenticate/login', [LoginController::class, 'login'])->name('login.submit');
 // Route::post('Authenticate/logout', [LoginController::class, 'logout'])->name('logout');

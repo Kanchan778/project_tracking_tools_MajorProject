@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redirect;
+// use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\Log;
+// use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;// Replace "Project" with the actual model class for your projects
 
 
 
@@ -21,26 +20,21 @@ class ProjectCoordinatorController extends Controller
 
     public function index()
     {
+       
         // Retrieve the authenticated user (Assuming you are using Laravel's built-in authentication)
         $user = Auth::user();
     
         // Set the default image path
         $defaultImage = '/path/to/default/Profile.png';
-    
+        $allusers = User::all();
+        
         // Retrieve supervisors and students (assuming 'role' is the field indicating the user's role)
         $students = User::where('role', 'student')->pluck('username');
         $supervisors = User::where('role', 'supervisor')->pluck('username');
-        // 
-        $projects = DB::table('projects')->get();
-        dd($projects);
-        $projectStatuses = DB::table('projects')
-        ->select(DB::raw('COUNT(*) as total_status, status'))
-        ->groupBy('status')
-        ->get();
-           // Fetch project statuses from the database
+       
+     
            
-           
-        return view('projectCoordinator.dashboard', compact('user', 'supervisors', 'students', 'defaultImage', 'projectStatuses'));
+        return view('dashboard.projectCoordinator', compact('user', 'supervisors', 'students', 'defaultImage', 'allusers'));
     }
     
     
@@ -80,5 +74,14 @@ public function updateProfile(Request $request)
 }
 
 
+//projectstatus pie chart
+public function getProjectStatus()
+{
+    $data = Project::selectRaw("status as x, COUNT(*) as y")
+        ->groupBy('status')
+        ->get();
+
+    return response()->json($data);
+}
 
 }

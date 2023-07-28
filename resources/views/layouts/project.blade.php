@@ -74,7 +74,7 @@
                         <div class="profile-avatar">
                             <label for="avatar-input" class="avatar-label">
 
-                                <img class="avatar-image"
+                                <img class="avatar-label"
                                     src="{{ asset(auth()->user()->profile_img ?: $defaultImage) }}" alt="Profile Image">
 
                             </label>
@@ -108,11 +108,9 @@
                             <a href="{{ route('projectCoordinator.groups.index') }}"class="nav-link">Group</a>
                           </li>
                         <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Evaluation</a>
+                            <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Change Password</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#"class="nav-link">Account Setting</a>
-                        </li>
+                       
                     </ul>
                     <hr>
                 </div>
@@ -203,32 +201,37 @@
                 <div class="col-lg-11 col-xl-10">
                     <div class="page-header">
                         <div class="d-flex align-items-center">
-                            <ul class="avatars">
-                                <!-- all users profilepic should be display here-->
-                            </ul>
-                            {{-- 
-                  <button class="btn btn-round flex-shrink-0" data-toggle="modal" data-target="#user-invite-modal">
-                    <i class="material-icons">add</i>
-                  </button> --}}
-                            <form>
-                                <div class="input-group input-group-dark input-group-round">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="material-icons">search</i>
-                                        </span>
-                                    </div>
-
-                                    <input type="search" class="form-control form-control-dark" placeholder="Search"
-                                        aria-label="Search app" id="searchInput">
-
-                                    <button type="button" class="btn btn-primary"
-                                        onclick="validateSearch()">Search</button>
-
-                                </div>
-                            </form>
-
+                            <div class="d-flex align-items-center">
+                                @foreach ($allUsers as $user)
+                               
+                                <ul class="avatars">
+                           <li>      
+        <a href="#" data-toggle="tooltip" data-placement="top" title="{{ $user->name }}">
+            <img class="avatar-image" src="{{ asset($user->profile_img) }}" alt="Profile Image">
+        </a></li> 
+    </ul>
+                                @endforeach
+                                 </div>
+                 
+                      
                         </div>
                     </div>
+                    <form>
+                        <div class="input-group input-group-dark input-group-round">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">search</i>
+                                </span>
+                            </div>
+
+                            <input type="search" class="form-control form-control-dark" placeholder="Search"
+                                aria-label="Search app" id="searchInput">
+
+                            <button type="button" class="btn btn-primary"
+                                onclick="validateSearch()">Search</button>
+
+                        </div>
+                    </form>
                     <hr>
                     <ul class="nav nav-tabs nav-fill" role="tablist">
                         <li class="nav-item">
@@ -382,8 +385,8 @@
                                     @foreach ($supervisors as $supervisor)
                                         <div class="col-6">
                                             <a class="media media-member" href="#">
-                                                <img src="{{ $supervisor->profile_image }}"
-                                                    class="avatar avatar-lg" />
+                                                <img class="avatar-label2" src="{{ asset($supervisor->profile_img) }}" alt="Profile Image">
+
                                                 <div class="media-body">
                                                     <h6 class="mb-0" data-filter-by="text">
                                                         {{ $supervisor->username }}</h6>

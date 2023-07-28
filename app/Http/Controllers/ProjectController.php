@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Student;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Models\PojectUser;
 use Illuminate\Validation\Rule;
@@ -39,6 +38,9 @@ class ProjectController extends Controller
         $project->remainingDays = $remainingDays;
     });
 
+    // Fetch all users from the User table
+    $allUsers = User::all();
+    // dd($allUsers);
         // Fetch the semesters and sections from the User table
         $semesters = User::distinct('semester')->pluck('semester');
         $sections = User::distinct('section')->pluck('section');
@@ -46,7 +48,7 @@ class ProjectController extends Controller
         // Fetch the supervisors from the User table who have the Supervisor role
         $supervisors = User::where('role', 'Supervisor')->get();
 
-        return view('layouts.project', compact('projects', 'semesters', 'sections', 'supervisors', 'user'));
+        return view('layouts.project', compact('projects', 'semesters', 'sections', 'supervisors', 'user','allUsers'));
    }
 
     public function store(Request $request)

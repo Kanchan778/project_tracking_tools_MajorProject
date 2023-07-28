@@ -1,5 +1,6 @@
+
 @php
-    use App\Models\User;
+    $defaultImage = 'public/img/Profile.png';
 @endphp
 
 <!doctype html>
@@ -80,29 +81,29 @@
 </div>
 
 <button class="edit-profile-button">Edit Profile</button>
-
 </ul>
 
           <hr>
           <div class="d-none d-lg-block w-100">
             <span class="text-small text-muted">Quick Links</span>
+    
             <ul class="nav nav-small flex-column mt-2">
             <li class="nav-item">
-                <a href="{{ route('projectCoordinator.dashboard') }}" class="nav-link">Dashboard</a>
+    <a href="{{ route('student.dashboard') }}" class="nav-link">Dashboard</a>
+</li>
+
+            <li class="nav-item">
+    <a href="{{ route('student.projects.index') }}" class="nav-link">Projects Overview</a>
+</li>
+
+
+              <li class="nav-item">
+              <a href="{{ route('student.student.group') }}" class="nav-link">Group</a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('projectCoordinator.project') }}" class="nav-link">Project Overview</a>
+              <a href="#"class="nav-link">Account Setting</a>
               </li>
-              <li class="nav-item">
-              <a href="{{ route('projectCoordinator.sidebartask') }}" class="nav-link">Task</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('projectCoordinator.groups.index') }}"class="nav-link">Group</a>
-              </li>
-              <li class="nav-item">
-              <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Change Password</a>
-              </li>
-               </ul>
+            </ul>
             <hr>
           </div>
           <div>
@@ -153,7 +154,7 @@
       <div class="main-container">
       <div class="edit-profile-form" style="display: none;">
  
-      <form action="{{ route('projectCoordinator.profile.update') }}" method="POST" enctype="multipart/form-data" id="profile-form" class="pro-form">
+      <form action="{{ route('student.profile.update') }}" method="POST" enctype="multipart/form-data" id="profile-form" class="pro-form">
    @csrf
       <!-- Your existing form fields -->
 <i class="fas fa-times" id="close-icon" >
@@ -186,8 +187,8 @@
     
 
 </form>
-</div>
 
+</div>
 </div>
    
         <div class="container">

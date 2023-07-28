@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
+use App\Models\Group;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
@@ -19,9 +20,9 @@ class StudentProjectController extends Controller
     $projectsall = Project::all();
     //  dd($projectsall);
 
-
-    // Return the projects and user to the view
-    return view('student.projects', compact('projects', 'projectsall','user'));
+$group = Group::all();
+// dd($group);    // Return the projects and user to the view
+    return view('student.projects', compact('projects', 'projectsall','user','group'));
 }
 
 

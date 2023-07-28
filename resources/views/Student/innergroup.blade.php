@@ -1,5 +1,6 @@
+
 @php
-    use App\Models\User;
+    $defaultImage = 'public/img/Profile.png';
 @endphp
 
 <!doctype html>
@@ -80,27 +81,27 @@
 </div>
 
 <button class="edit-profile-button">Edit Profile</button>
-
 </ul>
 
           <hr>
           <div class="d-none d-lg-block w-100">
             <span class="text-small text-muted">Quick Links</span>
+    
             <ul class="nav nav-small flex-column mt-2">
             <li class="nav-item">
-                <a href="{{ route('projectCoordinator.dashboard') }}" class="nav-link">Dashboard</a>
+    <a href="{{ route('student.dashboard') }}" class="nav-link">Dashboard</a>
+</li>
+
+            <li class="nav-item">
+    <a href="{{ route('student.projects.index') }}" class="nav-link">Projects Overview</a>
+</li>
+
+
+              <li class="nav-item">
+              <a href="{{ route('student.student.group') }}" class="nav-link">Group</a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('projectCoordinator.project') }}" class="nav-link">Project Overview</a>
-              </li>
-              <li class="nav-item">
-              <a href="{{ route('projectCoordinator.sidebartask') }}" class="nav-link">Task</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('projectCoordinator.group') }}"class="nav-link">Group</a>
-              </li>
-              <li class="nav-item">
-              <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Change Password</a>
+              <a href="#"class="nav-link">Account Setting</a>
               </li>
             </ul>
             <hr>
@@ -153,7 +154,7 @@
       <div class="main-container">
       <div class="edit-profile-form" style="display: none;">
  
-      <form action="{{ route('projectCoordinator.profile.update') }}" method="POST" enctype="multipart/form-data" id="profile-form" class="pro-form">
+      <form action="{{ route('student.profile.update') }}" method="POST" enctype="multipart/form-data" id="profile-form" class="pro-form">
    @csrf
       <!-- Your existing form fields -->
 <i class="fas fa-times" id="close-icon" >
@@ -189,93 +190,31 @@
 
 </div>
 </div>
+      <div class="main-container">
+
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-11 col-xl-9">
               <section class="py-4 py-lg-5">
-                <h1>Change Password</h1>
-
-    <form action="/change-password" method="post">
-        <!-- CSRF Token -->
-        @csrf
-
-        <!-- Current Password -->
-        <label for="current_password">Current Password:</label>
-        <input type="password" id="current_password" name="current_password" required>
-
-        <!-- New Password -->
-        <label for="new_password">New Password:</label>
-        <input type="password" id="new_password" name="new_password" required>
-
-        <!-- Confirm New Password -->
-        <label for="confirm_password">Confirm New Password:</label>
-        <input type="password" id="confirm_password" name="confirm_password" required>
-
-        <button type="submit">Change Password</button>
-    </form>
-                       
+                {{-- edit role --}}
+                <p class="lead">
+                       </p>
               </section>
-            </div> 
-             <button class="btn btn-primary btn-round btn-floating btn-lg" type="button" data-toggle="collapse" data-target="#floating-chat" aria-expanded="false">
-  <i class="material-icons">chat_bubble</i>
-  <i class="material-icons">close</i>
-</button>
-
-<div class="collapse sidebar-floating" id="floating-chat">
-  <div class="sidebar-content">
-    <div class="chat-module-fixed">
-      <div class="chat-module">
-        <div class="chat-module-top">
-          <h4>{{ Auth::user()->username }}</h4>
-          <!-- Existing chat module top content -->
-        </div>
-        <hr>
-        <ul class="nav nav-tabs nav-fill" role="tablist">
-                <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#tasks" role="tab" aria-controls="tasks" aria-selected="true">Supervisor</a>
-                  
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Student</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="false">Group</a>
-                </li>
-              </ul>
-        
-        
-        <div class="chat-module-bottom">
-          <form id="chat-form">
-            <input type="text" id="message" name="message" placeholder="Enter message..." autocomplete="off">
-            <button type="submit">Send</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-</div>
-
-     </div>
-          </div>
+            </div>
           </div>
         </div>
-
+</div>
       </div>
     </div>
 
     <footer>
-        <p>&copy; 2023 Kanchan Chaudhary. All rights reserved.</p>
+        <p>&copy; 2023 Kanchan Chaudhary. All rights reserved.</p>-->
       </footer>
 
     <!-- Required vendor scripts (Do not remove) -->
     <script type="text/javascript" src="{{ asset('js/frontend/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/frontend/popper.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/frontend/bootstrap.js') }}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chatify/dist/chatify.min.js"></script>
-
 
     <!-- Optional Vendor Scripts (Remove the plugin script here and comment initializer script out of index.js if site does not use that feature) -->
 
@@ -297,49 +236,6 @@
     <script type="text/javascript" src="{{ asset('js/frontend/theme.js') }}"></script>
       <!-- Cordinator js-->
       <script src="{{ asset('js/dashboard/projectcordinator.js') }}"></script>
-      <script src="{{ asset('js/pusher.js') }}"></script>
-
-      <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
-<script>
-    // Establish a connection with Pusher or Laravel WebSockets
-    const pusher = new Pusher('8cfa96120028307e2777', {
-        cluster: 'mt1',
-        // Add any other necessary configuration options
-    });
-  
-    // Subscribe to the chat channel
-    const channel = pusher.subscribe('chat');
-  
-    // Listen for new messages
-    channel.bind('App\\Events\\ChatMessageSent', function(data) {
-        // Handle the new message, update the chat interface
-    });
-  
-    // Handle the form submission to send a new message
-    $('form').on('submit', function(e) {
-        e.preventDefault();
-      
-        const message = $('#message').val();
-        const userId = '123'; // Get the user ID dynamically
-      
-        // Send the message to the server
-        $.ajax({
-            url: '/send-message',
-            method: 'POST',
-            data: { message: message, user_id: userId },
-            success: function(response) {
-                // Handle success if needed
-            },
-            error: function(error) {
-                // Handle error if needed
-            }
-        });
-      
-        // Clear the message input
-        $('#message').val('');
-    });
-</script>
-
 
     <!-- This appears in the demo only - demonstrates different layouts -->
     <style type="text/css">

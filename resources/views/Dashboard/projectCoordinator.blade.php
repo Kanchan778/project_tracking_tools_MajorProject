@@ -73,7 +73,7 @@
       <div class="profile-avatar">
     <label for="avatar-input" class="avatar-label">
    
-    <img class="avatar-image" src="{{asset(auth()->user()->profile_img ?: $defaultImage )}}"  alt="Profile Image">
+    <img class="avatar-label" src="{{asset(auth()->user()->profile_img ?: $defaultImage )}}"  alt="Profile Image">
        
     </label>
 </div>
@@ -106,10 +106,7 @@
                 <a href="{{ route('projectCoordinator.groups.index') }}"class="nav-link">Group</a>
               </li>
               <li class="nav-item">
-              <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Evaluation</a>
-              </li>
-              <li class="nav-item">
-              <a href="#"class="nav-link">Account Setting</a>
+              <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Change Password</a>
               </li>
             </ul>
             <hr>
@@ -224,13 +221,16 @@
         </div>
         <hr>
         <ul class="nav nav-tabs nav-fill" role="tablist">
-                <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#tasks" role="tab" aria-controls="tasks" aria-selected="true">Supervisor</a>
-                  
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Student</a>
-                </li>
+          {{-- @foreach ($allusers as $user)
+          <li class="nav-item">
+              @if ($user->role === 'Supervisor')
+                  <a class="nav-link{{ $loop->first ? ' active' : '' }}" data-toggle="tab" href="#supervisor-{{ $user->id }}" role="tab" aria-controls="supervisor-{{ $user->id }}" aria-selected="{{ $loop->first ? 'true' : 'false' }}">{{ $user->username }}</a>
+              @elseif ($user->role === 'Student')
+                  <a class="nav-link{{ $loop->first ? ' active' : '' }}" data-toggle="tab" href="#student-{{ $user->id }}" role="tab" aria-controls="student-{{ $user->id }}" aria-selected="{{ $loop->first ? 'true' : 'false' }}">{{ $user->username }}</a>
+              @endif
+          </li>
+      @endforeach --}}
+      
                 <li class="nav-item">
                   <a class="nav-link" data-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="false">Group</a>
                 </li>
@@ -293,6 +293,7 @@
 <!-- Add Chart.js library -->
 
       <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+      <script src="https://cdn.syncfusion.com/ej2/19.1.47/dist/ej2.min.js"></script>
 <script>
     // Establish a connection with Pusher or Laravel WebSockets
     const pusher = new Pusher('8cfa96120028307e2777', {
@@ -334,27 +335,42 @@
 </script>
 
 
+
 <script>
- 
-  var pie = new ej.charts.AccumulationChart({
-      //Initializing Series
-      series: [
-          {
-              dataSource: [
-                  { 'x': 'Evaluation', y: 30 },
-                  { 'x': 'Active', y: 20 },
-                  { 'x': 'Complete', y: 40 },
-                                     ],
-              dataLabel: {
-                  visible: true,
-                  position: 'Inside',
-              },
-              xName: 'x',
-              yName: 'y'
-          }
-      ],
-  });
-  pie.appendTo('#pie');
+  // Function to fetch data from the server using AJAX
+  function fetchProjectStatusData() {
+      fetch('/cordinator/get-project-status')
+          .then(response => response.json())
+          .then(data => {
+              // Data received, update the chart
+              updatePieChart(data);
+          })
+          .catch(error => {
+              console.error('Error fetching data:', error);
+          });
+  }
+
+  // Function to update the pie chart with new data
+  function updatePieChart(data) {
+      var pie = new ej.charts.AccumulationChart({
+          // Initializing Series
+          series: [
+              {
+                  dataSource: data,
+                  dataLabel: {
+                      visible: true,
+                      position: 'Inside',
+                  },
+                  xName: 'x',
+                  yName: 'y'
+              }
+          ],
+      });
+      pie.appendTo('#pie');
+  }
+
+  // Fetch data and update the chart on page load
+  fetchProjectStatusData();
 </script>
 
 
