@@ -105,9 +105,10 @@
               <li class="nav-item">
                 <a href="{{ route('projectCoordinator.groups.index') }}"class="nav-link">Group</a>
               </li>
-              <li class="nav-item">
-              <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Change Password</a>
-              </li>
+            </li>
+            <li class="nav-item">
+            <a href="#changePasswordModal" id="changePasswordModal" class="nav-link">Change Password</a>
+            </li>
             </ul>
             <hr>
           </div>
@@ -246,6 +247,19 @@
                             </div>
                             <div class="card-body">
                                 <div class="dropdown card-options">
+
+                                  <button class="btn-options1" type="button" id="cardlist-dropdown-button-{{ $group->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                  </button>
+                                  <div class="dropdown-menu dropdown-menu-right">
+                                    <!-- Add a data attribute for group_id to identify which group to assign the supervisor to -->
+                                    <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#assignSupervisorModal" data-group-id="{{ $group->id }}">Assign Supervisor</a>
+                                    
+                                    <!-- Add a data attribute for group_id to identify which group to create a note for -->
+                                    <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#createNoteModal" data-group-id="{{ $group->id }}">Create Note</a>
+                                    <!-- Other dropdown menu items -->
+                                  </div>
+                               
                    
                         </div>
                         <div>
@@ -258,7 +272,12 @@
                                     <strong>Project Type:</strong> {{ $group->project_type }}
                                     {{ $group->group_name }}
                                     <br>
-                                    <strong>Pitch:</strong> {{ $group->pitch }}
+                                    @if ($group->groupSupervisor)
+                                    <strong>Assigned Supervisor:</strong> {{ $group->groupSupervisor->supervisor_username }}
+                                @else
+                                    <strong>Pitch:</strong> {{ $group->pitch }} 
+                                    <br><span style="color: red;">(Supervisor not assigned yet)</span>
+                                @endif
                                     <br>
                                     <strong>Members:</strong>
                                     <ul>
@@ -279,7 +298,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
 
-      <form action="{{ route('projectCoordinator.group', $group->id) }}" method="post">
+      <form action="{{ route('projectCoordinator.groups.store', ['groupId' => $group->id]) }}" method="POST">
         @csrf
         <div class="modal-header">
           <h5 class="modal-title">Assign Supervisor</h5>
@@ -291,9 +310,11 @@
           <label for="supervisor">Select Supervisor:</label>
           <select name="supervisor" id="supervisor" class="form-control">
             @foreach ($supervisors as $supervisor)
-              <option value="{{ $supervisor->username }}">{{ $supervisor->username }}</option>
+                <option value="{{ $supervisor->username }}">{{ $supervisor->username }}</option>
             @endforeach
-          </select>
+        </select>
+        
+        
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -307,7 +328,7 @@
 <div class="modal fade" id="createNoteModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form action="{{ route('projectCoordinator.group', $group->id) }}" method="post">
+      <form action="{{ route('projectCoordinator.groups.storeNote', ['groupId' => $group->id]) }}" method="POST">
         @csrf
         <div class="modal-header">
           <h5 class="modal-title">Create Note</h5>
@@ -318,6 +339,8 @@
         <div class="modal-body">
           <label for="note">Note:</label>
           <textarea name="note" id="note" class="form-control" rows="4" required></textarea>
+          {{-- <label for="note">Created by:</label>
+          <input name="note" id="note" class="form-control" rows="4" required></input> --}}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -328,27 +351,7 @@
   </div>
 </div>
 <!-- Modify the "Assign Supervisor" link to open the modal popup form -->
-@foreach ($groups as $group)
-<div class="col-lg-6">
-  <div class="card2 card-project">
-    <!-- ... other card content ... -->
-    <div class="dropdown">
-      <button class="btn-options1" type="button" id="cardlist-dropdown-button-{{ $group->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="material-icons">more_vert</i>
-      </button>
-      <div class="dropdown-menu dropdown-menu-right">
-        <!-- Add a data attribute for group_id to identify which group to assign the supervisor to -->
-        <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#assignSupervisorModal" data-group-id="{{ $group->id }}">Assign Supervisor</a>
-        
-        <!-- Add a data attribute for group_id to identify which group to create a note for -->
-        <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#createNoteModal" data-group-id="{{ $group->id }}">Create Note</a>
-        <!-- Other dropdown menu items -->
-      </div>
-    </div>
-    <!-- ... other card content ... -->
-  </div>
 </div>
-@endforeach
 
                
 </div>
@@ -420,6 +423,39 @@
     </div>  
 
 </div>
+<div class="modal-wrapper">
+  <input type="checkbox" class="modal-toggle" id="changePasswordModalToggle">
+  <div class="modal-overlay">
+      <label for="changePasswordModalToggle" class="modal-overlay-close"></label>
+  </div>
+  <div class="modal">
+      <!-- Add your modal content here, e.g., form to change password -->
+      <div class="modal-header">
+          <h5 class="modal-title">Change Password</h5>
+          <label for="changePasswordModalToggle" class="modal-close">&#x2716;</label>
+      </div>
+      <div class="modal-body">
+          <!-- Add your password change form here -->
+          <!-- Example form -->
+          <form id="changePasswordForm">
+              <!-- Your form fields go here -->
+              <div class="form-group">
+                  <label for="currentPassword">Current Password</label>
+                  <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
+              </div>
+              <div class="form-group">
+                  <label for="newPassword">New Password</label>
+                  <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+              </div>
+              <!-- Add more form fields as needed -->
+          </form>
+      </div>
+      <div class="modal-footer">
+          <label for="changePasswordModalToggle" class="btn btn-secondary">Close</label>
+          <button type="submit" class="btn btn-primary" id="submitPasswordChange">Save Changes</button>
+      </div>
+  </div>
+</div>
   @if(session('success'))
     <div class="success-message">{{ session('success') }}</div>
   @endif
@@ -463,6 +499,7 @@
 
 <!-- This appears in the demo only - demonstrates different layouts -->
 <style>
+  
   .layout-switcher {
     position: fixed;
     bottom: 0;

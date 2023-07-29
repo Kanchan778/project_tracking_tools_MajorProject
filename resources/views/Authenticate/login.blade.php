@@ -23,7 +23,7 @@
             flex-direction: column;
             align-items: center;
             width: 30%;
-            height:80%;
+            height:60%;
             border-radius:10px;
         }
 
@@ -77,7 +77,7 @@ background: linear-gradient(90deg, rgba(238,174,174,1) 0%, rgba(225,174,237,1) 1
         <form action="{{ route('login') }}" method="POST">
             @csrf
             <div>
-                <img class="avatar" src="{{ asset('img/apexlogo.png') }}" alt="Avatar" style="width: 190px; height: 50px; margin-bottom: 10px;">
+                <img class="avatar" src="{{ asset('img/apexlogo.png') }}" alt="Avatar" style="width: 190px; height: 70px; margin-bottom: 10px;">
             </div>
             <div class="username">
                 <label for="username">Username</label>

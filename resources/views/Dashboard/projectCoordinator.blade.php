@@ -106,7 +106,7 @@
                 <a href="{{ route('projectCoordinator.groups.index') }}"class="nav-link">Group</a>
               </li>
               <li class="nav-item">
-              <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Change Password</a>
+              <a href="#changePasswordModal" id="changePasswordModal" class="nav-link">Change Password</a>
               </li>
             </ul>
             <hr>
@@ -197,6 +197,42 @@
 </div>
         <div class="container">
           {{-- <h1> Projects Tracking System</h1> --}}
+          <div class="modal" id="changePasswordModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+          
+                <form action="#" method="POST">
+                  @csrf
+                  <div class="modal-header">
+                      <h5 class="modal-title">Change Password</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="form-group">
+                          <label for="current_password">Current Password:</label>
+                          <input type="password" name="current_password" id="current_password" class="form-control" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="new_password">New Password:</label>
+                          <input type="password" name="new_password" id="new_password" class="form-control" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="confirm_password">Confirm New Password:</label>
+                          <input type="password" name="confirm_password" id="confirm_password" class="form-control" required>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-primary">Change Password</button>
+                  </div>
+              </form>
+              
+              </div>
+            </div>
+          </div>
+          <h1 class="header-pie">Project Status</h1>
           <div class="row justify-content-center">
             <div class="col-lg-11 col-xl-9">
               <section class="py-4 py-lg-5"></section>
@@ -339,34 +375,38 @@
 <script>
   // Function to fetch data from the server using AJAX
   function fetchProjectStatusData() {
-      fetch('/cordinator/get-project-status')
-          .then(response => response.json())
-          .then(data => {
-              // Data received, update the chart
-              updatePieChart(data);
-          })
-          .catch(error => {
-              console.error('Error fetching data:', error);
-          });
+    fetch('/cordinator/get-project-status')
+      .then(response => response.json())
+      .then(data => {
+        // Modify the data array with custom colors
+      
+
+        // Data received, update the chart
+        updatePieChart(data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
   }
 
   // Function to update the pie chart with new data
   function updatePieChart(data) {
-      var pie = new ej.charts.AccumulationChart({
-          // Initializing Series
-          series: [
-              {
-                  dataSource: data,
-                  dataLabel: {
-                      visible: true,
-                      position: 'Inside',
-                  },
-                  xName: 'x',
-                  yName: 'y'
-              }
-          ],
-      });
-      pie.appendTo('#pie');
+    var pie = new ej.charts.AccumulationChart({
+      // Initializing Series
+      series: [
+        {
+          dataSource: data,
+          dataLabel: {
+            visible: true,
+            position: 'Inside',
+          },
+          xName: 'x',
+          yName: 'y',
+          pointColorMapping: 'color', // Use the color property to map the custom color for each segment
+        },
+      ],
+    });
+    pie.appendTo('#pie');
   }
 
   // Fetch data and update the chart on page load
@@ -374,9 +414,45 @@
 </script>
 
 
-      
+
     // <!-- This appears in the demo only - demonstrates different layouts -->
     <style type="text/css">
+    /* CSS to style the modal */
+    .header-pie{
+      display: inline;
+      margin-top: 200px!important;
+      margin: 100px 0 0 400px;
+    }
+    #pie {
+  background-color: transparent !important;
+
+}
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Activate the modal when the target element is in the URL */
+.modal:target {
+    display: block;
+}
+
       .layout-switcher{ position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(73px); color: #fff; transition: all .35s ease; background: #343a40; border-radius: .25rem .25rem 0 0; padding: .75rem; z-index: 999; }
             .layout-switcher:not(:hover){ opacity: .95; }
             .layout-switcher:not(:focus){ cursor: pointer; }

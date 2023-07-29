@@ -88,21 +88,18 @@
             <span class="text-small text-muted">Quick Links</span>
     
             <ul class="nav nav-small flex-column mt-2">
-            <li class="nav-item">
-    <a href="{{ route('student.dashboard') }}" class="nav-link">Dashboard</a>
-</li>
-
-            <li class="nav-item">
-    <a href="{{ route('student.projects.index') }}" class="nav-link">Projects Overview</a>
-</li>
-
-
+            
               <li class="nav-item">
-              <a href="{{ route('student.student.group') }}" class="nav-link">Group</a>
-              </li>
-              <li class="nav-item">
-              <a href="#"class="nav-link">Account Setting</a>
-              </li>
+                <a href="{{ route('student.projects.index') }}" class="nav-link">Dashboard</a>
+            </li>
+            
+            
+                          <li class="nav-item">
+                          <a href="{{ route('student.student.innergroup') }}" class="nav-link">Your Group</a>
+                          </li>
+                          <li class="nav-item">
+                          <a href="#"class="nav-link">Account Setting</a>
+                          </li>
             </ul>
             <hr>
           </div>
@@ -196,10 +193,203 @@
           <div class="row justify-content-center">
             <div class="col-lg-11 col-xl-9">
               <section class="py-4 py-lg-5">
-                {{-- edit role --}}
-                <p class="lead">
-                       </p>
-              </section>
+                <h1 class="display-4 mb-3">Your Group</h1>
+                <div>
+                    @if ($group)
+                        <style>
+                            table {
+                                border-collapse: collapse;
+                                width: 100%;
+                                background-color: #fff;
+                            }
+                            th, td {
+                                border: 1px solid rgb(141, 137, 137);
+                                padding: 8px;
+                            }
+                            th {
+                                font-weight: bold;
+                            }
+                        </style>
+                        <table>
+                            <tr>
+                                <th>Group Name:</th>
+                                <td>{{ $group->group_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Project Type:</th>
+                                <td>{{ $group->project_type }}</td>
+                            </tr>
+                            @if ($group->groupSupervisor)
+                                <tr>
+                                    <th>Assigned Supervisor:</th>
+                                    <td>{{ $group->groupSupervisor->supervisor_username }}</td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <th>Pitch:</th>
+                                    <td>{{ $group->pitch }} <span style="color: red;">(Supervisor not assigned yet)</span></td>
+                                </tr>
+                            @endif
+                            <!-- Add more fields as needed -->
+                    
+                            <!-- You can also loop through any related data if available, for example, group members -->
+                            <tr>
+                                <th>Group Members:</th>
+                                <td>
+                                    <ul>
+                                        @foreach ($group->users as $user)
+                                            <li>{{ $user->username }}</li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    @else
+                        <p>No group attached to the student.</p>
+                    @endif
+                </div>
+                <br>
+            
+                <a href="#" class="custom-button"  data-toggle="modal" data-target="#assignRoleModal">Assign Role</a>
+                <div class="modal fade" id="assignRoleModal" tabindex="-1" role="dialog" aria-labelledby="assignRoleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="assignRoleModalLabel">Assign Role</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                              <form method="post" action="{{ route('student.assign.roles') }}">
+                                  @csrf
+                                  @if ($group)
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($group->users as $user)
+                <tr>
+                    <td>{{ $user->username }}</td>
+                    <td>
+                        <select name="roles[{{ $user->id }}][]" multiple>
+                            <option value="">Frontend</option>
+                            <option value="">Backend</option>
+                            <option value="">Testing</option>
+                            <option value="">Documentation</option>
+                            <option value="">Leader</option>
+                        </select>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+@else
+    <p>No group found for the current student.</p>
+@endif
+
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Assign Roles</button>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+
+              {{-- Edit Button, Upload Files, Isuues --}}
+              <a href="#"  class="custom-button"  data-toggle="modal" data-target="#noteModal">Notes</a>
+              <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="assignRoleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="assignRoleModalLabel">Create  Note</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                          <form
+                          action="{{ route('student.innergroup.storeNote', ['groupId' => $group->id]) }}"
+                          method="POST">
+                          @csrf
+                          <div class="modal-header">
+                              <h5 class="modal-title">Create Note</h5>
+                              <button type="button" class="close"
+                                  data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                              <label for="note">Note:</label>
+                              <textarea name="note" id="note" class="form-control" rows="4" required></textarea>
+                              {{-- <label for="note">Created by:</label>
+<input name="note" id="note" class="form-control" rows="4" required></input> --}}
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary"
+                                  data-dismiss="modal">Cancel</button>
+                              <button type="submit" class="btn btn-primary">Create
+                                  Note</button>
+                          </div>
+                      </form>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#"  class="custom-button" data-toggle="modal" data-target="#uploadModal">Upload Files</a>
+              <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="assignRoleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="assignRoleModalLabel">Upload Files</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="#">
+                                @csrf
+                              
+                                <div class="form-group">
+                                  <label for="file">Select File</label>
+                                  <input type="file" name="file" id="file" class="form-control">
+                              </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- your_view_name.blade.php -->
+            <div class="custom-card">
+<h6>Tasks</h6>
+<div>
+    @if ($group->notes->isEmpty())
+        <p>Nothing found here</p>
+    @else
+        <ul>
+            @foreach ($group->notes as $note)
+                <li>{{ $note->note }} - {{ $note->created_by }}</li>
+            @endforeach
+        </ul>
+    @endif
+</div>
+            </div>
+
+            </section>
+            
             </div>
           </div>
         </div>
@@ -239,6 +429,54 @@
 
     <!-- This appears in the demo only - demonstrates different layouts -->
     <style type="text/css">
+      .custom-button {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #255fb6;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin-left: 15px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Hover effect */
+  .custom-button:hover {
+    background-color: #0056b3;
+  }
+  .custom-card {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 60px;
+  }
+
+  .custom-card h6 {
+    margin-bottom: 12px;
+    font-weight: bold;
+    color: #007bff;
+  }
+
+  .custom-card ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .custom-card li {
+    margin-bottom: 8px;
+    color: #333;
+  }
+
+  .custom-card p {
+    margin: 0;
+    color: #777;
+  }
       .layout-switcher{ position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(73px); color: #fff; transition: all .35s ease; background: #343a40; border-radius: .25rem .25rem 0 0; padding: .75rem; z-index: 999; }
             .layout-switcher:not(:hover){ opacity: .95; }
             .layout-switcher:not(:focus){ cursor: pointer; }

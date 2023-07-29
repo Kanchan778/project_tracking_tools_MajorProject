@@ -24,6 +24,7 @@ use App\Http\Controllers\student\StudentTaskController;
 use App\Http\Controllers\cordinator\GroupController;
 use App\Http\Controllers\Supervisor\ProgressBarController;
 use App\Http\Controllers\Student\InnerGroupController;
+use App\Http\Controllers\supervisor\SupervisorGroupController;
 
 
 
@@ -106,11 +107,12 @@ Route::get('/sidebartask', [SideBarTaskController::class, 'viewSidebarTask'])->n
 
 // //
 Route::get('/group', [GroupController::class, 'index'])->name('groups.index');
-Route::post('/group', [GroupController::class, 'assignSupervisor'])->name('group');
+Route::post('/group/{groupId}/store', [GroupController::class, 'store'])->name('groups.store');
+
+Route::post('/group/{groupId}/storeNote', [GroupController::class, 'storeNote'])->name('groups.storeNote');
+
 
 Route::get('/get-project-status', [ProjectCoordinatorController::class, 'getProjectStatus']);
-
-
 //logout
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     }
@@ -140,8 +142,11 @@ Route::group([
     Route::get('/projects', [StudentProjectController::class, 'index'])->name('projects.index');
 
     // Add the route for the Group blade
+    Route::get('/student/innergroup', [InnerGroupController::class,'index'])->name('student.innergroup');// Add the 'auth' middleware to ensure only authenticated users can access this route
+    Route::post('/assign-roles', [InnerGroupController::class,'store'])->name('assign.roles');
 
-    Route::get('student/{projectId}/group/{groupId}', [StudentGroupController::class, 'viewGroup'])->name('student.group');
+
+    Route::get('student/{projectId}/group', [StudentGroupController::class, 'viewGroup'])->name('student.group');
 
 //update profile
      Route::post('/update', [StudentController::class, 'updatestudentProfile'])->name('profile.update');
@@ -151,7 +156,19 @@ Route::group([
      Route::post('student/{projectId}/group', [StudentGroupController::class, 'store'])->name('group.store');
 
      Route::get('student/innergroup/{groupId}', [StudentGroupController::class, 'viewGroup'])->name('innergroup');
-});
+
+
+     Route::post('/innergroup/{groupId}/storeNote', [InnerGroupController::class, 'storeNote'])->name('innergroup.storeNote');
+
+   //
+   
+
+
+
+    }
+
+
+);
 
 
 Route::group(
@@ -174,11 +191,13 @@ Route::group(
         Route::get('/project',  [SupervisorProjectController::class, 'index'])->name('projects');
 
         //
+        Route::get('supervisor/{projectId}/group/{groupId}', [SupervisorGroupController::class, 'viewGroup'])->name('supervisor.group');
 
 
 
 // Add a route to handle the form submission for updating progress
 Route::get('/progress', [ProgressBarController::class, 'index'])->name('progress');
+Route::get('/group', [SupervisorGroupController::class, 'index'])->name('group');
 
     }
 );

@@ -88,18 +88,19 @@
             <span class="text-small text-muted">Quick Links</span>
     
             <ul class="nav nav-small flex-column mt-2">
+    
             <li class="nav-item">
-    <a href="{{ route('student.dashboard') }}" class="nav-link">Dashboard</a>
-</li>
-
-            <li class="nav-item">
-    <a href="{{ route('student.projects.index') }}" class="nav-link">Projects Overview</a>
+    <a href="{{ route('student.projects.index') }}" class="nav-link">Dashboard</a>
 </li>
 
 
-              {{-- <li class="nav-item">
-              <a href="{{ route('student.student.group') }}" class="nav-link">Group</a>
-              </li> --}}
+             
+@if(Auth::user()->groups->isNotEmpty())
+<li class="nav-item">
+    <a href="{{ route('student.student.innergroup') }}" class="nav-link">Your Group</a>
+</li>
+@endif
+
               <li class="nav-item">
               <a href="#"class="nav-link">Account Setting</a>
               </li>

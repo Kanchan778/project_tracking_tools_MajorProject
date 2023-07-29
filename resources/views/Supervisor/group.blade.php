@@ -87,7 +87,7 @@
           <div class="d-none d-lg-block w-100">
             <span class="text-small text-muted">Quick Links</span>
             <ul class="nav nav-small flex-column mt-2">
-             
+                     
               <li class="nav-item">
                 <a href="{{ route('supervisor.projects') }}" class="nav-link">Dashboard</a>
               </li>
@@ -190,206 +190,207 @@
 </div>
 <div class="container" id="searchResultsContainer">
   <div class="row justify-content-center">
-      <div class="col-lg-11 col-xl-10">
-          <div class="page-header">
-              <div class="d-flex align-items-center">
-                  <ul class="avatars">
-                      <!-- all users profilepic should be display here-->
-                  </ul>
-                  {{-- 
-        <button class="btn btn-round flex-shrink-0" data-toggle="modal" data-target="#user-invite-modal">
-          <i class="material-icons">add</i>
-        </button> --}}
-                  <form>
-                      <div class="input-group input-group-dark input-group-round">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text">
-                                  <i class="material-icons">search</i>
-                              </span>
-                          </div>
-
-                          <input type="search" class="form-control form-control-dark" placeholder="Search"
-                              aria-label="Search app" id="searchInput">
-
-                          <button type="button" class="btn btn-primary"
-                              onclick="validateSearch()">Search</button>
-
-                      </div>
-                  </form>
-
-              </div>
-          </div>
-          <hr>
-          <ul class="nav nav-tabs nav-fill" role="tablist">
-              <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#projects" role="tab"
-                      aria-controls="projects" aria-selected="true">Assigned Projects</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#members" role="tab"
-                      aria-controls="members" aria-selected="false">All Projects</a>
-              </li>
-          </ul>
-          <div class="tab-content">
-              <div class="tab-pane fade show active" id="projects" role="tabpanel"
-                  data-filter-list="content-list-body">
-                  <div class="content-list">
-                      <div class="row content-list-head">
-                          <div class="col-auto">
-                              <h3>Projects</h3>
-                              
-                          </div>
-                          <form class="col-md-auto">
-                              <div class="input-group input-group-round">
-                                  <div class="input-group-prepend">
-                                      <span class="input-group-text">
-                                          <i class="material-icons">filter_list</i>
-                                      </span>
-                                  </div>
-                                  <input type="search" class="form-control filter-list-input"
-                                      placeholder="Filter projects" aria-label="Filter Projects">
-                              </div>
-                          </form>
-                      </div>
-                      <!--end of content list head-->
-                      <div class="content-list-body row">
-                         {{-- Loop through user-attached projects --}}
-@if($userProjects->isEmpty())
-    <p>No user-attached projects found.</p>
-@else
-    <ul>
-        @foreach($userProjects as $project)
-            <li>{{ $project->project_name }}</li>
-        @endforeach
-    </ul>
-@endif
-                      </div>
-                      <!-- </div> -->
-                      <!--end of content list body-->
-                  </div>
-                  <!--end of content list-->
-              </div>
-              <!--end of tab-->
-              <div class="tab-pane fade" id="members" role="tabpanel"
-                  data-filter-list="content-list-body">
-                  <div class="content-list">
-                      <div class="row content-list-head">
-                          <div class="col-auto">
-                              <h3>All Projects</h3>
-                              
-                          </div>
-                          <form class="col-md-auto">
-                              <div class="input-group input-group-round">
-                                  <div class="input-group-prepend">
-                                      <div class="input-group">
-                                          <span class="input-group-text">
-                                              <i class="material-icons">filter_list</i>
-                                          </span>
-                                          <input type="search" class="form-control filter-list-input"
-                                              placeholder="Filter projects" aria-label="Filter Members">
-                                      </div>
-                                  </div>
-                          </form>
-                      </div>
-                      <!--end of content list head-->
-                      <div class="content-list-body row">
-                      {{-- Loop through all projects --}}
-
-@if($allProjects->isEmpty())
-    <p>No projects found.</p>
-@else
-    <ul>
-        @foreach($allProjects as $project)
-            <li>{{ $project->project_name }}</li>
-        @endforeach
-    </ul>
-@endif
-                                          <!-- <span data-filter-by="text" class="text-body"></span>
-   -->
-                                      </div>
-                                  </a>
-                              </div>
-                      </div>
-
-                      <!--end of content list-->
-                  </div>
-              </div>
-              <form class="modal fade" id="team-manage-modal" tabindex="-1" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h5 class="modal-title">Manage Team</h5>
-                              <button type="button" class="close btn btn-round" data-dismiss="modal"
-                                  aria-label="Close">
-                                  <i class="material-icons">close</i>
-                              </button>
-                          </div>
-                          <!--end of modal head-->
-                          <ul class="nav nav-tabs nav-fill" role="tablist">
-                              <li class="nav-item">
-                                  <a class="nav-link active" id="team-manage-details-tab" data-toggle="tab"
-                                      href="#team-manage-details" role="tab"
-                                      aria-controls="team-manage-details" aria-selected="true">Details</a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" id="team-manage-members-tab" data-toggle="tab"
-                                      href="#team-manage-members" role="tab"
-                                      aria-controls="team-manage-members" aria-selected="false">Members</a>
-                              </li>
-                          </ul>
-                          <div class="modal-body">
-                              <div class="tab-content">
-                                  <div class="tab-pane fade show active" id="team-manage-details"
-                                      role="tabpanel">
-                                      <h6>Supervisor Details</h6>
-                                      <div class="form-group row align-items-center">
-                                          <label class="col-3">Name</label>
-                                          <input class="form-control col" type="text"
-                                              placeholder="Team name" name="team-name"
-                                              value="Medium Rare" />
-                                      </div>
-                                      <div class="form-group row">
-                                          <label class="col-3">Username</label>
-                                          <textarea class="form-control col" rows="3" placeholder="Team description" name="team-description">A small web studio crafting lovely template products.</textarea>
-                                      </div>
-                                  </div>
-                                  <div class="tab-pane fade" id="team-manage-members" role="tabpanel">
-                                      <div class="users-manage" data-filter-list="form-group-users">
-                                          <div class="mb-3">
-                                              <ul class="avatars text-center">
-                                              </ul>
-                                          </div>
-                                          <div class="input-group input-group-round">
-                                              <div class="input-group-prepend">
-                                                  <span class="input-group-text">
-                                                      <i class="material-icons">filter_list</i>
-                                                  </span>
-                                              </div>
-                                              <input type="search" class="form-control filter-list-input"
-                                                  placeholder="Filter supervisor"
-                                                  aria-label="Filter Members">
-                                          </div>
-
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                      <!--end of modal body-->
-                      <div class="modal-footer">
-                          <button role="button" class="btn btn-primary" type="submit">
-                              Done
-                          </button>
-                      </div>
-                  </div>
-          </div>
-       
+    <div class="col-lg-11 col-xl-10">
+      <div class="page-header">
+        <!-- Header content here (if any) -->
       </div>
-  
+      <hr>
+      <ul class="nav nav-tabs nav-fill" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#projects" role="tab" aria-controls="projects" aria-selected="true">Assigned Groups</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="false">All Groups</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="projects" role="tabpanel" data-filter-list="content-list-body">
+          <div class="content-list">
+            <div class="row content-list-head">
+              <div class="col-auto">
+                <h3>Groups</h3>
+              </div>
+              <form class="col-md-auto">
+                <!-- Filter input field here -->
+              </form>
+            </div>
+            <!-- Content list head end -->
+            <div class="content-list-body row">
+              <!-- Loop through user-attached projects -->
+            
+                <!-- Other project details here -->
+                <div class="col-lg-6">
+                  <div class="card2 card-project">
+                    <!-- ... other card content ... --> 
+                    <div class="dropdown">
+                      <button class="btn-options1" type="button" id="cardlist-dropdown-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="material-icons1">more_vert</i>
+                      </button>
+                      <div class="dropdown-menu dropdown-menu-right">
+                      
+                        <!-- Add a data attribute for group_id to identify which group to create a note for -->
+                        <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#createNoteModal" >comment</a>
+                        <!-- Other dropdown menu items -->
+                      </div>
+                    </div>
+                    <div class="col-12">
+                <h1>Major (2023)</h1>
+                <h2>Group H</h2>
+                <div class="mem">
+                <h6>Members</h6> 
+                 Kanchan Chaudhary
+                 <br>
+                 Azwin Dudhraj
+                 <br>
+                  <span class="text-small1">Status: In Progress</span>
+                </div>
+              </div>
+                    
+                    <div class="modal fade" id="createNoteModal" tabindex="-1" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <form action="#" method="">
+                            @csrf
+                            <div class="modal-header">
+                              <h5 class="modal-title">Comment</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <label for="note">Description</label>
+                              <textarea name="note" id="note" class="form-control" rows="4" required></textarea>
+                              {{-- <label for="note">Created by:</label>
+                              <input name="note" id="note" class="form-control" rows="4" required></input> --}}
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                              <button type="submit" class="btn btn-primary">Send</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    <!-- ... other card content ... -->
+                  </div>
+                </div>
+              </div>
+              <!-- End of user-attached projects loop -->
+            </div>
+            <!-- Content list body end -->
+          </div>
+          <!-- End of content list -->
+        </div>
+        <!-- End of tab -->
+        <div class="tab-pane fade" id="members" role="tabpanel" data-filter-list="content-list-body">
+          <div class="content-list">
+            <div class="row content-list-head">
+              <div class="col-auto">
+                <h3>All Groups</h3>
+              </div>
+              <form class="col-md-auto">
+                <!-- Filter input field here -->
+              </form>
+            </div>
+            <!-- Content list head end -->
+            <div class="content-list-body row">
+              <!-- Loop through all projects -->
+              <div class="col-12">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">Project</th>
+                      <th colspan="4">Group A</th>
+                      <th colspan="4">Group B</th>
+                   
+                      <!-- Add more groups here if needed -->
+                    </tr>
+                    <tr>
+                      <th>Project Field</th>
+                      <th>Project Name</th>
+                      <th>Assigned Supervisor</th>
+                     
+                      <th>Project Field</th>
+                      <th>Project Name</th>
+                      <th>Assigned Supervisor</th>
+                      
+                   
+                     
+                      <!-- Add more group-related headers here if needed -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>Major (2023)</th>
+                      <td>Agriculture System</td>
+                      <td>AgroSys</td>
+                      <td>Supervisor 1</td>
+                      
+                      <td>Web Development</td>
+                      <td>WebAppX</td>
+                      <td>Supervisor </td>
+                  
+                    
+                      <!-- Add more project details for each group here if needed -->
+                    </tr>
+                    <!-- Add more rows for different projects if needed -->
+                  </tbody>
+                </table>
+                
+                
+                
+                <!-- Other project details here -->
+              </div>
+              <div class="col-12">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">Project</th>
+                      <th colspan="4">Group A</th>
+                      <th colspan="4">Group B</th>
+                      
+                      <!-- Add more groups here if needed -->
+                    </tr>
+                    <tr>
+                      <th>Project Field</th>
+                      <th>Project Name</th>
+                      <th>Assigned Supervisor</th>
+                      
+                      <th>Project Field</th>
+                      <th>Project Name</th>
+                      <th>Assigned Supervisor</th>
+                     
+                      
+                      <!-- Add more group-related headers here if needed -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>Minor (2023)</th>
+                   
+                      <td>Web Development(Laravel)</td>
+                      <td>Army</td>
+                      <td>Supervisor3 </td>
+                      
+                      <td>Web Development</td>
+                      <td>BTS</td>
+                      <td>Supervisor5</td>
+                    
+                      <!-- Add more project details for each group here if needed -->
+                    </tr>
+                    <!-- Add more rows for different projects if needed -->
+                  </tbody>
+                </table>
+                
+                
+              </div>
+            </div>
+          </div>
+                <!-- Other project details here -->
+              </div>
+      </div>
+      <!-- End of tab content -->
+    </div>
   </div>
-</div>
-</div>
-
 </div>
 </div>
 </div>
@@ -473,6 +474,41 @@ function updateStatus(status, projectId) {
 
 <!-- This appears in the demo only - demonstrates different layouts -->
 <style>
+    table {
+      width: 120%; /* You can adjust this value to set the desired width */
+            margin: 0 auto; /* Centers the table on the page */
+            border-collapse: collapse;
+            max-width: 20%;
+            border: 1px solid #ccc;
+
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr {
+          background-color: #f2f2f2;
+          color: black;
+        }
+        element {
+  position: absolute;
+  transform: translate3d(-136px, 44px, 0px);
+  top: 0px;
+  left: 200px!important;
+  will-change: transform;
+}
 .layout-switcher {
   position: fixed;
   bottom: 0;

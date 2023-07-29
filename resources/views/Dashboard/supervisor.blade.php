@@ -87,13 +87,17 @@
           <div class="d-none d-lg-block w-100">
             <span class="text-small text-muted">Quick Links</span>
             <ul class="nav nav-small flex-column mt-2">
+                          
               <li class="nav-item">
-                <a href="{{ route('supervisor.projects') }}" class="nav-link">Project </a>
+                <a href="{{ route('supervisor.projects') }}" class="nav-link">Dashboard</a>
               </li>
-             
-             <li class="nav-item">
-                <a href="{{ route('supervisor.progress') }}"class="nav-link">Progress</a>
-            </li> 
+              <li class="nav-item">
+                <a href="{{ route('supervisor.progress') }}" class="nav-link">Progress</a>
+              </li>
+                 
+            <li class="nav-item">
+              <a href="{{ route('supervisor.group') }}"class="nav-link">Group</a>
+          </li> 
               <li class="nav-item">
               <a href="#"class="nav-link">Account Setting</a>
               </li>

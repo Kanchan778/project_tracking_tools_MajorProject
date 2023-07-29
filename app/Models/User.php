@@ -33,10 +33,9 @@ class User extends Authenticatable
     public function projects()
     {
         return $this->belongsToMany(Project::class);
-    }
-    public function group()
+    }public function groups()
     {
-        return $this->belongsTo(Group::class);
+        return $this->belongsToMany(Group::class, 'group_user', 'user_id', 'group_id');
     }
 
     public function hasNotInProject()
@@ -45,9 +44,9 @@ class User extends Authenticatable
     }
 
     //group users roles
-    public function role()
+    public function roles()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsToMany(Role::class);
     }
 
 

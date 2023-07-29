@@ -214,281 +214,251 @@
                 </div>
               </div>
               <hr>
-              <ul class="nav nav-tabs nav-fill" role="tablist">
-              <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#tasks" role="tab" aria-controls="tasks" aria-selected="true">Tasks</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="false">Files</a>
-                </li>
-              </ul>
-              <div class="tab-content">
-                <div class="tab-pane fade show active" id="tasks" role="tabpanel" data-filter-list="content-list-body">
-                  <div class="content-list">
-                    <div class="row content-list-head">
-                      <div class="col-auto">
-                        <h3>Tasks</h3>
-                      <button class="btn btn-round" data-toggle="modal" data-target="#task-add-modal">
-                        <i class="material-icons">add</i>
-                      </button>
-                      </div>
-                      <form class="col-md-auto">
-                        <div class="input-group input-group-round">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="material-icons">filter_list</i>
-                            </span>
-                          </div>
-                          <input type="search" class="form-control filter-list-input" placeholder="Filter projects" aria-label="Filter Projects">
+              <div class="row justify-content-center">
+                <div class="col-lg-11 col-xl-10">
+                    <div class="page-header">
+                        <div class="d-flex align-items-center">
+                            <ul class="avatars">
+                                <!-- all users profilepic should be displayed here -->
+                            </ul>
+                            {{-- <button class="btn btn-round flex-shrink-0" data-toggle="modal" data-target="#user-invite-modal">
+                    <i class="material-icons">add</i>
+                  </button> --}}
                         </div>
-                      </form>
                     </div>
-                    <!--end of content list head-->
-                    <div class="content-list-body row">
-                    @foreach ($tasks as $task)
-    <div class="card card-task">
-    <div class="card-list">
-                      <div class="card-list-head">
-                        <h6>{{ $task->name }}</h6>
-                        <div class="dropdown">
-                          <button class="btn-options" type="button" id="cardlist-dropdown-button-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Rename</a>
-                            <a class="dropdown-item text-danger" href="#">Archive</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card-list-body">
-
-                        <div class="card card-task">
-                          <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                          <div class="card-body">
-                            <div class="card-title">
-                              <a href="#"><h6 data-filter-by="text">{{ $task->description }}</h6></a>
-                              <span class="text-small">Unscheduled</span>
-                            </div>
-                            <div class="card-meta">
-                              <ul class="avatars">
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Marcus">
-                                    <img alt="Marcus Simmons" class="avatar" src="assets/img/avatar-male-1.jpg" />
-                                  </a>
-                                </li>
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Harry">
-                                    <img alt="Harry Xai" class="avatar" src="assets/img/avatar-male-2.jpg" />
-                                  </a>
-                                </li>
-
-                                <li>
-                                  <a href="#" data-toggle="tooltip" title="Kristina">
-                                    <img alt="Kristina Van Der Stroem" class="avatar" src="assets/img/avatar-female-4.jpg" />
-                                  </a>
-                                </li>
-
-                              </ul>
-                              <div class="d-flex align-items-center">
-                                <i class="material-icons">playlist_add_check</i>
-                                <span>-/-</span>
-                              </div>
-                              <div class="dropdown card-options">
-                                <button class="btn-options" type="button" id="task-dropdown-button-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <i class="material-icons">more_vert</i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                  <a class="dropdown-item" href="#">Mark as done</a>
-                                  <div class="dropdown-divider"></div>
-                                  <a class="dropdown-item text-danger" href="#">Archive</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-    </div>
-@endforeach
-
-
-</div>
-<form class="modal fade" id="task-add-modal" tabindex="-1" aria-hidden="true" action="{{ route('projectCoordinator.project.createTask', $project->id) }}" method="POST">
-              @csrf  
-              <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">New Task</h5>
-                      <button type="button" class="close btn btn-round" data-dismiss="modal" aria-label="Close">
-                        <i class="material-icons">close</i>
-                      </button>
-                    </div>
-                    <!--end of modal head-->
+                    <hr>
                     <ul class="nav nav-tabs nav-fill" role="tablist">
-                      <li class="nav-item">
-                        <a class="nav-link active" id="task-add-details-tab" data-toggle="tab" href="#task-add-details" role="tab" aria-controls="task-add-details" aria-selected="true">Details</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="task-add-members-tab" data-toggle="tab" href="#task-add-members" role="tab" aria-controls="task-add-members" aria-selected="false">Members</a>
-                      </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tasks" role="tab" aria-controls="tasks" aria-selected="true">Tasks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="false">Files</a>
+                        </li>
                     </ul>
-                    <div class="modal-body">
-                      <div class="tab-content">
-                        <div class="tab-pane fade show active" id="task-add-details" role="tabpanel">
-                          <h6>General Details</h6>
-                          <div class="form-group row align-items-center">
-                            <label class="cor-label col-3">Name</label>
-                            <input class="form-control col" type="text" placeholder="Task name" name="task-name" />
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-3">Description</label>
-                            <textarea class="form-control col" rows="3" placeholder="Task description" name="task-description"></textarea>
-                          </div>
-                          <hr>
-                          <h6>Timeline</h6>
-                          <div class="form-group row align-items-center">
-    <label class="col-3">Start Date</label>
-    <input class="form-control col" type="date" name="start_date" placeholder="Select a date" />
-</div>
-<div class="form-group row align-items-center">
-    <label class="col-3">Due Date</label>
-    <input class="form-control col" type="date" name="due_date" placeholder="Select a date" />
-</div>
-                          {{-- <div class="alert alert-warning text-small" role="alert">
-                            <span>You can change due dates at any time.</span>
-                          </div> --}}
-                        </div>
-                        <div class="tab-pane fade" id="task-add-members" role="tabpanel">
-                          <div class="users-manage" data-filter-list="form-group-users">
-                            <div class="mb-3">
-                              <ul class="avatars text-center">
-                                <li>
-                                  <img alt="Harry Xai" src="assets/img/avatar-male-2.jpg" class="avatar" data-toggle="tooltip" data-title="Harry Xai" />
-                                </li>
-
-                              </ul>
-                            </div>
-                            <div class="input-group input-group-round">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                  <i class="material-icons">filter_list</i>
-                                </span>
-                              </div>
-                              <input type="search" class="form-control filter-list-input" placeholder="Filter members" aria-label="Filter Members">
-                            </div>
-                            <div class="form-group-users">
-                           
-                              @foreach ($project->users->unique() as $user)
-                              <div class="custom-control custom-checkbox">
-                                  <input type="checkbox" class="custom-control-input" id="task-user-{{ $user->id }}">
-                                  <label class="custom-control-label" for="task-user-{{ $user->id }}">
-                                      <span class="d-flex align-items-center">
-                                          <!-- <img alt="{{ $user->username }}" src="assets/img/{{ $user->avatar }}" class="avatar mr-2" /> -->
-                                          <span class="h6 mb-0" data-filter-by="text">{{ $user->username }}</span>
-                                      </span>
-                                  </label>
-                              </div>
-                              @endforeach
-</div>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!--end of modal body-->
-                    <div class="modal-footer">
-                    <button type="submit">Create</button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-<!-- </div> -->
-                    <!--end of content list body-->
-                  </div>
-                  <!--end of content list-->
-                </div>
-                <!--end of tab-->
-                <div class="tab-pane fade" id="members" role="tabpanel" data-filter-list="content-list-body">
-                  <div class="content-list">
-                    <div class="row content-list-head">
-                      <div class="col-auto">
-                        <h3>Files</h3>
-                        
-                      </div>
-                      <form class="col-md-auto">
-                        <div class="input-group input-group-round">
-                          <div class="input-group-prepend">
-                          <div class="input-group">
-  <span class="input-group-text">
-    <i class="material-icons">filter_list</i>
-  </span>
-  <input type="search" class="form-control filter-list-input" placeholder="Filter files" aria-label="Filter Members">
-</div>
- </div>
-                      </form>
-                    </div>
-                    <!--end of content list head-->
-                    <div class="content-list-body row">
-                    <form class="dropzone" action="{{ route('projectCoordinator.project.files', $project->id) }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    <!-- Rest of your form inputs -->
-    <input type="file" id ="file" class="inputfile" name="file">
-    <label   class="label-file" for="file">Choose a file</label>
-    <button type="submit" class="uploadfile">Upload</button>
-</form>
-<div class="filelist">
-                    @foreach ($project->files as $file)
-                          <li class="list-group-item">
-                            <div class="media align-items-center">
-                              <ul class="avatars">
-                                <li>
-                                  <div class="avatar bg-primary">
-                                    <i class="material-icons">insert_drive_file</i>
-                                  </div>
-                                </li>
-                                
-                              </ul>
-                              <div class="media-body d-flex justify-content-between align-items-center">
-                              <div class="fildetails">
-   
-        <a href="{{ asset($file->file_path) }}" data-filter-by="text">{{ $file->filename }}</a>
-        <br>
-        <span class="text-small" data-filter-by="text">{{ $file->file_type }}</span>
-    
-
-
-                                <div class="dropdown">
-                                  <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">more_vert</i>
-                                  </button>
-                                  <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Download</a>
-                                    <a class="dropdown-item" href="#">Share</a>
-                                    <div class="dropdown-divider"></div>
-                                    <!-- Delete form -->
-        <form action="{{ route('projectCoordinator.files.destroy', $file->id) }}" method="post">
-            @csrf
-            @method('delete')
-            <button type="submit" class="dropdown-item text-danger" onclick="return confirm('Are you sure you want to delete this file?')">Delete</button>
-        </form>
-    </div>
-                                  </div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="tasks" role="tabpanel" data-filter-list="content-list-body">
+                            <div class="content-list">
+                                <div class="row content-list-head">
+                                    <div class="col-auto">
+                                        <h3>Tasks</h3>
+                                        <button class="btn btn-round" data-toggle="modal" data-target="#task-add-modal">
+                                            <i class="material-icons">add</i>
+                                        </button>
+                                    </div>
+                                    <form class="col-md-auto">
+                                        <div class="input-group input-group-round">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="material-icons">filter_list</i>
+                                                </span>
+                                            </div>
+                                            <input type="search" class="form-control filter-list-input" placeholder="Filter projects" aria-label="Filter Projects">
+                                        </div>
+                                    </form>
                                 </div>
-                              </div>
+                                <!--end of content list head-->
+                                <div class="content-list-body row">
+                                    @foreach ($tasks as $task)
+                                        <div class="col-md-4">
+                                            <div class="card card-task">
+                                                <div class="card-list">
+                                                    <div class="card-list-head">
+                                                        <h6>{{ $task->name }}</h6>
+                                                        <div class="dropdown">
+                                                            <button class="btn-options" type="button" id="cardlist-dropdown-button-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="material-icons">more_vert</i>
+                                                            </button>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item" href="#">Rename</a>
+                                                                <a class="dropdown-item text-danger" href="#">Archive</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-list-body">
+                                                        <div class="card card-task">
+                                                            <div class="progress">
+                                                                <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <div class="card-title">
+                                                                    <a href="#"><h6 data-filter-by="text">{{ $task->description }}</h6></a>
+                                                                </div>
+                                                                <div class="card-meta">
+                                                                    <!-- ... Task meta information ... -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <form class="modal fade" id="task-add-modal" tabindex="-1" aria-hidden="true" action="{{ route('projectCoordinator.project.createTask', $project->id) }}" method="POST">
+                                  @csrf  
+                                  <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">New Task</h5>
+                                          <button type="button" class="close btn btn-round" data-dismiss="modal" aria-label="Close">
+                                            <i class="material-icons">close</i>
+                                          </button>
+                                        </div>
+                                        <!--end of modal head-->
+                                        <ul class="nav nav-tabs nav-fill" role="tablist">
+                                          <li class="nav-item">
+                                            <a class="nav-link active" id="task-add-details-tab" data-toggle="tab" href="#task-add-details" role="tab" aria-controls="task-add-details" aria-selected="true">Details</a>
+                                          </li>
+                                          <li class="nav-item">
+                                            <a class="nav-link" id="task-add-members-tab" data-toggle="tab" href="#task-add-members" role="tab" aria-controls="task-add-members" aria-selected="false">Members</a>
+                                          </li>
+                                        </ul>
+                                        <div class="modal-body">
+                                          <div class="tab-content">
+                                            <div class="tab-pane fade show active" id="task-add-details" role="tabpanel">
+                                              <h6>General Details</h6>
+                                              <div class="form-group row align-items-center">
+                                                <label class="cor-label col-3">Name</label>
+                                                <input class="form-control col" type="text" placeholder="Task name" name="task-name" />
+                                              </div>
+                                              <div class="form-group row">
+                                                <label class="col-3">Description</label>
+                                                <textarea class="form-control col" rows="3" placeholder="Task description" name="task-description"></textarea>
+                                              </div>
+                                              <hr>
+                                              <h6>Timeline</h6>
+                                              <div class="form-group row align-items-center">
+                        <label class="col-3">Start Date</label>
+                        <input class="form-control col" type="date" name="start_date" placeholder="Select a date" />
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label class="col-3">Due Date</label>
+                        <input class="form-control col" type="date" name="due_date" placeholder="Select a date" />
+                    </div>
+                                              {{-- <div class="alert alert-warning text-small" role="alert">
+                                                <span>You can change due dates at any time.</span>
+                                              </div> --}}
+                                            </div>
+                                            <div class="tab-pane fade" id="task-add-members" role="tabpanel">
+                                              <div class="users-manage" data-filter-list="form-group-users">
+                                                <div class="mb-3">
+                                                  <ul class="avatars text-center">
+                                                    <li>
+                                                      <img alt="Harry Xai" src="assets/img/avatar-male-2.jpg" class="avatar" data-toggle="tooltip" data-title="Harry Xai" />
+                                                    </li>
+                    
+                                                  </ul>
+                                                </div>
+                                                <div class="input-group input-group-round">
+                                                  <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                      <i class="material-icons">filter_list</i>
+                                                    </span>
+                                                  </div>
+                                                  <input type="search" class="form-control filter-list-input" placeholder="Filter members" aria-label="Filter Members">
+                                                </div>
+                                                <div class="form-group-users">
+                                               
+                                                  @foreach ($project->users->unique() as $user)
+                                                  <div class="custom-control custom-checkbox">
+                                                      <input type="checkbox" class="custom-control-input" id="task-user-{{ $user->id }}">
+                                                      <label class="custom-control-label" for="task-user-{{ $user->id }}">
+                                                          <span class="d-flex align-items-center">
+                                                              <!-- <img alt="{{ $user->username }}" src="assets/img/{{ $user->avatar }}" class="avatar mr-2" /> -->
+                                                              <span class="h6 mb-0" data-filter-by="text">{{ $user->username }}</span>
+                                                          </span>
+                                                      </label>
+                                                  </div>
+                                                  @endforeach
+                    </div>
+                    
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!--end of modal body-->
+                                        <div class="modal-footer">
+                                        <button type="submit">Create</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </form>
                             </div>
-                       </li>
-                        @endforeach
-</div>
-
-                  <!--end of content list-->
-</div>
-</div> 
-
+                        </div>
+                        <div class="tab-pane fade" id="members" role="tabpanel" data-filter-list="content-list-body">
+                            <div class="content-list">
+                                <div class="row content-list-head">
+                                    <div class="col-auto">
+                                        <h3>Files</h3>
+                                    </div>
+                                    <form class="col-md-auto">
+                                        <div class="input-group input-group-round">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">
+                                                        <i class="material-icons">filter_list</i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <input type="search" class="form-control filter-list-input" placeholder="Filter files" aria-label="Filter Members">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!--end of content list head-->
+                                <div class="content-list-body row">
+                                    <!-- Your files content goes here -->
+                                    <form class="dropzone" action="{{ route('projectCoordinator.project.files', $project->id) }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <!-- Rest of your form inputs -->
+                                        <input type="file" id="file" class="inputfile" name="file">
+                                        <label class="label-file" for="file">Choose a file</label>
+                                        <button type="submit" class="uploadfile">Upload</button>
+                                    </form>
+                                    <div class="filelist">
+                                        @foreach ($project->files as $file)
+                                            <li class="list-group-item">
+                                                <div class="media align-items-center">
+                                                    <ul class="avatars">
+                                                        <li>
+                                                            <div class="avatar bg-primary">
+                                                                <i class="material-icons">insert_drive_file</i>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="media-body d-flex justify-content-between align-items-center">
+                                                        <div class="fildetails">
+                                                            <a href="{{ asset($file->file_path) }}" data-filter-by="text">{{ $file->filename }}</a>
+                                                            <br>
+                                                            <span class="text-small" data-filter-by="text">{{ $file->file_type }}</span>
+                                                        </div>
+                                                        <div class="dropdown">
+                                                            <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="material-icons">more_vert</i>
+                                                            </button>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item" href="#">Download</a>
+                                                                <a class="dropdown-item" href="#">Share</a>
+                                                                <div class="dropdown-divider"></div>
+                                                                <!-- Delete form -->
+                                                                <form action="{{ route('projectCoordinator.files.destroy', $file->id) }}" method="post">
+                                                                    @csrf
+                                                                    @method('delete')
+                                                                    <button type="submit" class="dropdown-item text-danger" onclick="return confirm('Are you sure you want to delete this file?')">Delete</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             
   @if(session('success'))
     <div class="success-message">{{ session('success') }}</div>
@@ -497,10 +467,11 @@
           </div>
         </div>
   
-        </div>
-      </div>
+        </div> 
+       </div>
     </div>
-    
+    </div>
+  
     <footer>
   <p>&copy; 2023 Kanchan Chaudhary. All rights reserved.</p>
 </footer>

@@ -95,21 +95,21 @@
                     <span class="text-small text-muted">Quick Links</span>
 
                     <ul class="nav nav-small flex-column mt-2">
-                        <li class="nav-item">
-                            <a href="{{ route('student.dashboard') }}" class="nav-link">Dashboard</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{ route('student.projects.index') }}" class="nav-link">Projects Overview</a>
-                        </li>
-
-
-                        {{-- <li class="nav-item">
-                            <a href="{{ route('student.student.group') }}" class="nav-link">Group</a>
-                        </li> --}}
-                        <li class="nav-item">
-                            <a href="#"class="nav-link">Account Setting</a>
-                        </li>
+                       
+            <li class="nav-item">
+                <a href="{{ route('student.projects.index') }}" class="nav-link">Dashboard</a>
+            </li>
+            
+            
+            @if(Auth::user()->groups->isNotEmpty())
+            <li class="nav-item">
+                <a href="{{ route('student.student.innergroup') }}" class="nav-link">Your Group</a>
+            </li>
+        @endif
+        
+                          <li class="nav-item">
+                          <a href="#"class="nav-link">Account Setting</a>
+                          </li>
                     </ul>
                     <hr>
                 </div>
@@ -231,15 +231,19 @@
                             data-filter-list="content-list-body">
                             <div class="content-list">
                                 <div class="row content-list-head">
-                                    @if ($isInGroup == false)
-                                        <div class="col-auto">
-                                            <h3>Group</h3>
-                                            <button class="btn btn-round" data-toggle="modal"
-                                                data-target="#project-add-modal">
-                                                <i class="material-icons">add</i>
-                                            </button>
-                                        </div>
-                                    @endif
+                                    @if ($isInGroup)
+    <div class="col-auto">
+        <h3>You are already in a group.</h3>
+    </div>
+@else
+    <div class="col-auto">
+        <h3>Group</h3>
+        <button class="btn btn-round" data-toggle="modal" data-target="#project-add-modal">
+            <i class="material-icons">add</i>
+        </button>
+    </div>
+@endif
+
                                     <form class="col-md-auto">
                                         <div class="input-group input-group-round">
                                             <div class="input-group-prepend">
@@ -255,9 +259,9 @@
                                 <!--end of content list head-->
 
                                 <div class="content-list-body row">
-                                    @if ($myGroup)
+                                    {{-- @if ($myGroup)
                                             <div class="group-item">
-                                                <h2>{{ $myGroup->group->name }}</h2>
+                                                <h2>{{ $myGroup->group->group_name }}</h2>
                                                 <p><strong>Project Type:</strong> {{ $myGroup->group->project_type }}</p>
 
                                                 <p><strong>Pitch:</strong> {{ $myGroup->group->pitch }}</p>
@@ -275,7 +279,7 @@
                                             </div>
                                     @else
                                         <p>No groups found for this project.</p>
-                                    @endif
+                                    @endif --}}
                                     <!-- </div> -->
                                     <!--end of content list body-->
                                 </div>
@@ -374,25 +378,35 @@
                                                 <div class="form-group row align-items-center">
                                                     <label class="col-3">Project Type:</label>
                                                     <div class="col">
-                                                        @foreach ($projectTypes as $projectType)
-                                                            <div>
-                                                                <input type="radio"
-                                                                    id="project_type_{{ $projectType }}"
-                                                                    name="project_type" value="{{ $projectType }}">
-                                                                <label
-                                                                    for="project_type_{{ $projectType }}">{{ $projectType }}</label>
-                                                            </div>
-                                                        @endforeach
+                                                        @if ($project->status === 'Active')
+                                                       
+                                                            @foreach ($projectTypes as $projectType)
+                                                                <div>
+                                                                    <input type="radio" id="project_type_{{ $projectType }}"
+                                                                        name="project_type" value="{{ $projectType }}">
+                                                                    <label for="project_type_{{ $projectType }}">{{ $projectType }}</label>
+                                                                </div>
+                                                            @endforeach
+                                                       
+                                                    @else
+                                                        <p style="color: red;">No active project for you. Can't create a group.</p>
+                                                    @endif
+                                                    
+                                                    
                                                     </div>
                                                 </div>
-
-                                           <select class="form-control" name="selectedUsernames[]" required multiple>
-    @foreach ($project->users as $user)
-        <option @if ($group && $group->users->contains('id', $user->id)) selected disabled @endif value="{{ $user->id }}">
-            {{ $user->username }}
-        </option>
-    @endforeach
-</select>
+                                                <select class="form-control" name="selectedUsernames[]" required multiple>
+                                                    @foreach ($project->users as $user)
+                                                        @php
+                                                            $alreadyInGroup = $group && $group->users->contains('id', $user->id);
+                                                        @endphp
+                                                        <option value="{{ $user->id }}" @if ($alreadyInGroup) style="color: red;" @endif
+                                                            @if ($alreadyInGroup) disabled @endif>
+                                                            {{ $user->username }} @if ($alreadyInGroup) (Already in group) @endif
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                
 
                                                 
                                                 

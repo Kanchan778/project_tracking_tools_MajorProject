@@ -215,23 +215,27 @@
                  
                       
                         </div>
+
                     </div>
                     <form>
                         <div class="input-group input-group-dark input-group-round">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">
+                                <span class="input-group-text1">
                                     <i class="material-icons">search</i>
+                                    <input type="search" class="form-control1" placeholder="Search"
+                                aria-label="Search app" id="searchInput">
                                 </span>
                             </div>
 
-                            <input type="search" class="form-control form-control-dark" placeholder="Search"
-                                aria-label="Search app" id="searchInput">
+                            
 
                             <button type="button" class="btn btn-primary"
                                 onclick="validateSearch()">Search</button>
 
                         </div>
+                    
                     </form>
+                
                     <hr>
                     <ul class="nav nav-tabs nav-fill" role="tablist">
                         <li class="nav-item">
@@ -344,7 +348,8 @@
                                                     </li>
                                                   </ul>
  
-                                     </div>
+                                                </div>
+                                     
                                                 </div>
                                             </div>
                                         </div>
@@ -757,6 +762,9 @@
 
     <!-- This appears in the demo only - demonstrates different layouts -->
     <style>
+        .container5{
+            width: 50%;
+        }
         .layout-switcher {
             position: fixed;
             bottom: 0;

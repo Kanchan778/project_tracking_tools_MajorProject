@@ -87,15 +87,17 @@
           <div class="d-none d-lg-block w-100">
             <span class="text-small text-muted">Quick Links</span>
             <ul class="nav nav-small flex-column mt-2">
+                     
               <li class="nav-item">
-                <a href="{{ route('supervisor.projects') }}" class="nav-link">Project </a>
+                <a href="{{ route('supervisor.projects') }}" class="nav-link">Dashboard</a>
               </li>
-{{--              
               <li class="nav-item">
-                <a href="{{ route('projectCoordinator.nav-side-task') }}"class="nav-link"></a>
-            
-           
-              </li> --}}
+                <a href="{{ route('supervisor.progress') }}" class="nav-link">Progress</a>
+              </li>
+                 
+            <li class="nav-item">
+              <a href="{{ route('supervisor.group') }}"class="nav-link">Group</a>
+          </li> 
               <li class="nav-item">
               <a href="#"class="nav-link">Account Setting</a>
               </li>
@@ -186,206 +188,222 @@
 
 </div>
 </div>
-      <div class="main-container">
+<div class="container" id="searchResultsContainer">
+  <div class="row justify-content-center">
 
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-11 col-xl-9">
-              <section class="py-4 py-lg-5">
-               
-                <style>
-                  p {
-                      font-size: 20px;
-                  }
-          
-                  .container {
-                      background-color: rgb(250, 249, 249);
-                      width: 80%;
-                      border-radius: 15px;
-                  }
-          
-                  .progress-bar {
-                      background-color: rgb(192, 192, 192);
-                      height: 30px;
-                      border-radius: 15px;
-                      position: relative;
-                      margin-bottom: 20px;
-                  }
-                  .progress1{
-                    margin-left: 200px;
-                    margin-bottom: 50px;
-                  }
-          
-                  .progress-bar .status {
-                      background-color: rgb(116, 194, 92);
-                      color: white;
-                      padding: 1%;
-                      text-align: center;
-                      font-size: 20px;
-                      border-radius: 15px;
-                      position: absolute;
-                      top: 0;
-                      left: 0;
-                      width: 0;
-                      height: 100%;
-                      transition: width 0.5s ease;
-                  }
-          .bar-super{
-            font-size: 20px;
-          }
-                  .concept {
-                      width: 100%;
-                  }
-          
-                  .proposal {
-                      width: 100%;
-                  }
-          
-                  .report {
-                      width: 100%;
-                  }
-          
-                  .code {
-                      width: 100%;
-                  }
-              </style>
-          </head>
-          <body>
-            <h2 class="progress1">Progress Bar</h2>
-              <label class="checkbox-super">
-                  <input type="checkbox" name="checkbox1" onclick="toggleItem('concept')"> Concept Paper
-              </label>
-          
-              <label  class="checkbox-super">
-                  <input type="checkbox" name="checkbox2" onclick="toggleItem('proposal')"> Proposal
-              </label>
-          
-              <label  class="checkbox-super">
-                  <input type="checkbox" name="checkbox3" onclick="toggleItem('report')"> Report
-              </label>
-          
-              <label  class="checkbox-super">
-                  <input type="checkbox" name="checkbox4" onclick="toggleItem('code')"> Source Code
-              </label>
-
-          
-              <p class="bar-super">Concept Paper</p>
-              <div class="container concept" id="conceptContainer">
-                  <div class="progress-bar">
-                      <div class="status concept-paper" id="conceptStatus">100%</div>
-                  </div>
-              </div>
-          
-              <p>Proposal</p>
-              <div class="container proposal" id="proposalContainer">
-                  <div class="progress-bar">
-                      <div class="status proposal-paper" id="proposalStatus">100%</div>
-                  </div>
-              </div>
-          
-              
-              <p>Report</p>
-              <div class="container report" id="reportContainer">
-                  <div class="progress-bar">
-                      <div class="status report-paper" id="reportStatus">100%</div>
-                  </div>
-              </div>
-          
-              <p>Source Code</p>
-              <div class="container code" id="codeContainer">
-                  <div class="progress-bar">
-                      <div class="status code-paper" id="codeStatus">100%</div>
-                  </div>
-              </div>
-          
-
-            </div>
-              </section>
-            </div>
-          </div>
-        </div>
+      </div>
+      <!-- End of tab content -->
+    </div>
+  </div>
+</div>
+</div>
 </div>
 
-      </div>
-    </div>
+<footer>
+<p>&copy; 2023 Kanchan Chaudhary. All rights reserved.</p>
+</footer>
 
-    <footer>
-        <p>&copy; 2023 Kanchan Chaudhary. All rights reserved.</p>
-      </footer>
+<!-- Required vendor scripts (Do not remove) -->
+<script src="{{ asset('js/frontend/jquery.min.js') }}"></script>
+<script src="{{ asset('js/frontend/popper.min.js') }}"></script>
+<script src="{{ asset('js/frontend/bootstrap.js') }}"></script>
 
-    <!-- Required vendor scripts (Do not remove) -->
-    <script type="text/javascript" src="{{ asset('js/frontend/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/frontend/popper.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/frontend/bootstrap.js') }}"></script>
+<!-- Optional Vendor Scripts (Remove the plugin script here and comment initializer script out of index.js if site does not use that feature) -->
+<!-- Autosize - resizes textarea inputs as user types -->
+<script src="{{ asset('js/frontend/autosize.min.js') }}"></script>
+<!-- Flatpickr (calendar/date/time picker UI) -->
+<script src="{{ asset('js/frontend/flatpicker.min.js') }}"></script>
+<!-- Prism - displays formatted code boxes -->
+<script src="{{ asset('js/frontend/prism.js') }}"></script>
+<!-- Shopify Draggable - drag, drop and sort items on page -->
+<script src="{{ asset('js/frontend/draggable.bundle.legacy.js') }}"></script>
+<script src="{{ asset('js/frontend/swap-animation.js') }}"></script>
+<!-- Dropzone - drag and drop files onto the page for uploading -->
+<script src="{{ asset('js/frontend/dropzone.min.js') }}"></script>
+<!-- List.js - filter list elements -->
+<script src="{{ asset('js/frontend/list.min.js') }}"></script>
+<!-- Required theme scripts (Do not remove) -->
+<script src="{{ asset('js/frontend/theme.js') }}"></script>
+<!-- <script src="{{ asset('js/dashboard/projectcordinator.js') }}"></script> -->
+<!-- Add this script tag to include Axios from a CDN -->
+<script>
+function validateSearch() {
+  const searchInput = document.getElementById('searchInput');
+  const searchTerm = searchInput.value.trim();
 
-    <!-- Optional Vendor Scripts (Remove the plugin script here and comment initializer script out of index.js if site does not use that feature) -->
+  if (searchTerm === '') {
+      alert('Please enter a search term.');
+      searchInput.focus();
+      return;
+  }
 
-    <!-- Autosize - resizes textarea inputs as user types -->
-    <script type="text/javascript" src="{{ asset('js/frontend/autosize.min.js') }}"></script>
-    <!-- Flatpickr (calendar/date/time picker UI) -->
-    <script type="text/javascript" src="{{ asset('js/frontend/flatpicker.min.js') }}"></script>
-    <!-- Prism - displays formatted code boxes -->
-    <script type="text/javascript" src="{{ asset('js/frontend/prism.js') }}"></script>
-    <!-- Shopify Draggable - drag, drop and sort items on page -->
-    <script type="text/javascript" src="{{ asset('js/frontend/draggable.bundle.legacy.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/frontend/swap-animation.js') }}"></script>
-    <!-- Dropzone - drag and drop files onto the page for uploading -->
-    <script type="text/javascript" src="{{ asset('js/frontend/dropzone.min.js') }}"></script>
-    <!-- List.js - filter list elements -->
-    <script type="text/javascript" src="{{ asset('js/frontend/list.min.js') }}"></script>
+  // Perform the search here, you can use AJAX to send the search term to the server and fetch search results dynamically.
+  // For demonstration purposes, we will use a simple client-side search.
 
-    <!-- Required theme scripts (Do not remove) -->
-    <script type="text/javascript" src="{{ asset('js/frontend/theme.js') }}"></script>
-      <!-- Cordinator js-->
-      <script src="{{ asset('js/dashboard/projectcordinator.js') }}"></script>
+  const projects = document.querySelectorAll('.card-project');
+  const searchResultsContainer = document.getElementById('searchResultsContainer');
+  searchResultsContainer.innerHTML = '';
+
+  projects.forEach(project => {
+      const projectName = project.querySelector('h5[data-filter-by="text"]').innerText.toLowerCase();
+      if (projectName.includes(searchTerm.toLowerCase())) {
+          searchResultsContainer.appendChild(project.cloneNode(true));
+      }
+  });
+}
+</script>
 
 
-      <script>
-        function toggleItem(itemName) {
-            const itemContainer = document.querySelector(`#${itemName}Container`);
-            const itemStatus = document.querySelector(`#${itemName}Status`);
-            if (itemContainer.style.display === 'none' || itemContainer.style.display === '') {
-                itemContainer.style.display = 'block';
-                setTimeout(() => {
-                    itemStatus.style.width = '100%';
-                }, 10);
-            } else {
-                itemStatus.style.width = '0';
-                setTimeout(() => {
-                    itemContainer.style.display = 'none';
-                }, 500);
-            }
+<script>
+function updateStatus(status, projectId) {
+  var form = document.getElementById('status-form-' + projectId);
+  var statusInput = document.getElementById('status-input');
+  if (form && statusInput) {
+      statusInput.value = status;
+      form.submit();
+  }
+  // console.log("Status:", status);
+  // console.log("Project ID:", projectId);
+
+  // You can also update the hidden input field with the selected status if needed.
+  document.getElementById('status-input').value = status;
+}
+</script>
+
+<!-- <script src="{{ asset('js/project.js') }}"></script> -->
+
+
+<!-- Include the CSRF token in a JavaScript variable -->
+
+
+<!-- This appears in the demo only - demonstrates different layouts -->
+<style>
+    table {
+      width: 120%; /* You can adjust this value to set the desired width */
+            margin: 0 auto; /* Centers the table on the page */
+            border-collapse: collapse;
+            max-width: 20%;
+            border: 1px solid #ccc;
+
         }
-    </script>
 
-    <!-- This appears in the demo only - demonstrates different layouts -->
-    <style type="text/css">
-      .layout-switcher{ position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(73px); color: #fff; transition: all .35s ease; background: #343a40; border-radius: .25rem .25rem 0 0; padding: .75rem; z-index: 999; }
-            .layout-switcher:not(:hover){ opacity: .95; }
-            .layout-switcher:not(:focus){ cursor: pointer; }
-            .layout-switcher-head{ font-size: .75rem; font-weight: 600; text-transform: uppercase; }
-            .layout-switcher-head i{ font-size: 1.25rem; transition: all .35s ease; }
-            .layout-switcher-body{ transition: all .55s ease; opacity: 0; padding-top: .75rem; transform: translateY(24px); text-align: center; }
-            .layout-switcher:focus{ opacity: 1; outline: none; transform: translateX(-50%) translateY(0); }
-            .layout-switcher:focus .layout-switcher-head i{ transform: rotateZ(180deg); opacity: 0; }
-            .layout-switcher:focus .layout-switcher-body{ opacity: 1; transform: translateY(0); }
-            .layout-switcher-option{ width: 72px; padding: .25rem; border: 2px solid rgba(255,255,255,0); display: inline-block; border-radius: 4px; transition: all .35s ease; }
-            .layout-switcher-option.active{ border-color: #007bff; }
-            .layout-switcher-icon{ width: 100%; border-radius: 4px; }
-            .layout-switcher-body:hover .layout-switcher-option:not(:hover){ opacity: .5; transform: scale(0.9); }
-            @media all and (max-width: 990px){ .layout-switcher{ min-width: 250px; } }
-            @media all and (max-width: 767px){ .layout-switcher{ display: none; } }
-    </style>
-    <div class="layout-switcher" tabindex="1">
-      <div class="layout-switcher-head d-flex justify-content-between">
-        <span>Select Layout</span>
-        <i class="material-icons">arrow_drop_up</i>
-      </div>
-      <div class="layout-switcher-body">
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
 
-      </div>
-    </div>
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
 
-  </body>
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr {
+          background-color: #f2f2f2;
+          color: black;
+        }
+        element {
+  position: absolute;
+  transform: translate3d(-136px, 44px, 0px);
+  top: 0px;
+  left: 200px!important;
+  will-change: transform;
+}
+.layout-switcher {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(73px);
+  color: #fff;
+  transition: all .35s ease;
+  background: #343a40;
+  border-radius: .25rem .25rem 0 0;
+  padding: .75rem;
+  z-index: 999;
+}
+
+.layout-switcher:not(:hover) {
+  opacity: .95;
+}
+
+.layout-switcher:not(:focus) {
+  cursor: pointer;
+}
+
+.layout-switcher-head {
+  font-size: .75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.layout-switcher-head i {
+  font-size: 1.25rem;
+  transition: all .35s ease;
+}
+
+.layout-switcher-body {
+  transition: all .55s ease;
+  opacity: 0;
+  padding-top: .75rem;
+  transform: translateY(24px);
+  text-align: center;
+}
+
+.layout-switcher:focus {
+  opacity: 1;
+  outline: none;
+  transform: translateX(-50%) translateY(0);
+}
+
+.layout-switcher:focus .layout-switcher-head i {
+  transform: rotateZ(180deg);
+  opacity: 0;
+}
+
+.layout-switcher:focus .layout-switcher-body {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.layout-switcher-option {
+  width: 72px;
+  padding: .25rem;
+  border: 2px solid rgba(255, 255, 255, 0);
+  display: inline-block;
+  border-radius: 4px;
+  transition: all .35s ease;
+}
+
+.layout-switcher-option.active {
+  border-color: #007bff;
+}
+
+.layout-switcher-icon {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.layout-switcher-body:hover .layout-switcher-option:not(:hover) {
+  opacity: .5;
+  transform: scale(0.9);
+}
+
+@media all and (max-width: 990px) {
+  .layout-switcher {
+      min-width: 250px;
+  }
+}
+
+@media all and (max-width: 767px) {
+  .layout-switcher {
+      display: none;
+  }
+}
+</style>
+</body>
 
 </html>

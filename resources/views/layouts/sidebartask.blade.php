@@ -106,7 +106,7 @@
                             <a href="{{ route('projectCoordinator.sidebartask') }}" class="nav-link">Task</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('projectCoordinator.group') }}"class="nav-link">Group</a>
+                            <a href="{{ route('projectCoordinator.groups.index') }}"class="nav-link">Group</a>
                           </li>
                         <li class="nav-item">
                             <a href="{{ route('projectCoordinator.evaluation') }}"class="nav-link">Change Password</a>
@@ -223,10 +223,7 @@
                                 </li>
 
                             </ul> --}}
-                            <button class="btn btn-round flex-shrink-0" data-toggle="modal"
-                                data-target="#user-manage-modal">
-                                <i class="material-icons">add</i>
-                            </button>
+                           
                         </div>
                         <div>
                             <div class="progress">
@@ -318,34 +315,7 @@
                                                                 {{-- <span class="text-small">Unscheduled</span> --}}
                                                             </div>
                                                             <div class="card-meta">
-                                                                <ul class="avatars">
-
-                                                                    <li>
-                                                                        <a href="#" data-toggle="tooltip"
-                                                                            title="Marcus">
-                                                                            <img alt="Marcus Simmons" class="avatar"
-                                                                                src="assets/img/avatar-male-1.jpg" />
-                                                                        </a>
-                                                                    </li>
-
-                                                                    <li>
-                                                                        <a href="#" data-toggle="tooltip"
-                                                                            title="Harry">
-                                                                            <img alt="Harry Xai" class="avatar"
-                                                                                src="assets/img/avatar-male-2.jpg" />
-                                                                        </a>
-                                                                    </li>
-
-                                                                    <li>
-                                                                        <a href="#" data-toggle="tooltip"
-                                                                            title="Kristina">
-                                                                            <img alt="Kristina Van Der Stroem"
-                                                                                class="avatar"
-                                                                                src="assets/img/avatar-female-4.jpg" />
-                                                                        </a>
-                                                                    </li>
-
-                                                                </ul>
+                                                                
                                                                 <div class="d-flex align-items-center">
                                                                     <i class="material-icons">playlist_add_check</i>
                                                                     <span>-/-</span>
@@ -786,26 +756,6 @@
                                 <div class="mb-3">
                                     <ul class="avatars text-center">
 
-                                        <li>
-                                            <img alt="Claire Connors" src="assets/img/avatar-female-1.jpg"
-                                                class="avatar" data-toggle="tooltip" data-title="Claire Connors" />
-                                        </li>
-
-                                        <li>
-                                            <img alt="Marcus Simmons" src="assets/img/avatar-male-1.jpg"
-                                                class="avatar" data-toggle="tooltip" data-title="Marcus Simmons" />
-                                        </li>
-
-                                        <li>
-                                            <img alt="Peggy Brown" src="assets/img/avatar-female-2.jpg"
-                                                class="avatar" data-toggle="tooltip" data-title="Peggy Brown" />
-                                        </li>
-
-                                        <li>
-                                            <img alt="Harry Xai" src="assets/img/avatar-male-2.jpg" class="avatar"
-                                                data-toggle="tooltip" data-title="Harry Xai" />
-                                        </li>
-
                                     </ul>
                                 </div>
                                 <div class="input-group input-group-round">
@@ -1055,29 +1005,7 @@
                                         <div class="mb-3">
                                             <ul class="avatars text-center">
 
-                                                <li>
-                                                    <img alt="Claire Connors" src="assets/img/avatar-female-1.jpg"
-                                                        class="avatar" data-toggle="tooltip"
-                                                        data-title="Claire Connors" />
-                                                </li>
-
-                                                <li>
-                                                    <img alt="Marcus Simmons" src="assets/img/avatar-male-1.jpg"
-                                                        class="avatar" data-toggle="tooltip"
-                                                        data-title="Marcus Simmons" />
-                                                </li>
-
-                                                <li>
-                                                    <img alt="Peggy Brown" src="assets/img/avatar-female-2.jpg"
-                                                        class="avatar" data-toggle="tooltip"
-                                                        data-title="Peggy Brown" />
-                                                </li>
-
-                                                <li>
-                                                    <img alt="Harry Xai" src="assets/img/avatar-male-2.jpg"
-                                                        class="avatar" data-toggle="tooltip"
-                                                        data-title="Harry Xai" />
-                                                </li>
+                                               
 
                                             </ul>
                                         </div>

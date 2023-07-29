@@ -9,23 +9,20 @@ use App\Models\Project;
 class StudentProjectController extends Controller
 {
     public function index()
-{
-    $user = Auth::user(); // Retrieve the currently authenticated user
-    $projects = $user->projects; // Retrieve the projects associated with the user
-
-    // Loop through the projects and access their attributes
-    // foreach ($projects as $project) {
-    //     echo $project->name; // Example attribute, adjust it based on your project model attributes
-    // }
-    $projectsall = Project::all();
-    //  dd($projectsall);
-
-$group = Group::all();
-// dd($group);    // Return the projects and user to the view
-    return view('student.projects', compact('projects', 'projectsall','user','group'));
-}
-
-
+    {
+        // Retrieve the currently authenticated user
+        $user = Auth::user();
+        $projectsall = Project::all();
+        // Retrieve the projects associated with the user
+        $projects = $user->projects()->get();
+    
+        // Retrieve all groups from the Group model
+        $groups = Group::all();
+    
+        // Return the projects, user, and groups to the view
+        return view('student.projects', compact('projects', 'user', 'groups','projectsall'));
+    }
+    
    // Calculate the remaining days
    
 

@@ -17,13 +17,15 @@ class StudentGroupController extends Controller
 {
     // StudentGroupController.php
 
-    public function viewGroup($projectId, $groupId)
+    public function viewGroup($projectId)
 {
     // Assuming you are using Laravel's built-in authentication system
     $authUserId = auth()->user()->id;
     $project = Project::with('group','users')->find($projectId);
-    $group = Group::with('users')->where('project_id',$projectId)->first();
-    $myGroup = GroupUser::with('group')->where('group_id', $groupId)->where('user_id', Auth::id())->first();
+    $group = Group::with('users')->where('project_id', $projectId)->first();
+    // $hasActiveProjects = $project->where('status', 'active')->isNotEmpty();
+    // dd($hasActiveProjects);
+    // $myGroup = GroupUser::with('group')->where('group_id', $groupId)->where('user_id', Auth::id())->first();
     
 // dd($myGroup);
     $projectTypes = Project::distinct('project_type')
@@ -88,10 +90,11 @@ class StudentGroupController extends Controller
         'studentUsernames' => $studentUsernames,
         'userGroups' => $userGroups,
         'isInGroup' => $isInGroup,
-        'myGroup' =>$myGroup ,
+    
         'group' =>$group ,
         'users',
         'username',
+       
     ]);
 }
 
